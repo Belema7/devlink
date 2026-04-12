@@ -21,7 +21,7 @@ const Home = async () => {
           {session ? (
             <Link
               href="/dashboard"
-              className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:bg-zinc-200 transition-all hover:scale-105"
+              className={buttonVariants({ variant: "default", size: "lg" })}
             >
               Go to Dashboard
             </Link>

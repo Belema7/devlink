@@ -39,23 +39,29 @@ export default function RegisterPage() {
     setLoading(true);
     setError("");
 
-    await signUp.email({
-      email: form.email,
-      password: form.password,
-      name: form.name,
-      fetchOptions: {
-        onSuccess: () => router.push("/dashboard"),
-        onError: (ctx) => setError(ctx.error.message),
-      },
-    });
-
-    setLoading(false);
+    try {
+      await signUp.email({
+        email: form.email,
+        password: form.password,
+        name: form.name,
+        fetchOptions: {
+          onSuccess: () => router.push("/dashboard"),
+          onError: (ctx) => setError(ctx.error.message),
+        },
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleOAuth = async (provider: "google" | "github") => {
+    setError("");
     await signIn.social({
       provider,
       callbackURL: "/dashboard",
+      fetchOptions: {
+        onError: (ctx) => setError(ctx.error.message),
+      },
     });
   };
 
@@ -133,6 +139,7 @@ export default function RegisterPage() {
 
           <div className="mt-6 grid grid-cols-2 gap-4">
             <Button
+              type="button"
               variant="outline"
               className="bg-zinc-900 border-zinc-800 hover:bg-zinc-800"
               onClick={() => handleOAuth("google")}
@@ -141,6 +148,7 @@ export default function RegisterPage() {
             </Button>
 
             <Button
+              type="button"
               variant="outline"
               className="bg-zinc-900 border-zinc-800 hover:bg-zinc-800"
               onClick={() => handleOAuth("github")}
