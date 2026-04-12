@@ -1,37 +1,46 @@
-import { Button } from "@/components/ui/button";
-import prisma from "@/lib/db";
-import { headers } from "next/headers"
-import { auth } from "@/lib/auth"
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
+import Link from 'next/link';
+import { Button, buttonVariants } from '@/components/ui/button'
 
-
-export default async function Home() {
-  const posts = await prisma.post.findMany();
-
+const Home = async () => {
   const session = await auth.api.getSession({
-        headers: await headers()
-    })
+    headers: await headers(),
+  });
 
+    return (
+      <main className="container mx-auto p-4 min-h-screen flex flex-col items-center justify-center">
+        <h1 className='text-3xl font-bold' >Welcome to DevLink</h1>
+        <p className='text-lg' >Your one-stop platform for connecting developers and projects.</p>
 
-  if(!session) {
-        return <div>Not authenticated</div>
-    }
-  return (
-    <main className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold">Posts</h1>
-      <ul className="mt-4 space-y-4">
-        {posts.map((p) => (
-          <li key={p.id} className="p-4 border rounded">
-            <strong className="text-lg">{p.title}</strong>
-            <p className="text-muted-foreground">{p.content}</p>
-          </li>
-        ))}
-      </ul>
-      <Button  variant="secondary" >Click me</Button>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {session ? (
+              <Link
+                href="/dashboard"
+                className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:bg-zinc-200 transition-all hover:scale-105"
+              >
+                Go to Dashboard
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/register"
+                className={buttonVariants({ variant: "outline", size: "lg" })}
+                >
+                  Get Started
+                </Link>
+                <Link
+                  href="/login"
+                  className={buttonVariants({ variant: "default", size: "lg" })}
+                >
+                  Sign In
+                </Link>
+              </>
+            )}
+          </div>
+      </main>
+    )
+  }
+export default Home
 
-        <div>
-            <h1>Welcome {session.user.name}</h1>
-        </div>
-    </main>
-  );
-}
 
