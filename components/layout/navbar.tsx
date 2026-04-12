@@ -18,49 +18,62 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-zinc-950 text-zinc-100 border-b border-zinc-800">
-      <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
-
+    <nav className="sticky top-0 z-50 bg-zinc-950 border-b border-zinc-800 py-2">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="text-xl font-bold tracking-tight">
+          <Link
+            href="/"
+            className="text-2xl font-bold tracking-tighter text-white hover:text-zinc-300 transition-colors"
+          >
             DevLink
           </Link>
 
-          {/* Navigation Actions */}
-          <div className="flex items-center space-x-4">
+          {/* Desktop Navigation */}
+          <div className="flex items-center gap-x-6">
             {isPending ? (
-              <div className="h-8 w-20 bg-zinc-800 animate-pulse rounded" />
+              <div className="h-9 w-28 bg-zinc-900 animate-pulse rounded-xl" />
             ) : session ? (
               <>
+                {/* Dashboard Link */}
                 <Link
                   href="/dashboard"
-                  className="text-sm font-medium text-zinc-300 hover:text-white transition"
+                  className="text-sm font-medium text-zinc-300 hover:text-white transition-colors"
                 >
                   Dashboard
                 </Link>
 
-                <div className="h-4 w-px bg-zinc-800 hidden sm:block" />
+                <div className="h-5 w-px bg-zinc-800" />
 
-                <span className="text-sm text-zinc-400 hidden sm:block">
-                  {session.user.name}
-                </span>
+                {/* User info */}
+                <div className="flex items-center gap-x-2">
+                  <span className="text-sm font-medium text-zinc-400 hidden sm:block">
+                    {session.user.name}
+                  </span>
+                </div>
 
+                {/* Sign out button - consistent with shadcn */}
                 <button
                   onClick={handleLogout}
-                  className="bg-zinc-800 hover:bg-zinc-700 text-sm font-medium px-4 py-2 rounded-md transition"
+                  className={buttonVariants({
+                    variant: "outline",
+                    size: "sm",
+                    className:
+                      "px-5 border-zinc-700 hover:bg-zinc-900 hover:text-white",
+                  })}
                 >
                   Sign out
                 </button>
               </>
             ) : (
               <>
+                {/* Logged-out actions */}
                 <Link
                   href="/login"
                   className={buttonVariants({
                     variant: "outline",
                     size: "sm",
-                    className: "px-4 py-2",
+                    className: "px-5",
                   })}
                 >
                   Sign in
@@ -71,10 +84,10 @@ export default function Navbar() {
                   className={buttonVariants({
                     variant: "default",
                     size: "sm",
-                    className: "px-4 py-2",
+                    className: "px-5",
                   })}
                 >
-                  Sign up
+                  Get started
                 </Link>
               </>
             )}
@@ -84,4 +97,5 @@ export default function Navbar() {
     </nav>
   );
 }
+
 
