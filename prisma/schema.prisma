@@ -29,6 +29,8 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  links         Link[]
+  bookmarks     Bookmark[]
 
   @@unique([email])
   @@map("user")
@@ -80,6 +82,44 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model Link {
+  id          String     @id @default(cuid())
+  title       String
+  url         String
+  description String?
+  isPublic    Boolean    @default(false)
+  userId      String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tags        Tag[]
+  bookmarks   Bookmark[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([userId])
+  @@map("link")
+}
+
+model Tag {
+  id    String @id @default(cuid())
+  name  String @unique
+  links Link[]
+
+  @@map("tag")
+}
+
+model Bookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  linkId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  link      Link     @relation(fields: [linkId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, linkId])
+  @@index([userId])
+  @@map("bookmark")
 }
 
 
