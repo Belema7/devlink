@@ -1,6 +1,9 @@
-import React from 'react'
+import React from "react";
+import { requireUser } from "@/lib/auth-guard";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
+  await requireUser();
+
   return (
     <>
       <div>
@@ -12,7 +15,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         </main>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default DashboardLayout
+export default DashboardLayout;

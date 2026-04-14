@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "@/lib/auth-client";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
@@ -38,6 +38,8 @@ function GoogleIcon() {
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo") || "/dashboard";
 
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
@@ -57,7 +59,7 @@ export default function LoginPage() {
         email: form.email,
         password: form.password,
         fetchOptions: {
-          onSuccess: () => router.push("/dashboard"),
+          onSuccess: () => router.push(redirectTo),
           onError: (ctx) => setError(ctx.error.message),
         },
       });
@@ -72,7 +74,7 @@ export default function LoginPage() {
     try {
       await signIn.social({
         provider,
-        callbackURL: "/dashboard",
+        callbackURL: redirectTo,
         fetchOptions: {
           onError: (ctx) => setError(ctx.error.message),
         },
