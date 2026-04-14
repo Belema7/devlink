@@ -1,9 +1,36 @@
-import React from "react";
+import Link from "next/link";
+import { getUserLinks } from "@/app/actions/link.actions";
+import DashboardLinksView from "@/components/links/dashboard-links-view";
+import { Button } from "@/components/ui/button";
 
-const DashboardPage = () => {
+const DashboardPage = async () => {
+  const links = await getUserLinks();
+
+  const serializableLinks = links.map((link) => ({
+    id: link.id,
+    title: link.title,
+    url: link.url,
+    description: link.description,
+    isPublic: link.isPublic,
+    tags: link.tags,
+    createdAt: link.createdAt.toISOString(),
+  }));
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold">Dashboard</h1>
+    <div className="container mx-auto space-y-6 px-4 py-8">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold">Dashboard</h1>
+          <p className="text-sm text-muted-foreground">
+            Manage your saved links, tags, and visibility in one place.
+          </p>
+        </div>
+        <Button asChild>
+          <Link href="/links/new">Add Link</Link>
+        </Button>
+      </div>
+
+      <DashboardLinksView initialLinks={serializableLinks} />
     </div>
   );
 };
