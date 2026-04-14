@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createLinkSchema, type CreateLinkInput } from "@/lib/validators/link.schema";
-import { createLinkAction } from "@/app/actions/link.actions";
+import { createLinkAction, updateLinkAction } from "@/app/actions/link.actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
@@ -24,19 +24,36 @@ const linkFormSchema = createLinkSchema.omit({ tags: true }).extend({
 
 type LinkFormValues = z.input<typeof linkFormSchema>;
 
-export default function LinkForm() {
+type LinkFormProps = {
+  mode?: "create" | "edit";
+  linkId?: string;
+  initialValues?: {
+    title: string;
+    url: string;
+    description?: string | null;
+    isPublic: boolean;
+    tags?: string[];
+  };
+};
+
+export default function LinkForm({
+  mode = "create",
+  linkId,
+  initialValues,
+}: LinkFormProps) {
   const router = useRouter();
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
+  const isEditMode = mode === "edit";
 
   const form = useForm<LinkFormValues>({
     resolver: zodResolver(linkFormSchema),
     defaultValues: {
-      title: "",
-      url: "",
-      description: "",
-      isPublic: false,
-      tagsInput: "",
+      title: initialValues?.title ?? "",
+      url: initialValues?.url ?? "",
+      description: initialValues?.description ?? "",
+      isPublic: initialValues?.isPublic ?? false,
+      tagsInput: initialValues?.tags?.join(", ") ?? "",
     },
   });
 
@@ -53,7 +70,9 @@ export default function LinkForm() {
       tags,
     };
 
-    const result = await createLinkAction(payload);
+    const result = isEditMode && linkId
+      ? await updateLinkAction({ id: linkId, ...payload })
+      : await createLinkAction(payload);
 
     if (!result.success) {
       setSubmitError(result.message);
@@ -74,7 +93,20 @@ export default function LinkForm() {
     }
 
     setSubmitSuccess(result.message);
-    form.reset();
+
+    if (isEditMode) {
+      router.push("/dashboard");
+      router.refresh();
+      return;
+    }
+
+    form.reset({
+      title: "",
+      url: "",
+      description: "",
+      isPublic: false,
+      tagsInput: "",
+    });
     router.refresh();
   });
 
@@ -82,10 +114,12 @@ export default function LinkForm() {
     <Card className="mx-auto w-full max-w-2xl shadow-xl border border-border/60">
       <CardHeader className="pb-6">
         <CardTitle className="flex items-center gap-2 text-2xl">
-          Add New Link
+          {isEditMode ? "Edit Link" : "Add New Link"}
         </CardTitle>
         <CardDescription className="text-base text-muted-foreground">
-          Save useful resources and organize them with tags.
+          {isEditMode
+            ? "Update your saved link details, tags, and visibility."
+            : "Save useful resources and organize them with tags."}
         </CardDescription>
       </CardHeader>
       
@@ -200,10 +234,10 @@ export default function LinkForm() {
             {form.formState.isSubmitting ? (
               <>
                 <span className="mr-2 animate-spin">⟳</span>
-                Saving link…
+                {isEditMode ? "Updating link..." : "Saving link..."}
               </>
             ) : (
-              "Save Link"
+              isEditMode ? "Update Link" : "Save Link"
             )}
           </Button>
         </form>

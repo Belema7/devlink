@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ExternalLink, Trash2 } from "lucide-react";
+import { ExternalLink, Pencil, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -61,20 +61,28 @@ export default function LinkCard({ link, onDelete, isDeleting }: LinkCardProps) 
           )}
         </div>
       </CardContent>
-      <CardFooter className="justify-between">
+      <CardFooter className="justify-between gap-2">
         <p className="text-xs text-muted-foreground">
           Added {new Date(link.createdAt).toLocaleDateString()}
         </p>
-        <Button
-          type="button"
-          size="sm"
-          variant="destructive"
-          onClick={() => onDelete(link.id)}
-          disabled={isDeleting}
-        >
-          <Trash2 className="size-3.5" />
-          {isDeleting ? "Deleting..." : "Delete"}
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button asChild type="button" size="sm" variant="outline">
+            <Link href={`/links/edit/${link.id}`}>
+              <Pencil className="size-3.5" />
+              Edit
+            </Link>
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="destructive"
+            onClick={() => onDelete(link.id)}
+            disabled={isDeleting}
+          >
+            <Trash2 className="size-3.5" />
+            {isDeleting ? "Deleting..." : "Delete"}
+          </Button>
+        </div>
       </CardFooter>
     </Card>
   );
