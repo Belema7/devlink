@@ -79,51 +79,85 @@ export default function LinkForm() {
   });
 
   return (
-    <Card className="mx-auto w-full max-w-2xl">
-      <CardHeader>
-        <CardTitle>Add New Link</CardTitle>
-        <CardDescription>Save useful resources and organize them with tags.</CardDescription>
+    <Card className="mx-auto w-full max-w-2xl shadow-xl border border-border/60">
+      <CardHeader className="pb-6">
+        <CardTitle className="flex items-center gap-2 text-2xl">
+          Add New Link
+        </CardTitle>
+        <CardDescription className="text-base text-muted-foreground">
+          Save useful resources and organize them with tags.
+        </CardDescription>
       </CardHeader>
-      <CardContent>
-        <form onSubmit={onSubmit} className="space-y-4" noValidate>
+      
+      <CardContent className="space-y-8">
+        <form onSubmit={onSubmit} className="space-y-6" noValidate>
           <FieldGroup>
+            {/* Title */}
             <Field>
-              <FieldLabel htmlFor="title">Title</FieldLabel>
-              <Input id="title" placeholder="e.g. React docs" {...form.register("title")} />
+              <FieldLabel htmlFor="title" className="text-sm font-semibold">
+                Title <span className="text-destructive">*</span>
+              </FieldLabel>
+              <Input
+                id="title"
+                placeholder="e.g. React docs"
+                className="h-11"
+                {...form.register("title")}
+              />
               <FieldError errors={[form.formState.errors.title]} />
             </Field>
 
+            {/* URL */}
             <Field>
-              <FieldLabel htmlFor="url">URL</FieldLabel>
-              <Input id="url" placeholder="https://example.com" {...form.register("url")} />
+              <FieldLabel htmlFor="url" className="text-sm font-semibold">
+                URL <span className="text-destructive">*</span>
+              </FieldLabel>
+              <Input
+                id="url"
+                type="url"
+                placeholder="https://example.com"
+                className="h-11"
+                {...form.register("url")}
+              />
               <FieldError errors={[form.formState.errors.url]} />
             </Field>
 
+            {/* Description */}
             <Field>
-              <FieldLabel htmlFor="description">Description (optional)</FieldLabel>
+              <FieldLabel htmlFor="description" className="text-sm font-semibold">
+                Description <span className="text-muted-foreground text-xs font-normal">(optional)</span>
+              </FieldLabel>
               <Textarea
                 id="description"
                 placeholder="A short note about why this link matters."
+                className="min-h-[108px] resize-y"
                 {...form.register("description")}
               />
               <FieldError errors={[form.formState.errors.description]} />
             </Field>
 
+            {/* Tags */}
             <Field>
-              <FieldLabel htmlFor="tagsInput">Tags</FieldLabel>
+              <FieldLabel htmlFor="tagsInput" className="text-sm font-semibold">
+                Tags
+              </FieldLabel>
               <Input
                 id="tagsInput"
                 placeholder="frontend, react, docs"
+                className="h-11"
                 {...form.register("tagsInput")}
               />
-              <p className="text-xs text-muted-foreground">
-                Use commas to separate tags. Tags are normalized to lowercase.
+              <p className="mt-1.5 text-xs text-muted-foreground flex items-center gap-1">
+                <span className="inline-block w-2 h-2 bg-blue-500 rounded-full" />
+                Separate with commas • Tags are automatically lowercased
               </p>
               <FieldError errors={[form.formState.errors.tagsInput]} />
             </Field>
 
+            {/* Visibility */}
             <Field>
-              <FieldLabel htmlFor="isPublic">Visibility</FieldLabel>
+              <FieldLabel htmlFor="isPublic" className="text-sm font-semibold">
+                Visibility
+              </FieldLabel>
               <Controller
                 control={form.control}
                 name="isPublic"
@@ -132,9 +166,10 @@ export default function LinkForm() {
                     id="isPublic"
                     value={field.value ? "public" : "private"}
                     onChange={(event) => field.onChange(event.target.value === "public")}
+                    className="h-11"
                   >
-                    <NativeSelectOption value="private">Private</NativeSelectOption>
-                    <NativeSelectOption value="public">Public</NativeSelectOption>
+                    <NativeSelectOption value="private">Private • Only you can see it</NativeSelectOption>
+                    <NativeSelectOption value="public">Public • Anyone with the link can view</NativeSelectOption>
                   </NativeSelect>
                 )}
               />
@@ -142,11 +177,34 @@ export default function LinkForm() {
             </Field>
           </FieldGroup>
 
-          {submitError ? <p className="text-sm text-destructive">{submitError}</p> : null}
-          {submitSuccess ? <p className="text-sm text-emerald-600">{submitSuccess}</p> : null}
+          {/* Status messages */}
+          {submitError && (
+            <div className="flex items-center gap-2 rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+              <span className="text-base">⚠️</span>
+              {submitError}
+            </div>
+          )}
+          {submitSuccess && (
+            <div className="flex items-center gap-2 rounded-xl border border-emerald-300 bg-emerald-50 dark:bg-emerald-950/30 px-4 py-3 text-sm text-emerald-700 dark:text-emerald-400">
+              <span className="text-base">✅</span>
+              {submitSuccess}
+            </div>
+          )}
 
-          <Button type="submit" disabled={form.formState.isSubmitting}>
-            {form.formState.isSubmitting ? "Saving..." : "Save Link"}
+          {/* Submit button */}
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            className="w-full h-12 text-base font-semibold shadow-sm"
+          >
+            {form.formState.isSubmitting ? (
+              <>
+                <span className="mr-2 animate-spin">⟳</span>
+                Saving link…
+              </>
+            ) : (
+              "Save Link"
+            )}
           </Button>
         </form>
       </CardContent>
