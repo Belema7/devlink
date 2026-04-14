@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ExternalLink, Pencil, Trash2 } from "lucide-react";
+import { ExternalLink, Eye, Pencil, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -66,6 +66,12 @@ export default function LinkCard({ link, onDelete, isDeleting }: LinkCardProps) 
           Added {new Date(link.createdAt).toLocaleDateString()}
         </p>
         <div className="flex items-center gap-2">
+          <Button asChild type="button" size="sm" variant="secondary">
+            <Link href={`/links/${link.id}`}>
+              <Eye className="size-3.5" />
+              View
+            </Link>
+          </Button>
           <Button asChild type="button" size="sm" variant="outline">
             <Link href={`/links/edit/${link.id}`}>
               <Pencil className="size-3.5" />
