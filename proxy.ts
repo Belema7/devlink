@@ -25,12 +25,12 @@ async function isAuthenticated(request: NextRequest) {
     const session = (await sessionResponse.json()) as SessionResponse | null;
     return !!session?.user?.id;
   } catch (error) {
-    console.error("Auth middleware session check failed:", error);
+    console.error("Auth proxy session check failed:", error);
     return false;
   }
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const authenticated = await isAuthenticated(request);
 
   if (authenticated) {
