@@ -23,6 +23,9 @@ void prisma.user;
 void prisma.session;
 void prisma.account;
 void prisma.verification;
+void prisma.link;
+void prisma.tag;
+void prisma.bookmark;
 
 export default prisma;
 

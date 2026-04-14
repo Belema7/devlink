@@ -1,9 +1,11 @@
-import React from 'react'
+import LinkForm from "@/components/links/link-form";
 
 const CreateLinkPage = () => {
   return (
-    <div>CreateLinkPage</div>
-  )
-}
+    <div className="container mx-auto px-4 py-8">
+      <LinkForm />
+    </div>
+  );
+};
 
-export default CreateLinkPage
+export default CreateLinkPage;
