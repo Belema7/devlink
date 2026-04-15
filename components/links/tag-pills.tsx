@@ -4,7 +4,7 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useTransition } from "react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { buildDashboardHref } from "@/lib/dashboard-filters";
+import { buildDashboardHref, normalizeTagList } from "@/lib/dashboard-filters";
 
 type TagPillsProps = {
     tags: string[];
@@ -16,20 +16,23 @@ export default function TagPills({ tags }: TagPillsProps) {
     const pathname = usePathname();
     const [isPending, startTransition] = useTransition();
 
-    const selectedTags = searchParams.getAll("tag");
+    const selectedTags = normalizeTagList(searchParams.getAll("tag"));
 
     const toggleTag = (tag: string) => {
-        const params = new URLSearchParams(searchParams.toString());
-        const currentTags = params.getAll("tag");
+        const normalizedTag = tag.trim().toLowerCase();
+        if (!normalizedTag) return;
 
-        if (currentTags.includes(tag)) {
+        const params = new URLSearchParams(searchParams.toString());
+        const currentTags = normalizeTagList(params.getAll("tag"));
+
+        if (currentTags.includes(normalizedTag)) {
             // Remove tag
-            const newTags = currentTags.filter((t) => t !== tag);
+            const newTags = currentTags.filter((t) => t !== normalizedTag);
             params.delete("tag");
             newTags.forEach((t) => params.append("tag", t));
         } else {
             // Add tag
-            params.append("tag", tag);
+            params.append("tag", normalizedTag);
         }
 
         startTransition(() => {
