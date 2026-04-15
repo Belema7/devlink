@@ -1,23 +1,27 @@
 import Link from "next/link";
-import { getUserLinks } from "@/app/actions/link.actions";
+import { getUserLinks, getUserTagNames } from "@/app/actions/link.actions";
 import DashboardLinksView from "@/components/links/dashboard-links-view";
 import { Button } from "@/components/ui/button";
+import { isDashboardVisibility, normalizeSearchQuery, normalizeTagList } from "@/lib/dashboard-filters";
 
 type DashboardPageProps = {
   searchParams: Promise<{
     search?: string;
     tag?: string | string[];
-    visibility?: "all" | "public" | "private";
+    visibility?: string;
   }>;
 };
 
 const DashboardPage = async ({ searchParams }: DashboardPageProps) => {
   const params = await searchParams;
-  const search = params.search;
-  const tags = typeof params.tag === "string" ? [params.tag] : params.tag;
-  const visibility = params.visibility;
+  const search = normalizeSearchQuery(params.search);
+  const tags = normalizeTagList(params.tag);
+  const visibility = isDashboardVisibility(params.visibility) ? params.visibility : "all";
 
-  const links = await getUserLinks({ search, tags, visibility });
+  const [links, availableTags] = await Promise.all([
+    getUserLinks({ search, tags, visibility }),
+    getUserTagNames(),
+  ]);
 
   const serializableLinks = links.map((link) => ({
     id: link.id,
@@ -43,7 +47,7 @@ const DashboardPage = async ({ searchParams }: DashboardPageProps) => {
         </Button>
       </div>
 
-      <DashboardLinksView initialLinks={serializableLinks} />
+      <DashboardLinksView initialLinks={serializableLinks} availableTags={availableTags} />
     </div>
   );
 };

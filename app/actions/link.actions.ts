@@ -5,7 +5,9 @@ import { headers } from "next/headers";
 import { z } from "zod";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/db";
+import { Prisma } from "@/lib/generated/prisma/client";
 import { createLinkSchema } from "@/lib/validators/link.schema";
+import { normalizeSearchQuery, normalizeTagList } from "@/lib/dashboard-filters";
 
 type CreateLinkActionInput = {
   title: string;
@@ -68,40 +70,46 @@ export async function getUserLinks(filters: GetUserLinksInput = {}) {
     return [];
   }
 
-  const { search, tags, visibility } = filters;
+  const search = normalizeSearchQuery(filters.search);
+  const tags = normalizeTagList(filters.tags);
+  const visibility = filters.visibility;
 
-  const where: any = {
-    userId,
-  };
+  const andFilters: Prisma.LinkWhereInput[] = [];
 
   if (search) {
-    where.OR = [
-      { title: { contains: search, mode: "insensitive" } },
-      { description: { contains: search, mode: "insensitive" } },
-      {
-        tags: {
-          some: {
-            name: { contains: search, mode: "insensitive" },
+    andFilters.push({
+      OR: [
+        { title: { contains: search, mode: "insensitive" } },
+        {
+          tags: {
+            some: {
+              name: { contains: search, mode: "insensitive" },
+            },
           },
         },
-      },
-    ];
+      ],
+    });
   }
 
-  if (tags && tags.length > 0) {
-    where.tags = {
-      some: {
-        name: { in: tags },
+  if (tags.length > 0) {
+    andFilters.push({
+      tags: {
+        some: {
+          name: { in: tags },
+        },
       },
-    };
+    });
   }
 
   if (visibility && visibility !== "all") {
-    where.isPublic = visibility === "public";
+    andFilters.push({ isPublic: visibility === "public" });
   }
 
   return prisma.link.findMany({
-    where,
+    where: {
+      userId,
+      ...(andFilters.length > 0 ? { AND: andFilters } : {}),
+    },
     include: {
       tags: {
         select: {
@@ -114,6 +122,32 @@ export async function getUserLinks(filters: GetUserLinksInput = {}) {
       createdAt: "desc",
     },
   });
+}
+
+export async function getUserTagNames() {
+  const userId = await getAuthUserId();
+
+  if (!userId) {
+    return [];
+  }
+
+  const tags = await prisma.tag.findMany({
+    where: {
+      links: {
+        some: {
+          userId,
+        },
+      },
+    },
+    select: {
+      name: true,
+    },
+    orderBy: {
+      name: "asc",
+    },
+  });
+
+  return tags.map((tag) => tag.name);
 }
 
 export async function getUserLinkById(linkId: string) {

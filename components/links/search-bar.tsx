@@ -1,9 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { buildDashboardHref, normalizeSearchQuery } from "@/lib/dashboard-filters";
 
 export default function SearchBar() {
     const router = useRouter();
@@ -11,33 +13,33 @@ export default function SearchBar() {
     const pathname = usePathname();
     const [isPending, startTransition] = useTransition();
 
-    const [searchValue, setSearchValue] = useState(searchParams.get("search") || "");
+    const activeSearch = normalizeSearchQuery(searchParams.get("search"));
+    const [searchValue, setSearchValue] = useState(activeSearch);
 
-    const handleSearch = useCallback(
-        (value: string) => {
+    useEffect(() => {
+        setSearchValue(activeSearch);
+    }, [activeSearch]);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            if (searchValue === activeSearch) {
+                return;
+            }
+
             const params = new URLSearchParams(searchParams.toString());
-            if (value) {
-                params.set("search", value);
+            if (searchValue) {
+                params.set("search", searchValue);
             } else {
                 params.delete("search");
             }
 
             startTransition(() => {
-                router.push(`${pathname}?${params.toString()}`);
+                router.replace(buildDashboardHref(pathname, params), { scroll: false });
             });
-        },
-        [router, searchParams, pathname]
-    );
-
-    useEffect(() => {
-        const timeoutId = setTimeout(() => {
-            if (searchValue !== (searchParams.get("search") || "")) {
-                handleSearch(searchValue);
-            }
-        }, 500);
+        }, 400);
 
         return () => clearTimeout(timeoutId);
-    }, [searchValue, handleSearch, searchParams]);
+    }, [activeSearch, pathname, router, searchParams, searchValue, startTransition]);
 
     return (
         <div className="relative w-full">
@@ -46,16 +48,29 @@ export default function SearchBar() {
             </div>
             <Input
                 type="search"
-                placeholder="Search links by title, description or tags..."
-                className="pl-10"
+                aria-label="Search links by title or tag"
+                placeholder="Search by title or tag..."
+                className="pl-10 pr-24"
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
             />
-            {isPending && (
-                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-                </div>
-            )}
+            <div className="absolute inset-y-0 right-0 flex items-center gap-1 pr-1.5">
+                {searchValue ? (
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon-xs"
+                        onClick={() => setSearchValue("")}
+                        aria-label="Clear search"
+                        className="h-6 w-6"
+                    >
+                        <X className="size-3.5" />
+                    </Button>
+                ) : null}
+                {isPending ? (
+                    <div className="mr-1.5 h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                ) : null}
+            </div>
         </div>
     );
 }

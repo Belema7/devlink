@@ -9,12 +9,14 @@ import LinkCard, { type DashboardLink } from "@/components/links/link-card";
 import SearchBar from "@/components/links/search-bar";
 import TagPills from "@/components/links/tag-pills";
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
+import { normalizeTagList } from "@/lib/dashboard-filters";
 
 type DashboardLinksViewProps = {
   initialLinks: DashboardLink[];
+  availableTags: string[];
 };
 
-export default function DashboardLinksView({ initialLinks }: DashboardLinksViewProps) {
+export default function DashboardLinksView({ initialLinks, availableTags }: DashboardLinksViewProps) {
   const [links, setLinks] = useState(initialLinks);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -28,9 +30,9 @@ export default function DashboardLinksView({ initialLinks }: DashboardLinksViewP
     setLinks(initialLinks);
   }, [initialLinks]);
 
-  const availableTags = useMemo(
-    () => [...new Set(links.flatMap((link) => link.tags.map((tag) => tag.name)))].sort(),
-    [links]
+  const normalizedAvailableTags = useMemo(
+    () => normalizeTagList(availableTags).sort(),
+    [availableTags]
   );
 
   const visibility = (searchParams.get("visibility") as "all" | "public" | "private") || "all";
@@ -69,6 +71,7 @@ export default function DashboardLinksView({ initialLinks }: DashboardLinksViewP
 
       setLinks((current) => current.filter((link) => link.id !== id));
       setActionMessage(result.message);
+      router.refresh();
       setDeletingId(null);
     });
   };
@@ -85,7 +88,7 @@ export default function DashboardLinksView({ initialLinks }: DashboardLinksViewP
         <SearchBar />
 
         <div className="flex flex-wrap items-center justify-between gap-4">
-          <TagPills tags={availableTags} />
+          <TagPills tags={normalizedAvailableTags} />
 
           <div className="flex items-center gap-2 min-w-[150px]">
             <span className="text-sm font-medium text-muted-foreground">Visibility:</span>

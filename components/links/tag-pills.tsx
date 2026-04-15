@@ -4,6 +4,7 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useTransition } from "react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { buildDashboardHref } from "@/lib/dashboard-filters";
 
 type TagPillsProps = {
     tags: string[];
@@ -32,7 +33,7 @@ export default function TagPills({ tags }: TagPillsProps) {
         }
 
         startTransition(() => {
-            router.push(`${pathname}?${params.toString()}`);
+            router.push(buildDashboardHref(pathname, params), { scroll: false });
         });
     };
 
@@ -46,14 +47,23 @@ export default function TagPills({ tags }: TagPillsProps) {
                 return (
                     <Badge
                         key={tag}
-                        variant={isActive ? "default" : "secondary"}
+                        asChild
+                        variant={isActive ? "default" : "outline"}
                         className={cn(
-                            "cursor-pointer transition-colors hover:opacity-80",
-                            isActive ? "bg-primary text-primary-foreground" : "hover:bg-secondary/80"
+                            "cursor-pointer border-transparent transition-all hover:-translate-y-px hover:shadow-sm",
+                            isActive
+                                ? "bg-primary text-primary-foreground shadow-sm"
+                                : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
                         )}
-                        onClick={() => toggleTag(tag)}
                     >
-                        {tag}
+                        <button
+                            type="button"
+                            onClick={() => toggleTag(tag)}
+                            aria-pressed={isActive}
+                            className="px-0.5"
+                        >
+                            {tag}
+                        </button>
                     </Badge>
                 );
             })}
@@ -63,7 +73,7 @@ export default function TagPills({ tags }: TagPillsProps) {
                         const params = new URLSearchParams(searchParams.toString());
                         params.delete("tag");
                         startTransition(() => {
-                            router.push(`${pathname}?${params.toString()}`);
+                            router.push(buildDashboardHref(pathname, params), { scroll: false });
                         });
                     }}
                     className="text-xs text-muted-foreground hover:text-primary hover:underline transition-colors"
