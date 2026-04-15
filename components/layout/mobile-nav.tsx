@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, LogOut, UserRound, Sparkles, LayoutDashboard, Newspaper } from "lucide-react";
+import { Menu, LogOut, UserRound, Sparkles } from "lucide-react";
 import { signOut, useSession } from "@/lib/auth-client";
 import { buttonVariants } from "@/components/ui/button";
 import {
