@@ -1,11 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { deleteLinkAction } from "@/app/actions/link.actions";
 import { Button } from "@/components/ui/button";
-import DashboardFilterBar, { type VisibilityFilter } from "@/components/links/dashboard-filter-bar";
 import LinkCard, { type DashboardLink } from "@/components/links/link-card";
+import SearchBar from "@/components/links/search-bar";
+import TagPills from "@/components/links/tag-pills";
+import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 
 type DashboardLinksViewProps = {
   initialLinks: DashboardLink[];
@@ -13,32 +16,43 @@ type DashboardLinksViewProps = {
 
 export default function DashboardLinksView({ initialLinks }: DashboardLinksViewProps) {
   const [links, setLinks] = useState(initialLinks);
-  const [tagFilter, setTagFilter] = useState("");
-  const [visibility, setVisibility] = useState<VisibilityFilter>("all");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [actionMessage, setActionMessage] = useState<string | null>(null);
+
+  // Sync state with server-side props when they change
+  useEffect(() => {
+    setLinks(initialLinks);
+  }, [initialLinks]);
 
   const availableTags = useMemo(
     () => [...new Set(links.flatMap((link) => link.tags.map((tag) => tag.name)))].sort(),
     [links]
   );
 
-  const filteredLinks = useMemo(() => {
-    const normalizedTagFilter = tagFilter.trim().toLowerCase();
+  const visibility = (searchParams.get("visibility") as "all" | "public" | "private") || "all";
 
-    return links.filter((link) => {
-      const matchesTag =
-        normalizedTagFilter.length === 0 ||
-        link.tags.some((tag) => tag.name.includes(normalizedTagFilter));
+  const handleVisibilityChange = (value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value === "all") {
+      params.delete("visibility");
+    } else {
+      params.set("visibility", value);
+    }
 
-      const matchesVisibility =
-        visibility === "all" ||
-        (visibility === "public" ? link.isPublic : !link.isPublic);
-
-      return matchesTag && matchesVisibility;
+    startTransition(() => {
+      router.push(`${pathname}?${params.toString()}`);
     });
-  }, [links, tagFilter, visibility]);
+  };
+
+  const handleClearFilters = () => {
+    startTransition(() => {
+      router.push(pathname);
+    });
+  };
 
   const handleDelete = (id: string) => {
     setDeletingId(id);
@@ -59,19 +73,7 @@ export default function DashboardLinksView({ initialLinks }: DashboardLinksViewP
     });
   };
 
-  if (links.length === 0) {
-    return (
-      <div className="rounded-xl border border-dashed p-8 text-center">
-        <p className="text-lg font-medium">No links yet</p>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Start by adding your first link to build your dashboard.
-        </p>
-        <Button asChild className="mt-4">
-          <Link href="/links/new">Add Link</Link>
-        </Button>
-      </div>
-    );
-  }
+  const hasFilters = searchParams.has("search") || searchParams.has("tag") || searchParams.has("visibility");
 
   return (
     <div className="space-y-6">
@@ -79,43 +81,78 @@ export default function DashboardLinksView({ initialLinks }: DashboardLinksViewP
         <p className="text-sm text-muted-foreground">{actionMessage}</p>
       ) : null}
 
-      <DashboardFilterBar
-        tagFilter={tagFilter}
-        visibility={visibility}
-        availableTags={availableTags}
-        onTagFilterChange={setTagFilter}
-        onVisibilityChange={setVisibility}
-      />
+      <div className="flex flex-col gap-4">
+        <SearchBar />
 
-      {filteredLinks.length === 0 ? (
-        <div className="rounded-xl border border-dashed p-8 text-center">
-          <p className="text-lg font-medium">No links match these filters</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Try clearing filters or using a different tag.
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <TagPills tags={availableTags} />
+
+          <div className="flex items-center gap-2 min-w-[150px]">
+            <span className="text-sm font-medium text-muted-foreground">Visibility:</span>
+            <NativeSelect
+              value={visibility}
+              onChange={(e) => handleVisibilityChange(e.target.value)}
+              className="h-9"
+            >
+              <NativeSelectOption value="all">All</NativeSelectOption>
+              <NativeSelectOption value="public">Public</NativeSelectOption>
+              <NativeSelectOption value="private">Private</NativeSelectOption>
+            </NativeSelect>
+          </div>
+        </div>
+      </div>
+
+      {links.length === 0 ? (
+        <div className="rounded-xl border border-dashed p-8 text-center bg-muted/30">
+          <p className="text-lg font-medium">
+            {hasFilters ? "No links match these filters" : "No links yet"}
           </p>
-          <Button
-            type="button"
-            variant="outline"
-            className="mt-4"
-            onClick={() => {
-              setTagFilter("");
-              setVisibility("all");
-            }}
-          >
-            Clear Filters
-          </Button>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {hasFilters
+              ? "Try clearing filters or using different criteria."
+              : "Start by adding your first link to build your dashboard."}
+          </p>
+          {hasFilters ? (
+            <Button
+              type="button"
+              variant="outline"
+              className="mt-4"
+              onClick={handleClearFilters}
+            >
+              Clear All Filters
+            </Button>
+          ) : (
+            <Button asChild className="mt-4">
+              <Link href="/links/new">Add Link</Link>
+            </Button>
+          )}
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {filteredLinks.map((link) => (
-            <LinkCard
-              key={link.id}
-              link={link}
-              onDelete={handleDelete}
-              isDeleting={isPending && deletingId === link.id}
-            />
-          ))}
-        </div>
+        <>
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-muted-foreground">
+              Showing {links.length} {links.length === 1 ? "link" : "links"}
+            </p>
+            {hasFilters && (
+              <button
+                onClick={handleClearFilters}
+                className="text-xs font-medium hover:underline"
+              >
+                Clear all
+              </button>
+            )}
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {links.map((link) => (
+              <LinkCard
+                key={link.id}
+                link={link}
+                onDelete={handleDelete}
+                isDeleting={isPending && deletingId === link.id}
+              />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

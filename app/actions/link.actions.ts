@@ -55,15 +55,53 @@ const getAuthUserId = async () => {
   return session?.user?.id ?? null;
 };
 
-export async function getUserLinks() {
+export type GetUserLinksInput = {
+  search?: string;
+  tags?: string[];
+  visibility?: "all" | "public" | "private";
+};
+
+export async function getUserLinks(filters: GetUserLinksInput = {}) {
   const userId = await getAuthUserId();
 
   if (!userId) {
     return [];
   }
 
+  const { search, tags, visibility } = filters;
+
+  const where: any = {
+    userId,
+  };
+
+  if (search) {
+    where.OR = [
+      { title: { contains: search, mode: "insensitive" } },
+      { description: { contains: search, mode: "insensitive" } },
+      {
+        tags: {
+          some: {
+            name: { contains: search, mode: "insensitive" },
+          },
+        },
+      },
+    ];
+  }
+
+  if (tags && tags.length > 0) {
+    where.tags = {
+      some: {
+        name: { in: tags },
+      },
+    };
+  }
+
+  if (visibility && visibility !== "all") {
+    where.isPublic = visibility === "public";
+  }
+
   return prisma.link.findMany({
-    where: { userId },
+    where,
     include: {
       tags: {
         select: {

@@ -3,8 +3,21 @@ import { getUserLinks } from "@/app/actions/link.actions";
 import DashboardLinksView from "@/components/links/dashboard-links-view";
 import { Button } from "@/components/ui/button";
 
-const DashboardPage = async () => {
-  const links = await getUserLinks();
+type DashboardPageProps = {
+  searchParams: Promise<{
+    search?: string;
+    tag?: string | string[];
+    visibility?: "all" | "public" | "private";
+  }>;
+};
+
+const DashboardPage = async ({ searchParams }: DashboardPageProps) => {
+  const params = await searchParams;
+  const search = params.search;
+  const tags = typeof params.tag === "string" ? [params.tag] : params.tag;
+  const visibility = params.visibility;
+
+  const links = await getUserLinks({ search, tags, visibility });
 
   const serializableLinks = links.map((link) => ({
     id: link.id,
