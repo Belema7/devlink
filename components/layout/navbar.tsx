@@ -31,6 +31,12 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="flex items-center gap-x-6">
+            <Link
+              href="/feed"
+              className="text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+            >
+              Feed
+            </Link>
             {isPending ? (
               <div className="h-9 w-28 bg-zinc-900 animate-pulse rounded-xl" />
             ) : session ? (

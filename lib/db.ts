@@ -26,6 +26,7 @@ void prisma.verification;
 void prisma.link;
 void prisma.tag;
 void prisma.bookmark;
+void prisma.vote;
 
 export default prisma;
 

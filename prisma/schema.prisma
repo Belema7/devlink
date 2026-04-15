@@ -20,17 +20,18 @@ model Post {
 }
 
 model User {
-  id            String    @id
+  id            String     @id
   name          String
   email         String
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean    @default(false)
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
   sessions      Session[]
   accounts      Account[]
   links         Link[]
   bookmarks     Bookmark[]
+  votes         Vote[]
 
   @@unique([email])
   @@map("user")
@@ -94,6 +95,7 @@ model Link {
   user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   tags        Tag[]
   bookmarks   Bookmark[]
+  votes       Vote[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 
@@ -122,5 +124,16 @@ model Bookmark {
   @@map("bookmark")
 }
 
+model Vote {
+  id        String   @id @default(cuid())
+  userId    String
+  linkId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  link      Link     @relation(fields: [linkId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
 
-
+  @@unique([userId, linkId])
+  @@index([linkId])
+  @@index([userId])
+  @@map("vote")
+}
