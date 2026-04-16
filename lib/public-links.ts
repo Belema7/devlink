@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { Prisma } from "@/lib/generated/prisma/client";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/db";
+import { normalizeFeedSearchQuery, normalizeFeedTag, type FeedSort } from "@/lib/feed-filters";
 
 const getAuthUserId = async () => {
   const session = await auth.api.getSession({
@@ -14,11 +15,51 @@ const getAuthUserId = async () => {
 const isVoteTableMissingError = (error: unknown) =>
   error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2021";
 
-export async function getPublicLinks() {
+type GetPublicLinksOptions = {
+  search?: string | null;
+  tag?: string | null;
+  sort?: FeedSort;
+};
+
+export async function getPublicLinks(options: GetPublicLinksOptions = {}) {
   const userId = await getAuthUserId();
+  const search = normalizeFeedSearchQuery(options.search);
+  const tag = normalizeFeedTag(options.tag);
+  const sort = options.sort ?? "all";
+
+  const where: Prisma.LinkWhereInput = {
+    isPublic: true,
+  };
+
+  if (search) {
+    where.OR = [
+      { title: { contains: search, mode: "insensitive" } },
+      {
+        tags: {
+          some: {
+            name: { contains: search, mode: "insensitive" },
+          },
+        },
+      },
+    ];
+  }
+
+  if (tag) {
+    where.tags = {
+      some: {
+        name: tag,
+      },
+    };
+  }
+
+  const orderBy =
+    sort === "trending"
+      ? ([{ votes: { _count: "desc" } }, { createdAt: "desc" }] as Prisma.LinkOrderByWithRelationInput[])
+      : ([{ createdAt: "desc" }] as Prisma.LinkOrderByWithRelationInput[]);
+
   try {
     const links = await prisma.link.findMany({
-      where: { isPublic: true },
+      where,
       include: {
         tags: {
           select: { id: true, name: true },
@@ -36,7 +77,7 @@ export async function getPublicLinks() {
             }
           : false,
       },
-      orderBy: [{ votes: { _count: "desc" } }, { createdAt: "desc" }],
+      orderBy,
     });
 
     return links.map((link) => ({
@@ -55,7 +96,7 @@ export async function getPublicLinks() {
     }
 
     const links = await prisma.link.findMany({
-      where: { isPublic: true },
+      where,
       include: {
         tags: {
           select: { id: true, name: true },
