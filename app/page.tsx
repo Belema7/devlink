@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { getPublicLinks } from "@/lib/public-links";
-import TopNav from "@/components/home/top-nav";
+import Navbar from "@/components/layout/navbar";
 import Hero from "@/components/home/hero";
 import Features from "@/components/home/features";
 import HowItWorks from "@/components/home/how-it-works";
@@ -30,7 +30,7 @@ const Home = async () => {
 
   return (
     <div className="min-h-screen bg-[#f6f1e8] text-zinc-900">
-      <TopNav isSignedIn={isSignedIn} />
+      <Navbar />
 
       <main className="mx-auto max-w-7xl px-4">
         <Hero

@@ -24,7 +24,7 @@ const PublicFeedPage = async () => {
           </p>
         </div>
 
-        <section className="space-y-3">
+        <section id="trending" className="space-y-3">
           <h2 className="text-xl font-semibold text-zinc-100">Trending Resources</h2>
           {trendingLinks.length === 0 ? (
             <Card className="border border-blue-950/70 bg-zinc-900/70">
@@ -44,7 +44,7 @@ const PublicFeedPage = async () => {
           )}
         </section>
 
-        <section className="space-y-3">
+        <section id="resources" className="space-y-3">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-zinc-100">All Public Resources</h2>
             <p className="text-sm text-zinc-400">{links.length} total</p>
