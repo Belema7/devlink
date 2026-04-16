@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signUp, signIn } from "@/lib/auth-client";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, Loader2, UserRoundPlus } from "lucide-react";
 
 import {
   Card,
@@ -13,9 +13,11 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 function GithubIcon() {
   return (
@@ -84,32 +86,42 @@ export default function RegisterPage() {
   };
 
   return (
-    <Card className="w-full max-w-sm">
-      <CardHeader className="text-center pb-2">
-        <CardTitle className="text-xl">Create an account</CardTitle>
-        <CardDescription>Join us and start managing your links</CardDescription>
+    <Card className="w-full max-w-md border-[#3a352f] bg-[#242220] text-[#f6f1e8] shadow-[0_24px_70px_rgba(36,34,32,0.22)]">
+      <CardHeader className="space-y-4 pb-2">
+        <div className="flex items-center justify-between gap-3">
+          <Badge
+            variant="outline"
+            className="border-[#4a433a] bg-[#1d1b19] text-[#f5e27f] hover:bg-[#1d1b19]"
+          >
+            <UserRoundPlus className="mr-1 size-3.5" />
+            Register
+          </Badge>
+          <span className="text-xs uppercase tracking-[0.24em] text-[#a79c88]">DevLinks</span>
+        </div>
+        <div className="space-y-2">
+          <CardTitle className="text-2xl font-semibold tracking-tight text-white">Create your account</CardTitle>
+          <CardDescription className="max-w-sm text-sm leading-6 text-[#a79c88]">
+            Start saving developer resources, organizing them with tags, and sharing your best finds.
+          </CardDescription>
+        </div>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-5 pt-2">
         {error && (
-          <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          <div className="rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-100">
             {error}
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Button
             type="button"
             variant="outline"
             disabled={!!oauthLoading}
             onClick={() => handleOAuth("google")}
-            className="gap-2"
+            className="h-11 gap-2 border-[#3a352f] bg-[#1c1a18] text-[#f6f1e8] hover:bg-[#2b2724] hover:text-white"
           >
-            {oauthLoading === "google" ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <GoogleIcon />
-            )}
+            {oauthLoading === "google" ? <Loader2 className="h-4 w-4 animate-spin" /> : <GoogleIcon />}
             Google
           </Button>
           <Button
@@ -117,83 +129,89 @@ export default function RegisterPage() {
             variant="outline"
             disabled={!!oauthLoading}
             onClick={() => handleOAuth("github")}
-            className="gap-2"
+            className="h-11 gap-2 border-[#3a352f] bg-[#1c1a18] text-[#f6f1e8] hover:bg-[#2b2724] hover:text-white"
           >
-            {oauthLoading === "github" ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <GithubIcon />
-            )}
+            {oauthLoading === "github" ? <Loader2 className="h-4 w-4 animate-spin" /> : <GithubIcon />}
             GitHub
           </Button>
         </div>
 
-        <div className="flex items-center gap-2">
-          <div className="flex-1 border-t border-border" />
-          <span className="text-xs text-muted-foreground">or</span>
-          <div className="flex-1 border-t border-border" />
+        <Separator className="bg-[#3a352f]" />
+
+        <div className="rounded-2xl border border-[#3a352f] bg-[#1b1816] p-4">
+          <form onSubmit={handleEmailSignUp} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="name" className="text-sm font-medium text-[#d7cfbf]">
+                Full name
+              </Label>
+              <Input
+                id="name"
+                type="text"
+                placeholder="Jane Doe"
+                required
+                autoComplete="name"
+                value={form.name}
+                onChange={(e) => updateField("name", e.target.value)}
+                className="h-11 border-[#3a352f] bg-[#141210] text-[#f6f1e8] placeholder:text-[#7f7669] focus-visible:border-[#b48f67] focus-visible:ring-[#b48f67]/20"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-sm font-medium text-[#d7cfbf]">
+                Email
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                required
+                autoComplete="email"
+                value={form.email}
+                onChange={(e) => updateField("email", e.target.value)}
+                className="h-11 border-[#3a352f] bg-[#141210] text-[#f6f1e8] placeholder:text-[#7f7669] focus-visible:border-[#b48f67] focus-visible:ring-[#b48f67]/20"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-sm font-medium text-[#d7cfbf]">
+                Password
+              </Label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  required
+                  autoComplete="new-password"
+                  value={form.password}
+                  onChange={(e) => updateField("password", e.target.value)}
+                  className="h-11 border-[#3a352f] bg-[#141210] pr-10 text-[#f6f1e8] placeholder:text-[#7f7669] focus-visible:border-[#b48f67] focus-visible:ring-[#b48f67]/20"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8f8778] transition-colors hover:text-[#f6f1e8]"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+
+            <Button
+              type="submit"
+              disabled={loading}
+              className="h-11 w-full rounded-xl bg-[#b48f67] text-white shadow-[0_12px_28px_rgba(180,143,103,0.28)] hover:bg-[#a97d55]"
+            >
+              {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <ArrowRight className="mr-2 size-4" />}
+              Create account
+            </Button>
+          </form>
         </div>
 
-        <form onSubmit={handleEmailSignUp} className="space-y-4">
-          <div className="space-y-1.5">
-            <Label htmlFor="name">Full name</Label>
-            <Input
-              id="name"
-              type="text"
-              placeholder="Jane Doe"
-              required
-              autoComplete="name"
-              value={form.name}
-              onChange={(e) => updateField("name", e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="you@example.com"
-              required
-              autoComplete="email"
-              value={form.email}
-              onChange={(e) => updateField("email", e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <Label htmlFor="password">Password</Label>
-            <div className="relative">
-              <Input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="••••••••"
-                required
-                autoComplete="new-password"
-                value={form.password}
-                onChange={(e) => updateField("password", e.target.value)}
-                className="pr-10"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                aria-label={showPassword ? "Hide password" : "Show password"}
-              >
-                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-              </button>
-            </div>
-          </div>
-
-          <Button type="submit" disabled={loading} className="w-full">
-            {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-            Create account
-          </Button>
-        </form>
-
-        <p className="text-center text-sm text-muted-foreground">
+        <p className="text-center text-sm text-[#a79c88]">
           Already have an account?{" "}
-          <Link href="/login" className="font-medium text-foreground hover:underline underline-offset-4">
+          <Link href="/login" className="font-medium text-[#f5e27f] hover:underline underline-offset-4">
             Sign in
           </Link>
         </p>
