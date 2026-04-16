@@ -78,7 +78,9 @@ export default function MobileNav({ navItems }: MobileNavProps) {
             <span className="inline-flex size-8 items-center justify-center rounded-2xl bg-zinc-900 text-blue-400 ring-1 ring-inset ring-zinc-700">
               <Sparkles className="size-4" />
             </span>
-            DevLink
+            <Link href="/" className="inline-block">
+              DevLinks
+            </Link>
           </SheetTitle>
           <SheetDescription className="text-left text-zinc-400">
             Developer tools, resources, and links.
