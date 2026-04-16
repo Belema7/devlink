@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { getUserLinks, getUserTagNames } from "@/app/actions/link.actions";
 import DashboardLinksView from "@/components/links/dashboard-links-view";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { isDashboardVisibility, normalizeSearchQuery, normalizeTagList } from "@/lib/dashboard-filters";
+import { ArrowUpRight, Link2, Lock, Sparkles, Tags } from "lucide-react";
 
 type DashboardPageProps = {
   searchParams: Promise<{
@@ -33,19 +36,133 @@ const DashboardPage = async ({ searchParams }: DashboardPageProps) => {
     createdAt: link.createdAt.toISOString(),
   }));
 
+  const totalLinks = serializableLinks.length;
+  const publicLinks = serializableLinks.filter((link) => link.isPublic).length;
+  const privateLinks = totalLinks - publicLinks;
+  const publicShare = totalLinks > 0 ? Math.round((publicLinks / totalLinks) * 100) : 0;
+  const recentTagCount = availableTags.length;
+  const topTags = availableTags.slice(0, 5);
+
   return (
     <div className="mx-auto max-w-7xl space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-bold text-zinc-100">Dashboard</h1>
-          <p className="text-sm text-zinc-400">
-            Manage your saved links, tags, and visibility in one place.
-          </p>
+      <section className="overflow-hidden rounded-[28px] border border-white/5 bg-[#232530] shadow-[0_24px_60px_rgba(0,0,0,0.24)]">
+        <div className="grid gap-5 p-5 lg:grid-cols-[1.6fr_1fr] lg:p-6">
+          <div className="space-y-5">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#22c6a4]/20 bg-[#22c6a4]/10 px-3 py-1 text-xs font-medium text-[#6fe7cf]">
+                <Sparkles className="size-3.5" />
+                Workspace overview
+              </span>
+              <span className="inline-flex items-center rounded-full border border-white/5 bg-white/5 px-3 py-1 text-xs text-zinc-400">
+                Updated just now
+              </span>
+            </div>
+
+            <div className="max-w-2xl space-y-3">
+              <h1 className="text-3xl font-semibold tracking-tight text-zinc-50 md:text-5xl">
+                Your dashboard, tuned to a darker, calmer rhythm.
+              </h1>
+              <p className="max-w-xl text-sm leading-6 text-zinc-400 md:text-base">
+                Track link volume, visibility, and tag usage from a charcoal control panel with teal accents inspired by the reference layout.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <Button asChild className="bg-[#22c6a4] text-[#07221d] shadow-[0_0_24px_rgba(34,198,164,0.22)] hover:bg-[#2ad0af]">
+                <Link href="/links/new">
+                  Add Link
+                  <ArrowUpRight className="size-4" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="border-white/10 bg-white/5 text-zinc-100 hover:bg-white/10">
+                <Link href="/links">View all links</Link>
+              </Button>
+            </div>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Card className="border-white/5 bg-[#2b2d37] text-zinc-100 shadow-[0_12px_36px_rgba(0,0,0,0.2)]">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+                <CardTitle className="text-sm font-medium text-zinc-300">Total links</CardTitle>
+                <Link2 className="size-4 text-[#22c6a4]" />
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="text-4xl font-semibold tracking-tight text-zinc-50">
+                  {totalLinks.toString().padStart(2, "0")}
+                </div>
+                <div className="flex items-center justify-between text-xs text-zinc-400">
+                  <span>{publicLinks} public</span>
+                  <span>{privateLinks} private</span>
+                </div>
+                <div className="h-2 overflow-hidden rounded-full bg-white/6">
+                  <div className="h-full rounded-full bg-[#22c6a4]" style={{ width: `${publicShare}%` }} />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-white/5 bg-[#2b2d37] text-zinc-100 shadow-[0_12px_36px_rgba(0,0,0,0.2)]">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+                <CardTitle className="text-sm font-medium text-zinc-300">Visibility</CardTitle>
+                <Lock className="size-4 text-[#22c6a4]" />
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-end gap-3">
+                  <div className="text-4xl font-semibold tracking-tight text-zinc-50">{publicShare}%</div>
+                  <Badge className="border border-[#22c6a4]/20 bg-[#22c6a4]/10 text-[#6fe7cf]">
+                    public share
+                  </Badge>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-xs text-zinc-400">
+                    <span>Public</span>
+                    <span>{publicLinks}</span>
+                  </div>
+                  <div className="h-2 overflow-hidden rounded-full bg-white/6">
+                    <div className="h-full rounded-full bg-[#22c6a4]" style={{ width: `${publicShare}%` }} />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-        <Button asChild className="bg-linear-to-r from-blue-600 to-indigo-500 text-white hover:from-blue-500 hover:to-indigo-400">
-          <Link href="/links/new">Add Link</Link>
-        </Button>
-      </div>
+
+        <div className="grid gap-px border-t border-white/5 bg-white/5 lg:grid-cols-3">
+          <div className="bg-[#232530] p-5">
+            <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">Active tags</p>
+            <p className="mt-3 text-2xl font-semibold text-zinc-50">{recentTagCount}</p>
+            <p className="mt-1 text-sm text-zinc-400">Organize your saved links with tags that feel lightweight, not noisy.</p>
+          </div>
+          <div className="bg-[#232530] p-5">
+            <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">Top tags</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {topTags.length > 0 ? (
+                topTags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-white/8 bg-white/5 px-3 py-1 text-sm text-zinc-300"
+                  >
+                    {tag}
+                  </span>
+                ))
+              ) : (
+                <span className="text-sm text-zinc-400">No tags yet.</span>
+              )}
+            </div>
+          </div>
+          <div className="bg-[#232530] p-5">
+            <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">Snapshot</p>
+            <div className="mt-3 flex items-center gap-3">
+              <div className="flex size-12 items-center justify-center rounded-2xl bg-[#22c6a4]/10 text-[#22c6a4] ring-1 ring-inset ring-[#22c6a4]/20">
+                <Tags className="size-5" />
+              </div>
+              <div>
+                <p className="text-lg font-semibold text-zinc-50">{totalLinks} links in total</p>
+                <p className="text-sm text-zinc-400">A compact dashboard surface for quick decisions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <DashboardLinksView initialLinks={serializableLinks} availableTags={availableTags} />
     </div>

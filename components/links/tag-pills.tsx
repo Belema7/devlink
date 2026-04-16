@@ -55,8 +55,8 @@ export default function TagPills({ tags }: TagPillsProps) {
                         className={cn(
                             "cursor-pointer border-transparent transition-all hover:-translate-y-px hover:shadow-sm",
                             isActive
-                                ? "bg-linear-to-r from-blue-600 to-indigo-500 text-white shadow-[0_0_14px_rgba(59,130,246,0.35)]"
-                                : "bg-zinc-900 text-zinc-400 ring-1 ring-blue-950/60 hover:bg-zinc-800 hover:text-zinc-100"
+                                ? "bg-[#22c6a4] text-[#07221d] shadow-[0_0_14px_rgba(34,198,164,0.28)]"
+                                : "bg-[#2d2f3a] text-zinc-400 ring-1 ring-white/8 hover:bg-white/5 hover:text-zinc-100"
                         )}
                     >
                         <button
@@ -79,7 +79,7 @@ export default function TagPills({ tags }: TagPillsProps) {
                             router.push(buildDashboardHref(pathname, params), { scroll: false });
                         });
                     }}
-                    className="text-xs text-zinc-400 hover:text-blue-400 hover:underline transition-colors"
+                    className="text-xs text-zinc-400 transition-colors hover:text-[#6fe7cf] hover:underline"
                 >
                     Clear tags
                 </button>

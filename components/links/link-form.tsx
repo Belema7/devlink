@@ -111,12 +111,12 @@ export default function LinkForm({
   });
 
   return (
-    <Card className="mx-auto w-full max-w-2xl shadow-xl border border-border/60">
+    <Card className="mx-auto w-full max-w-2xl border border-white/5 bg-[#2b2d37] text-zinc-100 shadow-[0_18px_48px_rgba(0,0,0,0.25)]">
       <CardHeader className="pb-6">
         <CardTitle className="flex items-center gap-2 text-2xl">
           {isEditMode ? "Edit Link" : "Add New Link"}
         </CardTitle>
-        <CardDescription className="text-base text-muted-foreground">
+        <CardDescription className="text-base text-zinc-400">
           {isEditMode
             ? "Update your saved link details, tags, and visibility."
             : "Save useful resources and organize them with tags."}
@@ -134,7 +134,7 @@ export default function LinkForm({
               <Input
                 id="title"
                 placeholder="e.g. React docs"
-                className="h-11"
+                className="h-11 border-white/10 bg-[#232530] text-zinc-100 placeholder:text-zinc-500"
                 {...form.register("title")}
               />
               <FieldError errors={[form.formState.errors.title]} />
@@ -149,7 +149,7 @@ export default function LinkForm({
                 id="url"
                 type="url"
                 placeholder="https://example.com"
-                className="h-11"
+                className="h-11 border-white/10 bg-[#232530] text-zinc-100 placeholder:text-zinc-500"
                 {...form.register("url")}
               />
               <FieldError errors={[form.formState.errors.url]} />
@@ -163,7 +163,7 @@ export default function LinkForm({
               <Textarea
                 id="description"
                 placeholder="A short note about why this link matters."
-                className="min-h-[108px] resize-y"
+                className="min-h-[108px] resize-y border-white/10 bg-[#232530] text-zinc-100 placeholder:text-zinc-500"
                 {...form.register("description")}
               />
               <FieldError errors={[form.formState.errors.description]} />
@@ -177,11 +177,11 @@ export default function LinkForm({
               <Input
                 id="tagsInput"
                 placeholder="frontend, react, docs"
-                className="h-11"
+                className="h-11 border-white/10 bg-[#232530] text-zinc-100 placeholder:text-zinc-500"
                 {...form.register("tagsInput")}
               />
-              <p className="mt-1.5 text-xs text-muted-foreground flex items-center gap-1">
-                <span className="inline-block w-2 h-2 bg-blue-500 rounded-full" />
+              <p className="mt-1.5 flex items-center gap-1 text-xs text-zinc-400">
+                <span className="inline-block h-2 w-2 rounded-full bg-[#22c6a4]" />
                 Separate with commas • Tags are automatically lowercased
               </p>
               <FieldError errors={[form.formState.errors.tagsInput]} />
@@ -200,7 +200,7 @@ export default function LinkForm({
                     id="isPublic"
                     value={field.value ? "public" : "private"}
                     onChange={(event) => field.onChange(event.target.value === "public")}
-                    className="h-11"
+                    className="h-11 border-white/10 bg-[#232530] text-zinc-100"
                   >
                     <NativeSelectOption value="private">Private • Only you can see it</NativeSelectOption>
                     <NativeSelectOption value="public">Public • Anyone with the link can view</NativeSelectOption>
@@ -219,7 +219,7 @@ export default function LinkForm({
             </div>
           )}
           {submitSuccess && (
-            <div className="flex items-center gap-2 rounded-xl border border-emerald-300 bg-emerald-50 dark:bg-emerald-950/30 px-4 py-3 text-sm text-emerald-700 dark:text-emerald-400">
+            <div className="flex items-center gap-2 rounded-xl border border-[#22c6a4]/20 bg-[#22c6a4]/10 px-4 py-3 text-sm text-[#6fe7cf]">
               <span className="text-base">✅</span>
               {submitSuccess}
             </div>
@@ -229,7 +229,7 @@ export default function LinkForm({
           <Button
             type="submit"
             disabled={form.formState.isSubmitting}
-            className="w-full h-12 text-base font-semibold shadow-sm"
+            className="h-12 w-full bg-[#22c6a4] text-[#07221d] text-base font-semibold shadow-[0_0_24px_rgba(34,198,164,0.2)] hover:bg-[#2ad0af]"
           >
             {form.formState.isSubmitting ? (
               <>

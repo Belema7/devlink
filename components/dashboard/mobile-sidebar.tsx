@@ -44,9 +44,9 @@ export default function MobileSidebar() {
 
       <SheetContent
         side="left"
-        className="w-[84vw] max-w-xs border-blue-950/70 bg-zinc-950/95 p-0 text-zinc-200 backdrop-blur-xl"
+        className="w-[84vw] max-w-xs border-white/5 bg-[#232530]/95 p-0 text-zinc-200 backdrop-blur-xl"
       >
-        <SheetHeader className="border-b border-blue-950/70 px-4 py-4">
+        <SheetHeader className="border-b border-white/5 px-4 py-4">
           <SheetTitle className="text-zinc-100">Dashboard</SheetTitle>
           <SheetDescription className="text-zinc-400">
             Navigate your workspace.
@@ -61,15 +61,15 @@ export default function MobileSidebar() {
             return (
               <SheetClose asChild key={link.href}>
                 <Link
-                  href={link.href}
-                  className={cn(
-                    "flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-all duration-200",
+                href={link.href}
+                className={cn(
+                    "flex items-center gap-3 rounded-2xl px-3 py-3 text-sm font-medium transition-all duration-200",
                     active
-                      ? "bg-linear-to-r from-blue-600/30 to-indigo-500/10 text-blue-300 ring-1 ring-blue-500/40"
-                      : "text-zinc-300 hover:bg-zinc-900 hover:text-zinc-100"
+                      ? "bg-[#2d2f3a] text-[#66dbc6] ring-1 ring-[#22c6a4]/25"
+                      : "text-zinc-400 hover:bg-white/5 hover:text-zinc-100"
                   )}
                 >
-                  <Icon className="size-4" />
+                  <Icon className={cn("size-4", active && "text-[#22c6a4]")} />
                   <span>{link.label}</span>
                 </Link>
               </SheetClose>

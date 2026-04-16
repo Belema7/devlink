@@ -19,10 +19,13 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden md:fixed md:inset-y-0 md:left-0 md:z-30 md:flex md:w-60 md:flex-col md:border-r md:border-blue-950/70 md:bg-zinc-950/95 md:backdrop-blur">
-      <div className="border-b border-blue-950/70 px-5 py-4">
-        <Link href="/dashboard" className="text-lg font-semibold tracking-tight text-zinc-100">
-          DevLink
+    <aside className="hidden md:flex md:w-64 md:flex-col md:border-r md:border-white/5 md:bg-[#232530]/95 md:backdrop-blur-xl">
+      <div className="border-b border-white/5 px-5 py-5">
+        <Link href="/dashboard" className="flex items-center gap-3 text-lg font-semibold tracking-tight text-zinc-50">
+          <span className="inline-flex size-10 items-center justify-center rounded-2xl bg-[#22c6a4]/15 text-[#22c6a4] ring-1 ring-inset ring-[#22c6a4]/25">
+            <LayoutDashboard className="size-5" />
+          </span>
+          <span>DevLink</span>
         </Link>
       </div>
 
@@ -36,13 +39,13 @@ export default function Sidebar() {
               key={link.href}
               href={link.href}
               className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                "flex items-center gap-3 rounded-2xl px-3 py-3 text-sm font-medium transition-all duration-200",
                 active
-                  ? "bg-linear-to-r from-blue-600/30 to-indigo-500/10 text-blue-300 ring-1 ring-blue-500/40"
-                  : "text-zinc-300 hover:bg-zinc-900 hover:text-zinc-100"
+                  ? "bg-[#2d2f3a] text-[#66dbc6] ring-1 ring-[#22c6a4]/25 shadow-[0_10px_25px_rgba(0,0,0,0.22)]"
+                  : "text-zinc-400 hover:bg-white/5 hover:text-zinc-100"
               )}
             >
-              <Icon className={cn("size-4", active && "text-blue-300")} />
+              <Icon className={cn("size-4", active && "text-[#22c6a4]")} />
               <span>{link.label}</span>
             </Link>
           );

@@ -34,7 +34,7 @@ export default function LinkDetailsActions({ linkId }: LinkDetailsActionsProps) 
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap items-center gap-2">
-        <Button asChild variant="outline">
+        <Button asChild variant="outline" className="border-white/10 bg-white/5 text-zinc-100 hover:bg-white/10">
           <Link href={`/links/edit/${linkId}`}>
             <Pencil className="size-4" />
             Edit

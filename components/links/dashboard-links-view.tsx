@@ -79,7 +79,7 @@ export default function DashboardLinksView({ initialLinks, availableTags }: Dash
   const hasFilters = searchParams.has("search") || searchParams.has("tag") || searchParams.has("visibility");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 rounded-[28px] border border-white/5 bg-[#232530] p-5 shadow-[0_24px_60px_rgba(0,0,0,0.22)] md:p-6">
       {actionMessage ? (
         <p className="text-sm text-zinc-400">{actionMessage}</p>
       ) : null}
@@ -95,7 +95,7 @@ export default function DashboardLinksView({ initialLinks, availableTags }: Dash
             <NativeSelect
               value={visibility}
               onChange={(e) => handleVisibilityChange(e.target.value)}
-              className="h-9 border-blue-950/70 bg-zinc-900/80 text-zinc-100"
+              className="h-9 border-white/10 bg-[#2d2f3a] text-zinc-100"
             >
               <NativeSelectOption value="all">All</NativeSelectOption>
               <NativeSelectOption value="public">Public</NativeSelectOption>
@@ -106,7 +106,7 @@ export default function DashboardLinksView({ initialLinks, availableTags }: Dash
       </div>
 
       {links.length === 0 ? (
-        <div className="rounded-2xl border border-blue-950/70 bg-zinc-900/55 p-8 text-center">
+        <div className="rounded-[24px] border border-white/5 bg-[#2b2d37] p-8 text-center">
           <p className="text-lg font-medium text-zinc-100">
             {hasFilters ? "No links match these filters" : "No links yet"}
           </p>
@@ -119,13 +119,13 @@ export default function DashboardLinksView({ initialLinks, availableTags }: Dash
             <Button
               type="button"
               variant="outline"
-              className="mt-4"
+              className="mt-4 border-white/10 bg-white/5 text-zinc-100 hover:bg-white/10"
               onClick={handleClearFilters}
             >
               Clear All Filters
             </Button>
           ) : (
-            <Button asChild className="mt-4">
+            <Button asChild className="mt-4 bg-[#22c6a4] text-[#07221d] hover:bg-[#2ad0af]">
               <Link href="/links/new">Add Link</Link>
             </Button>
           )}
@@ -139,7 +139,7 @@ export default function DashboardLinksView({ initialLinks, availableTags }: Dash
             {hasFilters && (
               <button
                 onClick={handleClearFilters}
-                className="text-xs font-medium text-zinc-300 hover:text-blue-400 hover:underline"
+                className="text-xs font-medium text-zinc-300 hover:text-[#6fe7cf] hover:underline"
               >
                 Clear all
               </button>
