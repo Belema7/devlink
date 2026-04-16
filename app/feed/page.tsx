@@ -18,20 +18,20 @@ const PublicFeedPage = async () => {
       <Navbar />
       <main className="container mx-auto space-y-8 px-4 py-8">
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">Public Feed</h1>
-          <p className="text-sm text-muted-foreground">
+          <h1 className="text-3xl font-bold tracking-tight text-zinc-100">Public Feed</h1>
+          <p className="text-sm text-zinc-400">
             Discover the most useful resources shared by the DevLink community.
           </p>
         </div>
 
         <section className="space-y-3">
-          <h2 className="text-xl font-semibold">Trending Resources</h2>
+          <h2 className="text-xl font-semibold text-zinc-100">Trending Resources</h2>
           {trendingLinks.length === 0 ? (
-            <Card>
+            <Card className="border border-blue-950/70 bg-zinc-900/70">
               <CardHeader>
-                <CardTitle>No trending resources yet</CardTitle>
+                <CardTitle className="text-zinc-100">No trending resources yet</CardTitle>
               </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">
+              <CardContent className="text-sm text-zinc-400">
                 Public resources will appear here once users begin sharing links.
               </CardContent>
             </Card>
@@ -46,15 +46,15 @@ const PublicFeedPage = async () => {
 
         <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold">All Public Resources</h2>
-            <p className="text-sm text-muted-foreground">{links.length} total</p>
+            <h2 className="text-xl font-semibold text-zinc-100">All Public Resources</h2>
+            <p className="text-sm text-zinc-400">{links.length} total</p>
           </div>
           {links.length === 0 ? (
-            <Card>
+            <Card className="border border-blue-950/70 bg-zinc-900/70">
               <CardHeader>
-                <CardTitle>No public resources yet</CardTitle>
+                <CardTitle className="text-zinc-100">No public resources yet</CardTitle>
               </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">
+              <CardContent className="text-sm text-zinc-400">
                 Share your first public link from the dashboard to seed the feed.
               </CardContent>
             </Card>

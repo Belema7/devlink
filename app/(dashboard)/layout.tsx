@@ -7,7 +7,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await requireUser();
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,#172554_0%,#090d1a_35%,#040711_100%)] text-zinc-100">
       <Sidebar />
       <div className="md:ml-60">
         <DashboardHeader userName={user.name} userImage={user.image} />

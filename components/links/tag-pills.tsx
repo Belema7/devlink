@@ -44,7 +44,7 @@ export default function TagPills({ tags }: TagPillsProps) {
 
     return (
         <div className={cn("flex flex-wrap gap-2", isPending && "opacity-50")}>
-            <p className="mr-2 text-sm font-medium text-muted-foreground">Filter by tag:</p>
+            <p className="mr-2 text-sm font-medium text-zinc-400">Filter by tag:</p>
             {tags.map((tag) => {
                 const isActive = selectedTags.includes(tag);
                 return (
@@ -55,8 +55,8 @@ export default function TagPills({ tags }: TagPillsProps) {
                         className={cn(
                             "cursor-pointer border-transparent transition-all hover:-translate-y-px hover:shadow-sm",
                             isActive
-                                ? "bg-primary text-primary-foreground shadow-sm"
-                                : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
+                                ? "bg-linear-to-r from-blue-600 to-indigo-500 text-white shadow-[0_0_14px_rgba(59,130,246,0.35)]"
+                                : "bg-zinc-900 text-zinc-400 ring-1 ring-blue-950/60 hover:bg-zinc-800 hover:text-zinc-100"
                         )}
                     >
                         <button
@@ -79,7 +79,7 @@ export default function TagPills({ tags }: TagPillsProps) {
                             router.push(buildDashboardHref(pathname, params), { scroll: false });
                         });
                     }}
-                    className="text-xs text-muted-foreground hover:text-primary hover:underline transition-colors"
+                    className="text-xs text-zinc-400 hover:text-blue-400 hover:underline transition-colors"
                 >
                     Clear tags
                 </button>

@@ -60,40 +60,40 @@ export default function PublicLinkCard({ link, allowVoting }: PublicLinkCardProp
   };
 
   return (
-    <Card className="h-full">
+    <Card className="h-full border border-blue-950/70 bg-zinc-900/70 text-zinc-100 shadow-[0_8px_26px_rgba(2,8,23,0.4)] backdrop-blur">
       <CardHeader className="space-y-3">
         <div className="space-y-1">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
             Shared by {link.createdBy}
           </p>
-          <CardTitle className="line-clamp-2 text-xl">{link.title}</CardTitle>
+          <CardTitle className="line-clamp-2 text-xl text-zinc-100">{link.title}</CardTitle>
         </div>
         <Link
           href={`/link/${link.id}`}
-          className="text-sm text-primary hover:underline"
+          className="text-sm text-blue-400 hover:underline"
         >
           Open details
         </Link>
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <p className="line-clamp-3 text-sm text-muted-foreground">
+        <p className="line-clamp-3 text-sm text-zinc-400">
           {link.description?.trim() ? link.description : "No description provided."}
         </p>
         <div className="flex flex-wrap gap-1.5">
           {link.tags.length > 0 ? (
             link.tags.map((tag) => (
-              <Badge key={tag.id} variant="outline">
+              <Badge key={tag.id} variant="outline" className="border-zinc-700 bg-zinc-950 text-zinc-300">
                 {tag.name}
               </Badge>
             ))
           ) : (
-            <span className="text-xs text-muted-foreground">No tags</span>
+            <span className="text-xs text-zinc-500">No tags</span>
           )}
         </div>
       </CardContent>
 
-      <CardFooter className="flex-wrap items-center justify-between gap-2">
+      <CardFooter className="flex-wrap items-center justify-between gap-2 border-zinc-800 bg-zinc-950/70">
         <Button asChild variant="outline" size="sm">
           <Link href={link.url} target="_blank" rel="noreferrer">
             Visit Resource

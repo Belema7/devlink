@@ -35,7 +35,7 @@ export default function MobileSidebar() {
           type="button"
           variant="ghost"
           size="icon-sm"
-          className="md:hidden text-zinc-200 hover:bg-zinc-800 hover:text-white"
+          className="md:hidden text-zinc-200 hover:bg-zinc-900 hover:text-white"
           aria-label="Open dashboard sidebar"
         >
           <Menu className="size-5" />
@@ -44,9 +44,9 @@ export default function MobileSidebar() {
 
       <SheetContent
         side="left"
-        className="w-[84vw] max-w-xs border-zinc-800 bg-zinc-900 p-0 text-zinc-200"
+        className="w-[84vw] max-w-xs border-blue-950/70 bg-zinc-950/95 p-0 text-zinc-200 backdrop-blur-xl"
       >
-        <SheetHeader className="border-b border-zinc-800 px-4 py-4">
+        <SheetHeader className="border-b border-blue-950/70 px-4 py-4">
           <SheetTitle className="text-zinc-100">Dashboard</SheetTitle>
           <SheetDescription className="text-zinc-400">
             Navigate your workspace.
@@ -63,10 +63,10 @@ export default function MobileSidebar() {
                 <Link
                   href={link.href}
                   className={cn(
-                    "flex items-center gap-3 rounded-md px-3 py-3 text-sm font-medium transition-colors",
+                    "flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-all duration-200",
                     active
-                      ? "bg-zinc-800 text-blue-400"
-                      : "text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100"
+                      ? "bg-linear-to-r from-blue-600/30 to-indigo-500/10 text-blue-300 ring-1 ring-blue-500/40"
+                      : "text-zinc-300 hover:bg-zinc-900 hover:text-zinc-100"
                   )}
                 >
                   <Icon className="size-4" />

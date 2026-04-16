@@ -81,7 +81,7 @@ export default function DashboardLinksView({ initialLinks, availableTags }: Dash
   return (
     <div className="space-y-6">
       {actionMessage ? (
-        <p className="text-sm text-muted-foreground">{actionMessage}</p>
+        <p className="text-sm text-zinc-400">{actionMessage}</p>
       ) : null}
 
       <div className="flex flex-col gap-4">
@@ -91,11 +91,11 @@ export default function DashboardLinksView({ initialLinks, availableTags }: Dash
           <TagPills tags={normalizedAvailableTags} />
 
           <div className="flex items-center gap-2 min-w-[150px]">
-            <span className="text-sm font-medium text-muted-foreground">Visibility:</span>
+            <span className="text-sm font-medium text-zinc-400">Visibility:</span>
             <NativeSelect
               value={visibility}
               onChange={(e) => handleVisibilityChange(e.target.value)}
-              className="h-9"
+              className="h-9 border-blue-950/70 bg-zinc-900/80 text-zinc-100"
             >
               <NativeSelectOption value="all">All</NativeSelectOption>
               <NativeSelectOption value="public">Public</NativeSelectOption>
@@ -106,11 +106,11 @@ export default function DashboardLinksView({ initialLinks, availableTags }: Dash
       </div>
 
       {links.length === 0 ? (
-        <div className="rounded-xl border border-dashed p-8 text-center bg-muted/30">
-          <p className="text-lg font-medium">
+        <div className="rounded-2xl border border-blue-950/70 bg-zinc-900/55 p-8 text-center">
+          <p className="text-lg font-medium text-zinc-100">
             {hasFilters ? "No links match these filters" : "No links yet"}
           </p>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-1 text-sm text-zinc-400">
             {hasFilters
               ? "Try clearing filters or using different criteria."
               : "Start by adding your first link to build your dashboard."}
@@ -133,13 +133,13 @@ export default function DashboardLinksView({ initialLinks, availableTags }: Dash
       ) : (
         <>
           <div className="flex items-center justify-between">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-zinc-400">
               Showing {links.length} {links.length === 1 ? "link" : "links"}
             </p>
             {hasFilters && (
               <button
                 onClick={handleClearFilters}
-                className="text-xs font-medium hover:underline"
+                className="text-xs font-medium text-zinc-300 hover:text-blue-400 hover:underline"
               >
                 Clear all
               </button>

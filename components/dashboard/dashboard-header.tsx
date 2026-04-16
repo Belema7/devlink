@@ -30,7 +30,7 @@ export default function DashboardHeader({ userName, userImage }: DashboardHeader
       .slice(0, 2) || "U";
 
   return (
-    <header className="sticky top-0 z-20 border-b border-zinc-800 bg-zinc-900/80 px-4 py-4 backdrop-blur md:px-6">
+    <header className="sticky top-0 z-20 border-b border-blue-950/60 bg-zinc-950/75 px-4 py-4 backdrop-blur-xl md:px-6">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2 md:gap-3">
           <MobileSidebar />
@@ -38,17 +38,17 @@ export default function DashboardHeader({ userName, userImage }: DashboardHeader
         </div>
 
         <div className="flex items-center gap-2 md:gap-3">
-          <Button asChild size="sm" className="bg-blue-600 text-white hover:bg-blue-500">
+          <Button asChild size="sm" className="bg-linear-to-r from-blue-600 to-indigo-500 text-white shadow-[0_0_24px_rgba(59,130,246,0.35)] hover:from-blue-500 hover:to-indigo-400">
             <Link href="/links/new">
               <Plus className="size-4" />
               Add Link
             </Link>
           </Button>
 
-          <Link href="/profile" className="flex items-center gap-2 rounded-md px-1.5 py-1 transition-colors hover:bg-zinc-800">
+          <Link href="/profile" className="flex items-center gap-2 rounded-lg px-1.5 py-1 transition-colors hover:bg-zinc-900">
             <Avatar size="sm">
               <AvatarImage src={userImage ?? undefined} alt={userName} />
-              <AvatarFallback className="bg-zinc-700 text-zinc-100">{initials}</AvatarFallback>
+              <AvatarFallback className="bg-blue-950 text-blue-200">{initials}</AvatarFallback>
             </Avatar>
             <span className="hidden text-sm font-medium text-zinc-300 md:inline">{userName}</span>
           </Link>

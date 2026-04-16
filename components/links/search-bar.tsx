@@ -44,13 +44,13 @@ export default function SearchBar() {
     return (
         <div className="relative w-full">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <Search className="h-4 w-4 text-muted-foreground" />
+                <Search className="h-4 w-4 text-zinc-500" />
             </div>
             <Input
                 type="search"
                 aria-label="Search links by title or tag"
                 placeholder="Search by title or tag..."
-                className="pl-10 pr-24"
+                className="rounded-xl border-blue-950/70 bg-zinc-900/80 pl-10 pr-24 text-zinc-100 placeholder:text-zinc-500 focus-visible:border-blue-600/70"
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
             />

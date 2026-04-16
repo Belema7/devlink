@@ -34,15 +34,15 @@ const DashboardPage = async ({ searchParams }: DashboardPageProps) => {
   }));
 
   return (
-    <div className="container mx-auto space-y-6 px-4 py-8">
+    <div className="mx-auto max-w-7xl space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold">Dashboard</h1>
-          <p className="text-sm text-muted-foreground">
+          <h1 className="text-2xl font-bold text-zinc-100">Dashboard</h1>
+          <p className="text-sm text-zinc-400">
             Manage your saved links, tags, and visibility in one place.
           </p>
         </div>
-        <Button asChild>
+        <Button asChild className="bg-linear-to-r from-blue-600 to-indigo-500 text-white hover:from-blue-500 hover:to-indigo-400">
           <Link href="/links/new">Add Link</Link>
         </Button>
       </div>
