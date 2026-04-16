@@ -37,7 +37,7 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { href: "/#features", label: "Features" },
   { href: "/#how-it-works", label: "How It Works" },
-  { href: "/feed#resources", label: "Resources" },
+  { href: "/feed", label: "Resources" },
   { href: "/feed#trending", label: "Trending" },
 ];
 
