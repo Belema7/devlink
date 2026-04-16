@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowRight, GitBranch, LockKeyhole, Search, ShieldCheck, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const highlights = [
   {
@@ -57,7 +58,7 @@ export default function AuthLayout({ children }: Readonly<{ children: ReactNode 
         </header>
 
         <main className="grid flex-1 items-center gap-6 py-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8 lg:py-10">
-          <section className="relative overflow-hidden rounded-[2rem] border border-[#d8d0bc] bg-[#242220] p-6 text-white shadow-[0_24px_70px_rgba(36,34,32,0.16)] sm:p-8 lg:min-h-[680px] lg:p-10">
+          <section className="hidden md:block relative overflow-hidden rounded-[2rem] border border-[#d8d0bc] bg-[#242220] p-6 text-white shadow-[0_24px_70px_rgba(36,34,32,0.16)] sm:p-8 lg:min-h-[680px] lg:p-10">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,226,127,0.12),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(180,143,103,0.16),transparent_40%)]" />
             <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.02),transparent_35%,rgba(255,255,255,0.03))]" />
 
@@ -99,6 +100,11 @@ export default function AuthLayout({ children }: Readonly<{ children: ReactNode 
               </div>
             </div>
           </section>
+          <div className="flex items-center gap-4 md:hidden">
+            <Button variant="outline" asChild>
+              <Link href="/">Back to Home</Link>
+            </Button>
+          </div>
 
           <section className="flex items-center justify-center lg:justify-end">{children}</section>
         </main>
