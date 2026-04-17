@@ -64,7 +64,7 @@ export default function Hero({ isSignedIn, publicCount, tagCount, topVoteCount }
           </div>
         </div>
 
-        <div className="grid gap-4">
+        <div className="hidden gap-4 md:grid-cols-1 lg:grid-cols-1">
           <Card className="overflow-hidden border border-white/8 bg-[#2b2926] text-white shadow-[0_22px_60px_rgba(0,0,0,0.22)]">
             <CardContent className="space-y-5 p-6">
               <div className="flex items-center justify-between">

@@ -21,7 +21,7 @@ export default function Sidebar() {
   return (
     <aside className="hidden md:flex md:w-64 md:flex-col md:border-r md:border-white/5 md:bg-[#232530]/95 md:backdrop-blur-xl">
       <div className="border-b border-white/5 px-5 py-5">
-        <Link href="/dashboard" className="flex items-center gap-3 text-lg font-semibold tracking-tight text-zinc-50">
+        <Link href="/" className="flex items-center gap-3 text-lg font-semibold tracking-tight text-zinc-50">
           <span className="inline-flex size-10 items-center justify-center rounded-2xl bg-[#22c6a4]/15 text-[#22c6a4] ring-1 ring-inset ring-[#22c6a4]/25">
             <LayoutDashboard className="size-5" />
           </span>
