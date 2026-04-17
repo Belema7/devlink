@@ -29,7 +29,7 @@ export default function FeedTabs({ activeTab }: FeedTabsProps) {
   ];
 
   return (
-    <div className="inline-flex rounded-full border border-[#3a352f] bg-white/5 p-1">
+    <div className="inline-flex rounded-full border border-[#d8d0bc] bg-white p-1 shadow-sm">
       {tabs.map((tab) => {
         const active = activeTab === tab.key;
 
@@ -43,7 +43,7 @@ export default function FeedTabs({ activeTab }: FeedTabsProps) {
               "rounded-full px-4 py-2 text-sm font-medium transition-all duration-200",
               active
                 ? "bg-[#f5e27f] text-[#201c13] shadow-[0_10px_24px_rgba(245,226,127,0.18)]"
-                : "text-zinc-300 hover:bg-white/5 hover:text-white"
+                : "text-zinc-600 hover:bg-[#f6f1e6] hover:text-[#1f1c17]"
             )}
           >
             {tab.label}

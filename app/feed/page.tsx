@@ -38,48 +38,48 @@ const PublicFeedPage = async ({ searchParams }: FeedPageProps) => {
     <>
       <Navbar />
       <main className="mx-auto max-w-7xl px-4 py-10">
-        <section className="overflow-hidden rounded-[32px] border border-[#d8d0bc] bg-white text-black shadow-[0_28px_80px_rgba(0,0,0,0.22)]">
+        <section className="overflow-hidden rounded-[32px] border border-[#e6deca] bg-[#fbf8f1] text-[#1f1c17] shadow-[0_22px_60px_rgba(31,28,23,0.08)]">
           <div className="grid gap-6 px-6 py-8 md:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
             <div className="space-y-4">
-              <span className="inline-flex items-center rounded-full border border-[#f5e27f]/20 bg-[#f5e27f]/10 px-3 py-1 text-xs font-medium text-[#f9f0b6]">
+              <span className="inline-flex items-center rounded-full border border-[#d8c98a] bg-[#f5e27f]/20 px-3 py-1 text-xs font-medium text-[#6c5a12]">
                 Public resources
               </span>
               <div className="space-y-3">
-                <h1 className="text-3xl font-semibold tracking-tight text-white md:text-5xl">
+                <h1 className="text-3xl font-semibold tracking-tight text-[#16130f] md:text-5xl">
                   Discover the best developer resources shared by the community.
                 </h1>
-                <p className="max-w-2xl text-sm leading-7 text-zinc-300 md:text-base">
+                <p className="max-w-2xl text-sm leading-7 text-zinc-600 md:text-base">
                   Search by title or tag, switch between newest and trending links, and jump into anything that looks useful.
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-3">
                 <FeedTabs activeTab={sort === "trending" ? "trending" : "all"} />
                 {hasFilters ? (
-                  <Button asChild variant="outline" className="rounded-full border-white/10 bg-white/5 text-white hover:bg-white/10">
+                  <Button asChild variant="outline" className="rounded-full border-[#d8d0bc] bg-white text-[#2a251c] hover:bg-[#f6f1e6]">
                     <Link href="/feed">Clear filters</Link>
                   </Button>
                 ) : null}
               </div>
             </div>
 
-            <div className="space-y-4 rounded-[28px] border border-white/10 bg-[#1f1d1a] p-5">
+            <div className="space-y-4 rounded-[28px] border border-[#e1d7c3] bg-white p-5 shadow-[0_14px_32px_rgba(31,28,23,0.04)]">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-zinc-400">Results</p>
-                  <p className="mt-1 text-2xl font-semibold text-white">{currentResultLabel}</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">Results</p>
+                  <p className="mt-1 text-2xl font-semibold text-[#16130f]">{currentResultLabel}</p>
                 </div>
-                <div className="rounded-full border border-[#f5e27f]/20 bg-[#f5e27f]/10 px-3 py-1 text-xs text-[#f9f0b6]">
+                <div className="rounded-full border border-[#d8c98a] bg-[#f5e27f]/20 px-3 py-1 text-xs text-[#6c5a12]">
                   {sort === "trending" ? "Trending" : "All"}
                 </div>
               </div>
 
               <FeedSearch />
 
-              <div className="flex flex-wrap gap-2 text-xs text-zinc-400">
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1">
+              <div className="flex flex-wrap gap-2 text-xs text-zinc-500">
+                <span className="rounded-full border border-[#e1d7c3] bg-[#fbf8f1] px-3 py-1">
                   Search title and tags
                 </span>
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1">
+                <span className="rounded-full border border-[#e1d7c3] bg-[#fbf8f1] px-3 py-1">
                   Click a tag to filter
                 </span>
               </div>
