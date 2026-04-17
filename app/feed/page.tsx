@@ -38,7 +38,7 @@ const PublicFeedPage = async ({ searchParams }: FeedPageProps) => {
     <>
       <Navbar />
       <main className="mx-auto max-w-7xl px-4 py-10">
-        <section className="overflow-hidden rounded-[32px] border border-[#d8d0bc] bg-[#242220] text-white shadow-[0_28px_80px_rgba(0,0,0,0.22)]">
+        <section className="overflow-hidden rounded-[32px] border border-[#d8d0bc] bg-white text-black shadow-[0_28px_80px_rgba(0,0,0,0.22)]">
           <div className="grid gap-6 px-6 py-8 md:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
             <div className="space-y-4">
               <span className="inline-flex items-center rounded-full border border-[#f5e27f]/20 bg-[#f5e27f]/10 px-3 py-1 text-xs font-medium text-[#f9f0b6]">
