@@ -1,7 +1,6 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -36,37 +35,10 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/feed", label: "Your Feeds" },
-  { href: "/feed#trending", label: "Trending" },
+  { href: "/trending", label: "Trending" },
 ];
 
-const isHashLink = (href: string) => href.includes("#");
-
-const getHrefBase = (href: string) => href.split("#")[0] || href;
-
-const getHrefHash = (href: string) => href.split("#")[1] || "";
-
-const isActiveRoute = (pathname: string, activeHash: string, href: string) => {
-  if (!isHashLink(href)) {
-    return pathname === href || pathname.startsWith(`${href}/`);
-  }
-
-  const base = getHrefBase(href);
-  const hash = getHrefHash(href);
-
-  if (pathname !== base && !(base === "/" && pathname === "/")) {
-    return false;
-  }
-
-  if (!activeHash) {
-    if (pathname === "/" && base === "/" && hash === "features") {
-      return true;
-    }
-
-    return base === "/feed" && hash === "resources";
-  }
-
-  return activeHash === hash;
-};
+const isActiveRoute = (pathname: string, href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
 const getInitials = (name?: string | null) =>
   name
@@ -80,16 +52,6 @@ export default function Navbar() {
   const { data: session, isPending } = useSession();
   const pathname = usePathname();
   const router = useRouter();
-  const [activeHash, setActiveHash] = useState("");
-
-  useEffect(() => {
-    const syncHash = () => setActiveHash(window.location.hash.replace("#", ""));
-
-    syncHash();
-    window.addEventListener("hashchange", syncHash);
-
-    return () => window.removeEventListener("hashchange", syncHash);
-  }, [pathname]);
 
   const handleLogout = async () => {
     await signOut({
@@ -114,7 +76,7 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-2 lg:flex">
           {navItems.map((item) => {
-            const active = isActiveRoute(pathname, activeHash, item.href);
+            const active = isActiveRoute(pathname, item.href);
 
             return (
               <Link
@@ -228,7 +190,7 @@ export default function Navbar() {
               <div className="flex h-full flex-col gap-4 px-5 py-6">
                 <nav className="flex flex-col gap-2">
                   {navItems.map((item) => {
-                    const active = isActiveRoute(pathname, activeHash, item.href);
+                    const active = isActiveRoute(pathname, item.href);
 
                     return (
                       <SheetClose asChild key={item.href}>

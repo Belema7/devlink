@@ -121,6 +121,61 @@ export async function getPublicLinks(options: GetPublicLinksOptions = {}) {
   }
 }
 
+export async function getTrendingLinks() {
+  const userId = await getAuthUserId();
+
+  try {
+    const links = await prisma.link.findMany({
+      where: {
+        isPublic: true,
+        votes: {
+          some: {},
+        },
+      },
+      include: {
+        tags: {
+          select: { id: true, name: true },
+        },
+        user: {
+          select: { id: true, name: true },
+        },
+        _count: {
+          select: { votes: true },
+        },
+        votes: userId
+          ? {
+              where: { userId },
+              select: { id: true },
+            }
+          : false,
+      },
+      orderBy: {
+        votes: {
+          _count: "desc",
+        },
+      },
+      take: 10,
+    });
+
+    return links.map((link) => ({
+      id: link.id,
+      title: link.title,
+      url: link.url,
+      description: link.description,
+      tags: link.tags,
+      createdBy: link.user.name,
+      voteCount: link._count.votes,
+      hasVoted: userId ? link.votes.length > 0 : false,
+    }));
+  } catch (error) {
+    if (!isVoteTableMissingError(error)) {
+      throw error;
+    }
+
+    return [];
+  }
+}
+
 export async function getPublicLinkById(linkId: string) {
   const userId = await getAuthUserId();
   try {

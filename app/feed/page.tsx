@@ -2,19 +2,17 @@ import Link from "next/link";
 import { headers } from "next/headers";
 import Navbar from "@/components/layout/navbar";
 import PublicLinkCard from "@/components/PublicLinkCard";
-import FeedTabs from "@/components/feed/feed-tabs";
 import FeedSearch from "@/components/feed/feed-search";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPublicLinks } from "@/lib/public-links";
 import { auth } from "@/lib/auth";
-import { isFeedSort, normalizeFeedSearchQuery, normalizeFeedTag } from "@/lib/feed-filters";
+import { normalizeFeedSearchQuery, normalizeFeedTag } from "@/lib/feed-filters";
 
 type FeedPageProps = {
   searchParams: Promise<{
     search?: string;
     tag?: string;
-    sort?: string;
   }>;
 };
 
@@ -22,16 +20,14 @@ const PublicFeedPage = async ({ searchParams }: FeedPageProps) => {
   const params = await searchParams;
   const search = normalizeFeedSearchQuery(params.search);
   const tag = normalizeFeedTag(params.tag);
-  const sort = isFeedSort(params.sort) ? params.sort : "all";
 
   const [links, session] = await Promise.all([
-    getPublicLinks({ search, tag, sort }),
+    getPublicLinks({ search, tag }),
     auth.api.getSession({ headers: await headers() }),
   ]);
 
   const allowVoting = Boolean(session?.user);
-  const trendingLinks = [...links].sort((a, b) => b.voteCount - a.voteCount).slice(0, 6);
-  const hasFilters = Boolean(search || tag || sort === "trending");
+  const hasFilters = Boolean(search || tag);
   const currentResultLabel = `${links.length} ${links.length === 1 ? "resource" : "resources"}`;
 
   return (
@@ -49,11 +45,10 @@ const PublicFeedPage = async ({ searchParams }: FeedPageProps) => {
                   Discover the best developer resources shared by the community.
                 </h1>
                 <p className="max-w-2xl text-sm leading-7 text-zinc-600 md:text-base">
-                  Search by title or tag, switch between newest and trending links, and jump into anything that looks useful.
+                  Search by title or tag and jump into anything that looks useful.
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-3">
-                <FeedTabs activeTab={sort === "trending" ? "trending" : "all"} />
                 {hasFilters ? (
                   <Button asChild variant="outline" className="rounded-full border-[#d8d0bc] bg-white text-[#2a251c] hover:bg-[#f6f1e6]">
                     <Link href="/feed">Clear filters</Link>
@@ -69,7 +64,7 @@ const PublicFeedPage = async ({ searchParams }: FeedPageProps) => {
                   <p className="mt-1 text-2xl font-semibold text-[#16130f]">{currentResultLabel}</p>
                 </div>
                 <div className="rounded-full border border-[#d8c98a] bg-[#f5e27f]/20 px-3 py-1 text-xs text-[#6c5a12]">
-                  {sort === "trending" ? "Trending" : "All"}
+                  All
                 </div>
               </div>
 
@@ -85,35 +80,6 @@ const PublicFeedPage = async ({ searchParams }: FeedPageProps) => {
               </div>
             </div>
           </div>
-        </section>
-
-        <section id="trending" className="mt-10 space-y-4">
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <h2 className="text-xl font-semibold text-zinc-900">Trending Resources</h2>
-              <p className="text-sm text-zinc-600">Top voted public links across the feed.</p>
-            </div>
-            <span className="rounded-full border border-[#d8d0bc] bg-[#f9f5ec] px-3 py-1 text-sm text-zinc-700">
-              Top 6
-            </span>
-          </div>
-
-          {trendingLinks.length === 0 ? (
-            <Card className="border border-[#d8d0bc] bg-[#f9f5ec] shadow-[0_14px_34px_rgba(30,27,22,0.05)]">
-              <CardHeader>
-                <CardTitle className="text-zinc-900">No trending resources yet</CardTitle>
-              </CardHeader>
-              <CardContent className="text-sm text-zinc-600">
-                Public resources will appear here once users begin sharing links.
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {trendingLinks.map((link) => (
-                <PublicLinkCard key={`trending-${link.id}`} link={link} allowVoting={allowVoting} />
-              ))}
-            </div>
-          )}
         </section>
 
         <section id="resources" className="mt-10 space-y-4">
