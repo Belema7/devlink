@@ -65,16 +65,16 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
-        <Link href="/" className="flex items-center gap-3 text-zinc-100 transition-opacity hover:opacity-90">
-          <span className="inline-flex size-10 items-center justify-center rounded-2xl bg-teal-500/15 text-teal-400 shadow-sm ring-1 ring-inset ring-teal-500/25">
-            <Sparkles className="size-5" />
+    <nav className="border-b border-zinc-800 bg-zinc-950">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
+        <Link href="/" className="flex items-center gap-3 text-zinc-100">
+          <span className="inline-flex size-9 items-center justify-center rounded-full border border-zinc-700 text-zinc-100">
+            <Sparkles className="size-4" />
           </span>
-          <span className="text-lg font-semibold tracking-tight">DevLinks</span>
+          <span className="text-base font-semibold tracking-tight">DevLinks</span>
         </Link>
 
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden items-center gap-8 lg:flex">
           {navItems.map((item) => {
             const active = isActiveRoute(pathname, item.href);
 
@@ -84,10 +84,10 @@ export default function Navbar() {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-all duration-200",
+                  "text-sm font-medium transition-colors",
                   active
-                    ? "bg-zinc-900 text-teal-400 shadow-[0_10px_22px_rgba(0,0,0,0.16)]"
-                    : "text-zinc-400 hover:bg-zinc-900 hover:text-zinc-100"
+                    ? "text-zinc-100"
+                    : "text-zinc-500 hover:text-zinc-100"
                 )}
               >
                 {item.label}
@@ -98,11 +98,11 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-2 md:flex">
           {isPending ? (
-            <div className="h-10 w-40 animate-pulse rounded-full bg-zinc-900" />
+            <div className="h-9 w-32 animate-pulse rounded-full bg-zinc-900" />
           ) : session ? (
             <>
-              <ButtonLink href="/dashboard" className="rounded-full bg-teal-500 text-zinc-950 hover:bg-teal-400">
-                Add a Link
+              <ButtonLink href="/dashboard" className="rounded-full border border-zinc-700 bg-zinc-100 text-zinc-950 hover:bg-zinc-200">
+                Dashboard
                 <Rocket className="size-4" />
               </ButtonLink>
 
@@ -110,22 +110,19 @@ export default function Navbar() {
                 <DropdownMenuTrigger asChild>
                   <button
                     type="button"
-                    className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900 px-2.5 py-2 text-sm font-medium text-zinc-200 transition-all hover:border-zinc-700 hover:bg-zinc-800"
+                    className="inline-flex items-center gap-2 rounded-full border border-zinc-800 px-2.5 py-2 text-sm font-medium text-zinc-200 transition-colors hover:border-zinc-700 hover:bg-zinc-900"
                     aria-label="Open account menu"
                   >
                     <Avatar className="size-8">
                       <AvatarImage src={session.user.image ?? undefined} alt={session.user.name} />
-                      <AvatarFallback className="bg-zinc-900 text-xs font-medium text-teal-400">
+                      <AvatarFallback className="bg-zinc-900 text-xs font-medium text-zinc-300">
                         {getInitials(session.user.name)}
                       </AvatarFallback>
                     </Avatar>
-                    <ChevronDown className="size-4 text-zinc-400" />
+                    <ChevronDown className="size-4 text-zinc-500" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="end"
-                  className="w-56 border-zinc-800 bg-zinc-900 text-zinc-100 shadow-[0_18px_40px_rgba(0,0,0,0.22)]"
-                >
+                <DropdownMenuContent align="end" className="w-56 border-zinc-800 bg-zinc-950 text-zinc-100">
                   <DropdownMenuItem className="cursor-pointer" onSelect={() => router.push("/profile")}>
                     <UserRound className="mr-2 size-4" />
                     Profile
@@ -150,13 +147,13 @@ export default function Navbar() {
               <ButtonLink
                 href="/login"
                 variant="ghost"
-                className="rounded-full text-zinc-400 hover:bg-zinc-900 hover:text-zinc-100"
+                className="rounded-full text-zinc-500 hover:bg-zinc-900 hover:text-zinc-100"
               >
                 Login
               </ButtonLink>
               <ButtonLink
                 href="/register"
-                className="rounded-full bg-teal-500 text-zinc-950 shadow-[0_12px_28px_rgba(20,184,166,0.22)] hover:bg-teal-400"
+                className="rounded-full border border-zinc-700 bg-zinc-100 text-zinc-950 hover:bg-zinc-200"
               >
                 Register
                 <ArrowRight className="size-4" />
@@ -170,7 +167,7 @@ export default function Navbar() {
             <SheetTrigger asChild>
               <button
                 type="button"
-                className="inline-flex size-11 items-center justify-center rounded-full border border-zinc-800 bg-zinc-900 text-zinc-200 transition-all hover:border-zinc-700 hover:bg-zinc-800"
+                className="inline-flex size-10 items-center justify-center rounded-full border border-zinc-800 text-zinc-200 transition-colors hover:bg-zinc-900"
                 aria-label="Open navigation menu"
               >
                 <Menu className="size-5" />
@@ -180,7 +177,7 @@ export default function Navbar() {
             <SheetContent side="right" className="border-zinc-800 bg-zinc-950 text-zinc-100">
               <SheetHeader className="border-b border-zinc-800 px-5 py-5">
                 <SheetTitle className="flex items-center gap-3 text-left text-xl font-semibold tracking-tight">
-                  <span className="inline-flex size-9 items-center justify-center rounded-2xl bg-teal-500/15 text-teal-400">
+                  <span className="inline-flex size-9 items-center justify-center rounded-full border border-zinc-700 text-zinc-100">
                     <Sparkles className="size-4" />
                   </span>
                   DevLinks
@@ -198,10 +195,10 @@ export default function Navbar() {
                           href={item.href}
                           aria-current={active ? "page" : undefined}
                           className={cn(
-                            "rounded-2xl px-4 py-4 text-sm font-medium transition-all duration-200",
+                            "rounded-2xl px-4 py-4 text-sm font-medium transition-colors",
                             active
-                              ? "bg-zinc-900 text-teal-400"
-                              : "bg-zinc-900/60 text-zinc-300 hover:bg-zinc-900 hover:text-zinc-100"
+                              ? "bg-zinc-900 text-zinc-100"
+                              : "bg-zinc-950 text-zinc-400 hover:bg-zinc-900 hover:text-zinc-100"
                           )}
                         >
                           {item.label}
@@ -222,7 +219,7 @@ export default function Navbar() {
                       <div className="flex items-center gap-3">
                         <Avatar className="size-11">
                           <AvatarImage src={session.user.image ?? undefined} alt={session.user.name} />
-                          <AvatarFallback className="bg-zinc-900 text-teal-400">
+                          <AvatarFallback className="bg-zinc-900 text-zinc-300">
                             {getInitials(session.user.name)}
                           </AvatarFallback>
                         </Avatar>
@@ -234,9 +231,12 @@ export default function Navbar() {
 
                       <div className="grid gap-2">
                         <SheetClose asChild>
-                          <ButtonLink href="/dashboard" className="w-full justify-start rounded-2xl bg-teal-500 text-zinc-950 hover:bg-teal-400">
+                          <ButtonLink
+                            href="/dashboard"
+                            className="w-full justify-start rounded-2xl border border-zinc-700 bg-zinc-100 text-zinc-950 hover:bg-zinc-200"
+                          >
                             <LayoutDashboard className="size-4" />
-                            Add a Link
+                            Dashboard
                           </ButtonLink>
                         </SheetClose>
                         <SheetClose asChild>
@@ -245,7 +245,7 @@ export default function Navbar() {
                             onClick={handleLogout}
                             className={cn(
                               buttonVariants({ variant: "outline", size: "sm" }),
-                              "h-11 w-full justify-start rounded-2xl border-zinc-800 bg-zinc-950/60 text-zinc-100 hover:bg-zinc-900"
+                              "h-11 w-full justify-start rounded-2xl border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900"
                             )}
                           >
                             <LogOut className="size-4" />
@@ -260,7 +260,7 @@ export default function Navbar() {
                         <ButtonLink
                           href="/login"
                           variant="ghost"
-                          className="w-full justify-start rounded-2xl text-zinc-300 hover:bg-zinc-900 hover:text-zinc-100"
+                          className="w-full justify-start rounded-2xl text-zinc-400 hover:bg-zinc-900 hover:text-zinc-100"
                         >
                           Login
                         </ButtonLink>
@@ -268,7 +268,7 @@ export default function Navbar() {
                       <SheetClose asChild>
                         <ButtonLink
                           href="/register"
-                          className="w-full justify-start rounded-2xl bg-teal-500 text-zinc-950 hover:bg-teal-400"
+                          className="w-full justify-start rounded-2xl border border-zinc-700 bg-zinc-100 text-zinc-950 hover:bg-zinc-200"
                         >
                           Register
                           <ArrowRight className="size-4" />
