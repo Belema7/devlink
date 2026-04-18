@@ -34,7 +34,7 @@ export default async function PublicFeedPage({ searchParams }: FeedPageProps) {
     <>
       <Navbar />
 
-      <main className="mx-auto w-full max-w-6xl px-6 py-14">
+      <main className="mx-auto w-full max-w-6xl px-6 py-14 text-zinc-100">
         <section className="max-w-3xl">
           <p className="text-sm font-medium uppercase tracking-[0.28em] text-zinc-500">Public feed</p>
           <h1 className="mt-5 text-4xl font-semibold tracking-tight text-zinc-100 sm:text-5xl">
@@ -46,7 +46,7 @@ export default async function PublicFeedPage({ searchParams }: FeedPageProps) {
         </section>
 
         <section className="mt-12 space-y-6">
-          <div className="rounded-3xl border border-zinc-800 px-6 py-6">
+          <div className="rounded-3xl border border-zinc-800 bg-zinc-900/40 px-6 py-6">
             <div className="flex flex-col gap-4 border-b border-zinc-800 pb-5 lg:flex-row lg:items-end lg:justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.24em] text-zinc-500">Search</p>
@@ -72,7 +72,7 @@ export default async function PublicFeedPage({ searchParams }: FeedPageProps) {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-zinc-800 px-6 py-6">
+          <div className="rounded-3xl border border-zinc-800 bg-zinc-900/40 px-6 py-6">
             <div className="flex items-end justify-between gap-3 border-b border-zinc-800 pb-4">
               <div>
                 <h2 className="text-lg font-semibold text-zinc-100">All public resources</h2>
