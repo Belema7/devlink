@@ -34,7 +34,7 @@ const TrendingPage = async () => {
               </span>
               <div className="space-y-3">
                 <h1 className="text-3xl font-semibold tracking-tight text-[#16130f] md:text-5xl">
-                  🔥 Trending Resources
+                  Trending Resources
                 </h1>
                 <p className="max-w-2xl text-sm leading-7 text-zinc-600 md:text-base">
                   Top voted developer resources from the community, ranked by public votes and limited to the strongest 10.
