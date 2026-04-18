@@ -42,6 +42,11 @@ export default function DashboardHeader({ userName, userImage }: DashboardHeader
           </div>
         </div>
 
+        {/* public feed */}
+        <Button asChild size="sm" variant="outline" className="border-zinc-800 text-zinc-100 hover:bg-zinc-900">
+          <Link href="/feed">Public feed</Link>
+        </Button>
+
         <div className="flex items-center gap-2 md:gap-3">
           <Button asChild size="sm" className="border border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900">
             <Link href="/links/new">

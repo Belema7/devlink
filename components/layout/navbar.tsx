@@ -102,7 +102,7 @@ export default function Navbar() {
           ) : session ? (
             <>
               <ButtonLink href="/dashboard" className="rounded-full border border-zinc-700 bg-zinc-100 text-zinc-950 hover:bg-zinc-200">
-                Dashboard
+                Add resource
                 <Rocket className="size-4" />
               </ButtonLink>
 
@@ -236,7 +236,7 @@ export default function Navbar() {
                             className="w-full justify-start rounded-2xl border border-zinc-700 bg-zinc-100 text-zinc-950 hover:bg-zinc-200"
                           >
                             <LayoutDashboard className="size-4" />
-                            Dashboard
+                            Add resource
                           </ButtonLink>
                         </SheetClose>
                         <SheetClose asChild>
