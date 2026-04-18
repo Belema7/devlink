@@ -24,7 +24,7 @@ export default async function TrendingPage() {
     <>
       <Navbar />
 
-      <main className="mx-auto w-full max-w-6xl px-6 py-14 bg-zinc-950 text-zinc-100">
+      <main className="mx-auto w-full px-6 py-14 bg-zinc-950 text-zinc-100">
         <section className="max-w-3xl">
           <p className="text-sm font-medium uppercase tracking-[0.28em] text-zinc-500">Trending</p>
           <h1 className="mt-5 text-4xl font-semibold tracking-tight text-zinc-100 sm:text-5xl">
