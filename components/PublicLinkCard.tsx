@@ -38,9 +38,7 @@ export default function PublicLinkCard({ link, allowVoting }: PublicLinkCardProp
   const selectedTag = normalizeFeedTag(searchParams.get("tag"));
 
   const handleVoteToggle = () => {
-    if (!allowVoting || isPending) {
-      return;
-    }
+    if (!allowVoting || isPending) return;
 
     const previousVoteCount = voteCount;
     const previousHasVoted = hasVoted;
@@ -77,27 +75,23 @@ export default function PublicLinkCard({ link, allowVoting }: PublicLinkCardProp
       params.set("tag", normalizedTag);
     }
 
-    const destination =
-      pathname === "/feed" ? buildFeedHref(pathname, params) : buildFeedHref("/feed", params);
-
+    const destination = pathname === "/feed" ? buildFeedHref(pathname, params) : buildFeedHref("/feed", params);
     router.push(destination, { scroll: false });
   };
 
   return (
-    <Card className="group h-full border border-zinc-800 bg-zinc-900/80 text-zinc-100 shadow-[0_16px_40px_rgba(0,0,0,0.18)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(0,0,0,0.22)]">
+    <Card className="h-full border-zinc-800 bg-zinc-950 text-zinc-100">
       <CardHeader className="space-y-4">
         <div className="flex items-start justify-between gap-3">
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-400">
-              Shared by {link.createdBy}
-            </p>
-            <CardTitle className="line-clamp-2 text-xl text-white">{link.title}</CardTitle>
+            <p className="text-xs font-medium uppercase tracking-[0.18em] text-zinc-500">Shared by {link.createdBy}</p>
+            <CardTitle className="line-clamp-2 text-lg font-semibold text-zinc-100">{link.title}</CardTitle>
           </div>
-          <Badge className="rounded-full border border-zinc-800 bg-zinc-950/60 px-3 py-1 text-xs font-medium text-zinc-200">
-            {voteCount} votes
+          <Badge className="rounded-full border border-zinc-800 bg-zinc-950 px-3 py-1 text-xs font-medium text-zinc-200">
+            {voteCount}
           </Badge>
         </div>
-        <Link href={link.url} target="_blank" rel="noreferrer" className="truncate text-sm text-teal-400 hover:underline">
+        <Link href={link.url} target="_blank" rel="noreferrer" className="truncate text-sm text-zinc-400 hover:text-zinc-100">
           {link.url}
         </Link>
       </CardHeader>
@@ -106,6 +100,7 @@ export default function PublicLinkCard({ link, allowVoting }: PublicLinkCardProp
         <p className="line-clamp-3 text-sm leading-6 text-zinc-400">
           {link.description?.trim() ? link.description : "No description provided."}
         </p>
+
         <div className="flex flex-wrap gap-2">
           {link.tags.length > 0 ? (
             link.tags.map((tag) => (
@@ -114,10 +109,10 @@ export default function PublicLinkCard({ link, allowVoting }: PublicLinkCardProp
                 type="button"
                 onClick={() => handleTagClick(tag.name)}
                 className={cn(
-                  "inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-medium transition-all duration-200",
+                  "inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-medium transition-colors",
                   selectedTag === normalizeFeedTag(tag.name)
-                    ? "border-teal-500/30 bg-teal-500/10 text-teal-300"
-                    : "border-zinc-800 bg-zinc-950/60 text-zinc-300 hover:bg-zinc-900 hover:text-white"
+                    ? "border-zinc-600 bg-zinc-900 text-zinc-100"
+                    : "border-zinc-800 bg-zinc-950 text-zinc-400 hover:bg-zinc-900 hover:text-zinc-100"
                 )}
               >
                 <Hash className="size-3" />
@@ -130,39 +125,45 @@ export default function PublicLinkCard({ link, allowVoting }: PublicLinkCardProp
         </div>
       </CardContent>
 
-      <CardFooter className="flex-col items-start gap-3 border-t border-zinc-800 bg-zinc-950/60 md:flex-row md:items-center md:justify-between">
+      <CardFooter className="flex-col items-start gap-3 border-t border-zinc-800 md:flex-row md:items-center md:justify-between">
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center gap-2 text-xs text-zinc-400">
-            <span className="inline-flex size-6 items-center justify-center rounded-full bg-zinc-900">
+          <div className="flex items-center gap-2 text-xs text-zinc-500">
+            <span className="inline-flex size-6 items-center justify-center rounded-full border border-zinc-800">
               <Hash className="size-3" />
             </span>
             <span className="truncate">{link.createdBy}</span>
           </div>
-          <Button asChild variant="outline" size="sm" className="border-zinc-800 bg-zinc-950/60 text-zinc-100 hover:bg-zinc-900">
+
+          <Button asChild variant="outline" size="sm" className="border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900">
             <Link href={`/link/${link.id}`}>Open</Link>
           </Button>
-          <Button asChild variant="outline" size="sm" className="border-zinc-800 bg-zinc-950/60 text-zinc-100 hover:bg-zinc-900">
+
+          <Button asChild variant="outline" size="sm" className="border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900">
             <Link href={link.url} target="_blank" rel="noreferrer">
               Visit
               <ExternalLink className="size-3.5" />
             </Link>
           </Button>
         </div>
+
         <div className="flex items-center gap-2">
           {allowVoting ? (
             <Button
               type="button"
               size="sm"
-              variant={hasVoted ? "default" : "secondary"}
+              variant="outline"
               onClick={handleVoteToggle}
               disabled={isPending}
-              className="rounded-full"
+              className={cn(
+                "rounded-full border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900",
+                hasVoted ? "border-zinc-700 bg-zinc-900" : ""
+              )}
             >
               <ThumbsUp className="size-3.5" />
               {voteCount}
             </Button>
           ) : (
-            <Button asChild type="button" size="sm" variant="secondary" className="rounded-full">
+            <Button asChild type="button" size="sm" variant="outline" className="rounded-full border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900">
               <Link href="/login">
                 <ThumbsUp className="size-3.5" />
                 {voteCount}
@@ -171,7 +172,8 @@ export default function PublicLinkCard({ link, allowVoting }: PublicLinkCardProp
           )}
         </div>
       </CardFooter>
-      {message ? <p className="px-6 pb-4 text-xs text-destructive">{message}</p> : null}
+
+      {message ? <p className="px-6 pb-4 text-xs text-zinc-500">{message}</p> : null}
     </Card>
   );
 }
