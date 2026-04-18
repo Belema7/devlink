@@ -28,8 +28,8 @@ export default function AuthLayout({ children }: Readonly<{ children: ReactNode 
           </div>
         </header>
 
-        <main className="hidden md:grid flex-1 items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-20">
-          <section className="max-w-xl">
+        <main className="grid flex-1 items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-20">
+          <section className="hidden md:block max-w-xl">
             <p className="text-sm font-medium uppercase tracking-[0.28em] text-zinc-500">Developer link organizer</p>
             <h1 className="mt-6 text-5xl font-semibold tracking-tight text-zinc-100 sm:text-6xl">
               Sign in to keep your links clean and organized.
