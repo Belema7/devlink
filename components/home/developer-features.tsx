@@ -28,8 +28,8 @@ export default function DeveloperFeatures() {
   return (
     <section className="py-20">
       <div className="mb-8 max-w-2xl">
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#8e6f52]">Developer-focused</p>
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-900 md:text-4xl">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-400">Developer-focused</p>
+        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-100 md:text-4xl">
           Sharp tools for builders who care about speed and clarity.
         </h2>
       </div>
@@ -39,14 +39,14 @@ export default function DeveloperFeatures() {
           const Icon = feature.icon;
 
           return (
-            <Card key={feature.title} className="border border-[#d8d0bc] bg-[#f9f5ec]">
+            <Card key={feature.title} className="border border-zinc-800 bg-zinc-900/80">
               <CardHeader className="space-y-4">
-                <div className="inline-flex size-11 items-center justify-center rounded-2xl bg-[#242220] text-[#f5e27f]">
+                <div className="inline-flex size-11 items-center justify-center rounded-2xl bg-teal-500/10 text-teal-400">
                   <Icon className="size-5" />
                 </div>
-                <CardTitle className="text-lg text-zinc-900">{feature.title}</CardTitle>
+                <CardTitle className="text-lg text-zinc-100">{feature.title}</CardTitle>
               </CardHeader>
-              <CardContent className="pt-0 text-sm leading-6 text-zinc-600">
+              <CardContent className="pt-0 text-sm leading-6 text-zinc-400">
                 {feature.description}
               </CardContent>
             </Card>

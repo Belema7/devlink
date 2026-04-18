@@ -29,7 +29,7 @@ const Home = async () => {
   const topVoteCount = publicLinks[0]?.voteCount ?? 0;
 
   return (
-    <div className="min-h-screen bg-[#f6f1e8] text-zinc-900">
+    <div className="min-h-screen bg-zinc-950 text-zinc-200">
       <Navbar />
 
       <main className="mx-auto max-w-7xl px-4">

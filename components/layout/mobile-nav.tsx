@@ -62,20 +62,19 @@ export default function MobileNav({ navItems }: MobileNavProps) {
         aria-label="Open navigation menu"
         className={cn(
           buttonVariants({ variant: "ghost", size: "icon" }),
-          "size-10 rounded-2xl border border-zinc-700 bg-zinc-900/80 text-zinc-200 transition-all duration-200 hover:bg-zinc-800 hover:text-white active:scale-95"
+          "size-10 rounded-2xl border border-zinc-800 bg-zinc-900/80 text-zinc-200 transition-all duration-200 hover:bg-zinc-800 hover:text-white active:scale-95"
         )}
       >
         <Menu className="size-5" />
       </SheetTrigger>
 
       <SheetContent
-        className="w-full max-w-xs border-zinc-700 bg-zinc-950 text-zinc-100 sm:max-w-sm"
+        className="w-full max-w-xs border-zinc-800 bg-zinc-950 text-zinc-100 sm:max-w-sm"
         side="right"
       >
-        {/* Polished header with matching logo */}
         <SheetHeader className="border-b border-zinc-800 px-6 py-5">
           <SheetTitle className="flex items-center gap-2 text-left text-xl font-semibold tracking-[-0.5px]">
-            <span className="inline-flex size-8 items-center justify-center rounded-2xl bg-zinc-900 text-blue-400 ring-1 ring-inset ring-zinc-700">
+            <span className="inline-flex size-8 items-center justify-center rounded-2xl bg-teal-500/15 text-teal-400 ring-1 ring-inset ring-teal-500/25">
               <Sparkles className="size-4" />
             </span>
             <Link href="/" className="inline-block">
@@ -88,7 +87,6 @@ export default function MobileNav({ navItems }: MobileNavProps) {
         </SheetHeader>
 
         <div className="flex h-[calc(100%-73px)] flex-col gap-8 px-5 py-8">
-          {/* Navigation with icons + consistent active styling */}
           <nav className="flex flex-col gap-2">
             {navItems.map((item) => {
               const active = isActiveRoute(pathname, item.href);
@@ -100,7 +98,7 @@ export default function MobileNav({ navItems }: MobileNavProps) {
                     className={cn(
                       "flex items-center gap-3 rounded-2xl px-5 py-4 text-sm font-medium transition-all duration-200",
                       active
-                        ? "bg-zinc-900 text-blue-400 shadow-inner"
+                        ? "bg-zinc-900 text-teal-400 shadow-inner"
                         : "text-zinc-300 hover:bg-zinc-900 hover:text-white"
                     )}
                     aria-current={active ? "page" : undefined}
@@ -113,8 +111,7 @@ export default function MobileNav({ navItems }: MobileNavProps) {
             })}
           </nav>
 
-          {/* User / Auth card - refined shadows and spacing */}
-          <div className="mt-auto rounded-3xl border border-zinc-700 bg-zinc-900/60 p-5 shadow-xl">
+          <div className="mt-auto rounded-3xl border border-zinc-800 bg-zinc-900/70 p-5 shadow-xl">
             {isPending ? (
               <div className="space-y-3">
                 <div className="h-12 animate-pulse rounded-2xl bg-zinc-800" />
@@ -125,7 +122,7 @@ export default function MobileNav({ navItems }: MobileNavProps) {
                 <div className="flex items-center gap-3">
                   <Avatar className="size-11 ring-2 ring-inset ring-zinc-700">
                     <AvatarImage src={session.user.image ?? undefined} alt={session.user.name} />
-                    <AvatarFallback className="bg-zinc-800 text-sm font-medium">
+                    <AvatarFallback className="bg-zinc-800 text-sm font-medium text-teal-400">
                       {getInitials(session.user.name)}
                     </AvatarFallback>
                   </Avatar>
@@ -145,7 +142,7 @@ export default function MobileNav({ navItems }: MobileNavProps) {
                         variant: "outline",
                         size: "sm",
                         className:
-                          "h-11 w-full justify-start border-zinc-600 bg-zinc-950/80 text-zinc-100 hover:bg-zinc-900 hover:text-white",
+                          "h-11 w-full justify-start border-zinc-800 bg-zinc-950/60 text-zinc-100 hover:bg-zinc-900 hover:text-white",
                       })}
                     >
                       <UserRound className="mr-3 size-4" />
@@ -160,7 +157,7 @@ export default function MobileNav({ navItems }: MobileNavProps) {
                         variant: "outline",
                         size: "sm",
                         className:
-                          "h-11 w-full justify-start border-zinc-600 bg-zinc-950/80 text-zinc-100 hover:bg-zinc-900 hover:text-white",
+                          "h-11 w-full justify-start border-zinc-800 bg-zinc-950/60 text-zinc-100 hover:bg-zinc-900 hover:text-white",
                       })}
                     >
                       <LogOut className="mr-3 size-4" />
@@ -178,7 +175,7 @@ export default function MobileNav({ navItems }: MobileNavProps) {
                       variant: "outline",
                       size: "sm",
                       className:
-                        "h-11 w-full justify-start border-zinc-600 bg-zinc-950/80 text-zinc-100 hover:bg-zinc-900 hover:text-white",
+                        "h-11 w-full justify-start border-zinc-800 bg-zinc-950/60 text-zinc-100 hover:bg-zinc-900 hover:text-white",
                     })}
                   >
                     Sign in
@@ -191,7 +188,7 @@ export default function MobileNav({ navItems }: MobileNavProps) {
                       variant: "default",
                       size: "sm",
                       className:
-                        "h-11 w-full justify-start bg-blue-500 text-white hover:bg-blue-600",
+                        "h-11 w-full justify-start bg-teal-500 text-zinc-950 hover:bg-teal-400",
                     })}
                   >
                     Get started

@@ -48,7 +48,7 @@ export default function FeedSearch() {
         type="search"
         aria-label="Search public resources"
         placeholder="Search resources by title or tag..."
-        className="h-12 rounded-full border-[#ddd3bf] bg-white pl-11 pr-24 text-[#1f1c17] placeholder:text-zinc-500 focus-visible:border-[#cdbb6e] focus-visible:ring-[#f5e27f]/20"
+        className="h-12 rounded-full border-zinc-800 bg-zinc-900/80 pl-11 pr-24 text-zinc-100 placeholder:text-zinc-500 focus-visible:border-teal-500/60"
         value={searchValue}
         onChange={(event) => setSearchValue(event.target.value)}
       />
@@ -58,14 +58,14 @@ export default function FeedSearch() {
             type="button"
             variant="ghost"
             size="icon-xs"
-            className="h-8 w-8 rounded-full text-zinc-500 hover:bg-[#f6f1e6] hover:text-[#1f1c17]"
+            className="h-8 w-8 rounded-full text-zinc-500 hover:bg-zinc-900 hover:text-zinc-100"
             onClick={() => setSearchValue("")}
             aria-label="Clear search"
           >
             <X className="size-4" />
           </Button>
         ) : null}
-        {isPending ? <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-[#cdbb6e] border-t-transparent" /> : null}
+        {isPending ? <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-teal-500 border-t-transparent" /> : null}
       </div>
     </div>
   );

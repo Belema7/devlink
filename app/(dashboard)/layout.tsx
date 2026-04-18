@@ -7,8 +7,8 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await requireUser();
 
   return (
-    <div className="min-h-screen bg-[#676976] p-3 text-zinc-100 md:p-4">
-      <div className="flex min-h-[calc(100vh-1.5rem)] overflow-hidden rounded-[28px] border border-white/5 bg-[#1c1e26] shadow-[0_28px_90px_rgba(10,10,20,0.45)] md:min-h-[calc(100vh-2rem)]">
+    <div className="min-h-screen bg-zinc-950 p-3 text-zinc-100 md:p-4">
+      <div className="flex min-h-[calc(100vh-1.5rem)] overflow-hidden rounded-[28px] border border-zinc-800 bg-zinc-950 shadow-[0_28px_90px_rgba(0,0,0,0.45)] md:min-h-[calc(100vh-2rem)]">
         <Sidebar />
         <div className="flex min-w-0 flex-1 flex-col">
           <DashboardHeader userName={user.name} userImage={user.image} />

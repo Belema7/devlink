@@ -11,15 +11,15 @@ const TagsPage = async () => {
 
   return (
     <div className="mx-auto max-w-7xl space-y-6">
-      <section className="overflow-hidden rounded-[28px] border border-white/5 bg-[#232530] shadow-[0_24px_60px_rgba(0,0,0,0.24)]">
+      <section className="overflow-hidden rounded-[28px] border border-zinc-800 bg-zinc-900/80 shadow-[0_24px_60px_rgba(0,0,0,0.24)]">
         <div className="grid gap-6 p-5 lg:grid-cols-[1.35fr_0.9fr] lg:p-6">
           <div className="space-y-5">
             <div className="flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center gap-2 rounded-full border border-[#22c6a4]/20 bg-[#22c6a4]/10 px-3 py-1 text-xs font-medium text-[#6fe7cf]">
+              <span className="inline-flex items-center gap-2 rounded-full border border-teal-500/20 bg-teal-500/10 px-3 py-1 text-xs font-medium text-teal-300">
                 <Sparkles className="size-3.5" />
                 Tag control panel
               </span>
-              <span className="inline-flex items-center rounded-full border border-white/5 bg-white/5 px-3 py-1 text-xs text-zinc-400">
+              <span className="inline-flex items-center rounded-full border border-zinc-800 bg-zinc-950/60 px-3 py-1 text-xs text-zinc-400">
                 Manage tags attached to your links
               </span>
             </div>
@@ -34,24 +34,24 @@ const TagsPage = async () => {
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <Badge className="border border-[#22c6a4]/20 bg-[#22c6a4]/10 text-[#6fe7cf]">
+              <Badge className="border border-teal-500/20 bg-teal-500/10 text-teal-300">
                 {tags.length} {tags.length === 1 ? "tag" : "tags"}
               </Badge>
-              <Badge variant="outline" className="border-white/10 bg-white/5 text-zinc-300">
+              <Badge variant="outline" className="border-zinc-800 bg-zinc-950/60 text-zinc-300">
                 {totalLinksTagged} linked uses
               </Badge>
               {mostUsedTag ? (
-                <Badge variant="outline" className="border-white/10 bg-white/5 text-zinc-300">
+                <Badge variant="outline" className="border-zinc-800 bg-zinc-950/60 text-zinc-300">
                   Top tag: {mostUsedTag.name} ({mostUsedTag.linkCount})
                 </Badge>
               ) : null}
             </div>
           </div>
 
-          <Card className="border-white/5 bg-[#2b2d37] text-zinc-100 shadow-[0_12px_36px_rgba(0,0,0,0.2)]">
+          <Card className="border-zinc-800 bg-zinc-900/80 text-zinc-100 shadow-sm">
             <CardContent className="grid gap-4 p-5">
               <div className="flex items-center gap-3">
-                <div className="flex size-12 items-center justify-center rounded-2xl bg-[#22c6a4]/10 text-[#22c6a4] ring-1 ring-inset ring-[#22c6a4]/20">
+                <div className="flex size-12 items-center justify-center rounded-2xl bg-teal-500/10 text-teal-400 ring-1 ring-inset ring-teal-500/20">
                   <TagsIcon className="size-5" />
                 </div>
                 <div>
@@ -61,7 +61,7 @@ const TagsPage = async () => {
               </div>
 
               <div className="grid gap-3 sm:grid-cols-2">
-                <div className="rounded-[20px] border border-white/5 bg-[#232530] p-4">
+                <div className="rounded-[20px] border border-zinc-800 bg-zinc-950/60 p-4">
                   <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">Most used</p>
                   <p className="mt-2 text-lg font-semibold text-zinc-50">
                     {mostUsedTag ? mostUsedTag.name : "No tags yet"}
@@ -70,7 +70,7 @@ const TagsPage = async () => {
                     {mostUsedTag ? `${mostUsedTag.linkCount} links use this tag` : "Add a link to start building your tag library."}
                   </p>
                 </div>
-                <div className="rounded-[20px] border border-white/5 bg-[#232530] p-4">
+                <div className="rounded-[20px] border border-zinc-800 bg-zinc-950/60 p-4">
                   <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">Status</p>
                   <p className="mt-2 text-lg font-semibold text-zinc-50">
                     {tags.length > 0 ? "Ready" : "Empty"}

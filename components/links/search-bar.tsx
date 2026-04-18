@@ -50,7 +50,7 @@ export default function SearchBar() {
                 type="search"
                 aria-label="Search links by title or tag"
                 placeholder="Search by title or tag..."
-                className="rounded-2xl border-white/10 bg-[#2d2f3a] pl-10 pr-24 text-zinc-100 placeholder:text-zinc-500 focus-visible:border-[#22c6a4]/60"
+                className="rounded-2xl border-zinc-800 bg-zinc-900/80 pl-10 pr-24 text-zinc-100 placeholder:text-zinc-500 focus-visible:border-teal-500/60"
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
             />
@@ -68,7 +68,7 @@ export default function SearchBar() {
                     </Button>
                 ) : null}
                 {isPending ? (
-                    <div className="mr-1.5 h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                    <div className="mr-1.5 h-4 w-4 animate-spin rounded-full border-2 border-teal-500 border-t-transparent" />
                 ) : null}
             </div>
         </div>

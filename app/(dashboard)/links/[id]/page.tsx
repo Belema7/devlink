@@ -1,17 +1,19 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, ExternalLink, Hash, Sparkles } from "lucide-react";
 import { getUserLinkById } from "@/app/actions/link.actions";
 import LinkDetailsActions from "@/components/links/link-details-actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { requireUser } from "@/lib/auth-guard";
 
-type SingleLinkPageProps = {
+type LinkDetailsPageProps = {
   params: Promise<{ id: string }>;
 };
 
-const SingleLinkPage = async ({ params }: SingleLinkPageProps) => {
+const LinkDetailsPage = async ({ params }: LinkDetailsPageProps) => {
+  await requireUser();
   const { id } = await params;
   const link = await getUserLinkById(id);
 
@@ -20,67 +22,76 @@ const SingleLinkPage = async ({ params }: SingleLinkPageProps) => {
   }
 
   return (
-    <div className="container mx-auto max-w-3xl space-y-5 px-4 py-8">
-      <Button asChild variant="ghost" className="w-fit text-zinc-300 hover:bg-white/5 hover:text-zinc-50">
+    <div className="mx-auto max-w-6xl space-y-6">
+      <Button asChild variant="ghost" className="rounded-full text-zinc-400 hover:bg-zinc-900 hover:text-zinc-100">
         <Link href="/dashboard">
           <ArrowLeft className="size-4" />
           Back to dashboard
         </Link>
       </Button>
 
-      <Card className="border border-white/5 bg-[#2b2d37] text-zinc-100 shadow-[0_18px_48px_rgba(0,0,0,0.25)]">
-        <CardHeader className="space-y-3">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <CardTitle className="text-2xl">{link.title}</CardTitle>
-            <Badge
-              variant={link.isPublic ? "secondary" : "outline"}
-              className={link.isPublic ? "bg-[#22c6a4]/15 text-[#6fe7cf]" : "border-white/10 text-zinc-300"}
-            >
+      <Card className="overflow-hidden border border-zinc-800 bg-zinc-900/80 text-zinc-100 shadow-[0_18px_48px_rgba(0,0,0,0.2)]">
+        <CardHeader className="space-y-4 border-b border-zinc-800">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="inline-flex items-center gap-2 rounded-full border border-teal-500/20 bg-teal-500/10 px-3 py-1 text-xs font-medium text-teal-300">
+              <Sparkles className="size-3.5" />
+              Link detail
+            </span>
+            <Badge className="border border-zinc-800 bg-zinc-950/60 text-zinc-300">
               {link.isPublic ? "Public" : "Private"}
             </Badge>
           </div>
+          <CardTitle className="text-3xl text-zinc-50">{link.title}</CardTitle>
           <Link
             href={link.url}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1 text-sm text-[#6fe7cf] hover:underline"
+            className="inline-flex w-fit items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950/60 px-4 py-2 text-sm text-teal-400 transition-all hover:bg-zinc-900 hover:text-teal-300"
           >
-            {link.url}
-            <ExternalLink className="size-3.5" />
+            Open resource
+            <ExternalLink className="size-4" />
           </Link>
         </CardHeader>
-        <CardContent className="space-y-5">
-          <div className="space-y-1">
-            <p className="text-sm font-medium">Description</p>
-            <p className="text-sm text-zinc-400">
-              {link.description?.trim() ? link.description : "No description provided."}
-            </p>
+        <CardContent className="space-y-6">
+          {link.description ? <p className="text-sm leading-7 text-zinc-400">{link.description}</p> : null}
+          <div className="flex flex-wrap gap-2">
+            {link.tags.length > 0 ? (
+              link.tags.map((tag) => (
+                <Badge key={tag.id} variant="outline" className="border-zinc-800 bg-zinc-950/60 text-zinc-300">
+                  <Hash className="mr-1 size-3" />
+                  {tag.name}
+                </Badge>
+              ))
+            ) : (
+              <span className="text-sm text-zinc-500">No tags</span>
+            )}
           </div>
-
-          <div className="space-y-2">
-            <p className="text-sm font-medium">Tags</p>
-            <div className="flex flex-wrap gap-1.5">
-              {link.tags.length > 0 ? (
-                link.tags.map((tag) => (
-                  <Badge key={tag.id} variant="outline" className="border-white/10 bg-white/5 text-zinc-300">
-                    {tag.name}
-                  </Badge>
-                ))
-              ) : (
-                <span className="text-sm text-zinc-400">No tags</span>
-              )}
-            </div>
-          </div>
-
-          <div className="text-xs text-zinc-500">
-            Created {new Date(link.createdAt).toLocaleString()}
-          </div>
-
           <LinkDetailsActions linkId={link.id} />
         </CardContent>
       </Card>
+
+      <div className="grid gap-4 md:grid-cols-3">
+        <Card className="border border-zinc-800 bg-zinc-900/80">
+          <CardHeader>
+            <CardTitle className="text-base text-zinc-100">URL</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-zinc-400">{link.url}</CardContent>
+        </Card>
+        <Card className="border border-zinc-800 bg-zinc-900/80">
+          <CardHeader>
+            <CardTitle className="text-base text-zinc-100">Visibility</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-zinc-400">{link.isPublic ? "Public" : "Private"}</CardContent>
+        </Card>
+        <Card className="border border-zinc-800 bg-zinc-900/80">
+          <CardHeader>
+            <CardTitle className="text-base text-zinc-100">Actions</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-zinc-400">Edit or delete this resource from your workspace.</CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
 
-export default SingleLinkPage;
+export default LinkDetailsPage;

@@ -45,15 +45,15 @@ const DashboardPage = async ({ searchParams }: DashboardPageProps) => {
 
   return (
     <div className="mx-auto max-w-7xl space-y-6">
-      <section className="overflow-hidden rounded-[28px] border border-white/5 bg-[#232530] shadow-[0_24px_60px_rgba(0,0,0,0.24)]">
+      <section className="overflow-hidden rounded-[28px] border border-zinc-800 bg-zinc-900/80 shadow-[0_24px_60px_rgba(0,0,0,0.24)]">
         <div className="grid gap-5 p-5 lg:grid-cols-[1.6fr_1fr] lg:p-6">
           <div className="space-y-5">
             <div className="flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center gap-2 rounded-full border border-[#22c6a4]/20 bg-[#22c6a4]/10 px-3 py-1 text-xs font-medium text-[#6fe7cf]">
+              <span className="inline-flex items-center gap-2 rounded-full border border-teal-500/20 bg-teal-500/10 px-3 py-1 text-xs font-medium text-teal-300">
                 <Sparkles className="size-3.5" />
                 Workspace overview
               </span>
-              <span className="inline-flex items-center rounded-full border border-white/5 bg-white/5 px-3 py-1 text-xs text-zinc-400">
+              <span className="inline-flex items-center rounded-full border border-zinc-800 bg-zinc-950/60 px-3 py-1 text-xs text-zinc-400">
                 Updated just now
               </span>
             </div>
@@ -63,28 +63,28 @@ const DashboardPage = async ({ searchParams }: DashboardPageProps) => {
                 Your dashboard, tuned to a darker, calmer rhythm.
               </h1>
               <p className="max-w-xl text-sm leading-6 text-zinc-400 md:text-base">
-                Track link volume, visibility, and tag usage from a charcoal control panel with teal accents inspired by the reference layout.
+                Track link volume, visibility, and tag usage from a focused dark control panel with teal accents.
               </p>
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <Button asChild className="bg-[#22c6a4] text-[#07221d] shadow-[0_0_24px_rgba(34,198,164,0.22)] hover:bg-[#2ad0af]">
+              <Button asChild className="bg-teal-500 text-zinc-950 shadow-[0_0_24px_rgba(20,184,166,0.22)] hover:bg-teal-400">
                 <Link href="/links/new">
                   Add Link
                   <ArrowUpRight className="size-4" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="border-white/10 bg-white/5 text-zinc-100 hover:bg-white/10">
+              <Button asChild variant="outline" className="border-zinc-800 bg-zinc-950/60 text-zinc-100 hover:bg-zinc-900">
                 <Link href="/links">View all links</Link>
               </Button>
             </div>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <Card className="border-white/5 bg-[#2b2d37] text-zinc-100 shadow-[0_12px_36px_rgba(0,0,0,0.2)]">
+            <Card className="border-zinc-800 bg-zinc-900/80 text-zinc-100 shadow-sm">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
                 <CardTitle className="text-sm font-medium text-zinc-300">Total links</CardTitle>
-                <Link2 className="size-4 text-[#22c6a4]" />
+                <Link2 className="size-4 text-teal-400" />
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="text-4xl font-semibold tracking-tight text-zinc-50">
@@ -95,20 +95,20 @@ const DashboardPage = async ({ searchParams }: DashboardPageProps) => {
                   <span>{privateLinks} private</span>
                 </div>
                 <div className="h-2 overflow-hidden rounded-full bg-white/6">
-                  <div className="h-full rounded-full bg-[#22c6a4]" style={{ width: `${publicShare}%` }} />
+                  <div className="h-full rounded-full bg-teal-500" style={{ width: `${publicShare}%` }} />
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-white/5 bg-[#2b2d37] text-zinc-100 shadow-[0_12px_36px_rgba(0,0,0,0.2)]">
+            <Card className="border-zinc-800 bg-zinc-900/80 text-zinc-100 shadow-sm">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
                 <CardTitle className="text-sm font-medium text-zinc-300">Visibility</CardTitle>
-                <Lock className="size-4 text-[#22c6a4]" />
+                <Lock className="size-4 text-teal-400" />
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-end gap-3">
                   <div className="text-4xl font-semibold tracking-tight text-zinc-50">{publicShare}%</div>
-                  <Badge className="border border-[#22c6a4]/20 bg-[#22c6a4]/10 text-[#6fe7cf]">
+                  <Badge className="border border-teal-500/20 bg-teal-500/10 text-teal-300">
                     public share
                   </Badge>
                 </div>
@@ -118,7 +118,7 @@ const DashboardPage = async ({ searchParams }: DashboardPageProps) => {
                     <span>{publicLinks}</span>
                   </div>
                   <div className="h-2 overflow-hidden rounded-full bg-white/6">
-                    <div className="h-full rounded-full bg-[#22c6a4]" style={{ width: `${publicShare}%` }} />
+                    <div className="h-full rounded-full bg-teal-500" style={{ width: `${publicShare}%` }} />
                   </div>
                 </div>
               </CardContent>
@@ -126,20 +126,20 @@ const DashboardPage = async ({ searchParams }: DashboardPageProps) => {
           </div>
         </div>
 
-        <div className="grid gap-px border-t border-white/5 bg-white/5 lg:grid-cols-3">
-          <div className="bg-[#232530] p-5">
+        <div className="grid gap-px border-t border-zinc-800 bg-zinc-800 lg:grid-cols-3">
+          <div className="bg-zinc-900 p-5">
             <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">Active tags</p>
             <p className="mt-3 text-2xl font-semibold text-zinc-50">{recentTagCount}</p>
             <p className="mt-1 text-sm text-zinc-400">Organize your saved links with tags that feel lightweight, not noisy.</p>
           </div>
-          <div className="bg-[#232530] p-5">
+          <div className="bg-zinc-900 p-5">
             <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">Top tags</p>
             <div className="mt-3 flex flex-wrap gap-2">
               {topTags.length > 0 ? (
                 topTags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-white/8 bg-white/5 px-3 py-1 text-sm text-zinc-300"
+                    className="rounded-full border border-zinc-800 bg-zinc-950/60 px-3 py-1 text-sm text-zinc-300"
                   >
                     {tag}
                   </span>
@@ -149,10 +149,10 @@ const DashboardPage = async ({ searchParams }: DashboardPageProps) => {
               )}
             </div>
           </div>
-          <div className="bg-[#232530] p-5">
+          <div className="bg-zinc-900 p-5">
             <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">Snapshot</p>
             <div className="mt-3 flex items-center gap-3">
-              <div className="flex size-12 items-center justify-center rounded-2xl bg-[#22c6a4]/10 text-[#22c6a4] ring-1 ring-inset ring-[#22c6a4]/20">
+              <div className="flex size-12 items-center justify-center rounded-2xl bg-teal-500/10 text-teal-400 ring-1 ring-inset ring-teal-500/20">
                 <Tags className="size-5" />
               </div>
               <div>

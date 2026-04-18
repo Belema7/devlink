@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
@@ -84,26 +82,26 @@ export default function PublicLinkCard({ link, allowVoting }: PublicLinkCardProp
   };
 
   return (
-    <Card className="group h-full border border-[#3a352f] bg-[#242220] text-white shadow-[0_16px_40px_rgba(0,0,0,0.18)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(0,0,0,0.22)]">
+    <Card className="group h-full border border-zinc-800 bg-zinc-900/80 text-zinc-100 shadow-[0_16px_40px_rgba(0,0,0,0.18)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(0,0,0,0.22)]">
       <CardHeader className="space-y-4">
         <div className="flex items-start justify-between gap-3">
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#c8beab]">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-400">
               Shared by {link.createdBy}
             </p>
             <CardTitle className="line-clamp-2 text-xl text-white">{link.title}</CardTitle>
           </div>
-          <Badge className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-zinc-200">
+          <Badge className="rounded-full border border-zinc-800 bg-zinc-950/60 px-3 py-1 text-xs font-medium text-zinc-200">
             {voteCount} votes
           </Badge>
         </div>
-        <Link href={link.url} target="_blank" rel="noreferrer" className="truncate text-sm text-[#f5e27f] hover:underline">
+        <Link href={link.url} target="_blank" rel="noreferrer" className="truncate text-sm text-teal-400 hover:underline">
           {link.url}
         </Link>
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <p className="line-clamp-3 text-sm leading-6 text-zinc-300">
+        <p className="line-clamp-3 text-sm leading-6 text-zinc-400">
           {link.description?.trim() ? link.description : "No description provided."}
         </p>
         <div className="flex flex-wrap gap-2">
@@ -116,8 +114,8 @@ export default function PublicLinkCard({ link, allowVoting }: PublicLinkCardProp
                 className={cn(
                   "inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-medium transition-all duration-200",
                   selectedTag === normalizeFeedTag(tag.name)
-                    ? "border-[#f5e27f]/30 bg-[#f5e27f]/10 text-[#f9f0b6]"
-                    : "border-white/10 bg-white/5 text-zinc-200 hover:bg-white/10 hover:text-white"
+                    ? "border-teal-500/30 bg-teal-500/10 text-teal-300"
+                    : "border-zinc-800 bg-zinc-950/60 text-zinc-300 hover:bg-zinc-900 hover:text-white"
                 )}
               >
                 <Hash className="size-3" />
@@ -125,25 +123,23 @@ export default function PublicLinkCard({ link, allowVoting }: PublicLinkCardProp
               </button>
             ))
           ) : (
-            <span className="text-xs text-zinc-400">No tags</span>
+            <span className="text-xs text-zinc-500">No tags</span>
           )}
         </div>
       </CardContent>
 
-      <CardFooter className="flex-col items-start gap-3 border-t border-white/10 bg-[#1f1d1a] md:flex-row md:items-center md:justify-between">
+      <CardFooter className="flex-col items-start gap-3 border-t border-zinc-800 bg-zinc-950/60 md:flex-row md:items-center md:justify-between">
         <div className="flex flex-wrap items-center gap-2">
           <div className="flex items-center gap-2 text-xs text-zinc-400">
-            <span className="inline-flex size-6 items-center justify-center rounded-full bg-white/5">
+            <span className="inline-flex size-6 items-center justify-center rounded-full bg-zinc-900">
               <Hash className="size-3" />
             </span>
             <span className="truncate">{link.createdBy}</span>
           </div>
-          <Button asChild variant="outline" size="sm" className="border-white/10 bg-white/5 text-zinc-100 hover:bg-white/10">
-            <Link href={`/link/${link.id}`}>
-              Open
-            </Link>
+          <Button asChild variant="outline" size="sm" className="border-zinc-800 bg-zinc-950/60 text-zinc-100 hover:bg-zinc-900">
+            <Link href={`/link/${link.id}`}>Open</Link>
           </Button>
-          <Button asChild variant="outline" size="sm" className="border-white/10 bg-white/5 text-zinc-100 hover:bg-white/10">
+          <Button asChild variant="outline" size="sm" className="border-zinc-800 bg-zinc-950/60 text-zinc-100 hover:bg-zinc-900">
             <Link href={link.url} target="_blank" rel="noreferrer">
               Visit
               <ExternalLink className="size-3.5" />

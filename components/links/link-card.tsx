@@ -24,13 +24,13 @@ type LinkCardProps = {
 
 export default function LinkCard({ link, onDelete, isDeleting }: LinkCardProps) {
   return (
-    <Card className="h-full border border-white/5 bg-[#2b2d37] text-zinc-100 shadow-[0_12px_30px_rgba(0,0,0,0.22)] backdrop-blur">
+    <Card className="h-full border border-zinc-800 bg-zinc-900/80 text-zinc-100 shadow-sm backdrop-blur">
       <CardHeader className="space-y-2">
         <div className="flex items-start justify-between gap-2">
           <CardTitle className="line-clamp-2 text-zinc-100">{link.title}</CardTitle>
           <Badge
             variant={link.isPublic ? "secondary" : "outline"}
-            className={link.isPublic ? "bg-[#22c6a4]/15 text-[#6fe7cf]" : "border-white/10 text-zinc-300"}
+            className={link.isPublic ? "border-teal-500/20 bg-teal-500/10 text-teal-300" : "border-zinc-800 text-zinc-300"}
           >
             {link.isPublic ? "Public" : "Private"}
           </Badge>
@@ -39,7 +39,7 @@ export default function LinkCard({ link, onDelete, isDeleting }: LinkCardProps) 
           href={link.url}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-1 text-sm text-[#6fe7cf] hover:underline"
+          className="inline-flex items-center gap-1 text-sm text-teal-400 hover:underline"
         >
           Open Link
           <ExternalLink className="size-3.5" />
@@ -55,7 +55,7 @@ export default function LinkCard({ link, onDelete, isDeleting }: LinkCardProps) 
         <div className="flex flex-wrap gap-1.5">
           {link.tags.length > 0 ? (
             link.tags.map((tag) => (
-              <Badge key={tag.id} variant="outline" className="border-white/10 bg-white/5 text-zinc-300">
+              <Badge key={tag.id} variant="outline" className="border-zinc-800 bg-zinc-950/60 text-zinc-300">
                 {tag.name}
               </Badge>
             ))
@@ -64,7 +64,7 @@ export default function LinkCard({ link, onDelete, isDeleting }: LinkCardProps) 
           )}
         </div>
       </CardContent>
-      <CardFooter className="justify-between gap-2 border-white/5 bg-[#232530]">
+      <CardFooter className="justify-between gap-2 border-zinc-800 bg-zinc-950/60">
         <p className="text-xs text-zinc-500">
           Added {new Date(link.createdAt).toLocaleDateString()}
         </p>

@@ -18,8 +18,8 @@ export function TagCard({ tag, isFeatured = false, onEdit, onDelete }: TagCardPr
   return (
     <Card
       className={[
-        "h-full border border-white/5 bg-[#2b2d37] text-zinc-100 shadow-[0_12px_30px_rgba(0,0,0,0.22)] backdrop-blur",
-        isFeatured ? "ring-1 ring-[#22c6a4]/25" : "",
+        "h-full border border-zinc-800 bg-zinc-900/80 text-zinc-100 shadow-sm backdrop-blur",
+        isFeatured ? "ring-1 ring-teal-500/25" : "",
       ]
         .filter(Boolean)
         .join(" ")}
@@ -29,8 +29,8 @@ export function TagCard({ tag, isFeatured = false, onEdit, onDelete }: TagCardPr
           <CardTitle className="flex flex-wrap items-center gap-2 text-zinc-100">
             <Badge
               className={[
-                "border-white/10 bg-white/5 text-zinc-200",
-                isFeatured ? "border-[#22c6a4]/20 bg-[#22c6a4]/10 text-[#6fe7cf]" : "",
+                "border-zinc-800 bg-zinc-950/60 text-zinc-200",
+                isFeatured ? "border-teal-500/20 bg-teal-500/10 text-teal-300" : "",
               ]
                 .filter(Boolean)
                 .join(" ")}
@@ -39,7 +39,7 @@ export function TagCard({ tag, isFeatured = false, onEdit, onDelete }: TagCardPr
               {tag.name}
             </Badge>
             {isFeatured ? (
-              <Badge className="border border-[#22c6a4]/20 bg-[#22c6a4]/10 text-[#6fe7cf]">Most used</Badge>
+              <Badge className="border border-teal-500/20 bg-teal-500/10 text-teal-300">Most used</Badge>
             ) : null}
           </CardTitle>
 
@@ -50,7 +50,7 @@ export function TagCard({ tag, isFeatured = false, onEdit, onDelete }: TagCardPr
 
         <Link
           href={`/dashboard?tag=${encodeURIComponent(tag.name)}`}
-          className="inline-flex items-center gap-1 text-sm text-[#6fe7cf] hover:underline"
+          className="inline-flex items-center gap-1 text-sm text-teal-400 hover:underline"
         >
           Filter dashboard
           <ArrowUpRight className="size-3.5" />
@@ -63,12 +63,12 @@ export function TagCard({ tag, isFeatured = false, onEdit, onDelete }: TagCardPr
         </p>
       </CardContent>
 
-      <CardFooter className="justify-end gap-2 border-white/5 bg-[#232530]">
+      <CardFooter className="justify-end gap-2 border-zinc-800 bg-zinc-950/60">
         <Button
           type="button"
           size="sm"
           variant="outline"
-          className="border-white/10 bg-white/5 text-zinc-100 hover:bg-white/10"
+          className="border-zinc-800 bg-zinc-950/60 text-zinc-100 hover:bg-zinc-900"
           onClick={() => onEdit(tag)}
         >
           <Pencil className="size-3.5" />

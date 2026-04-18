@@ -9,8 +9,8 @@ import {
   LayoutDashboard,
   LogOut,
   Menu,
-  Sparkles,
   Rocket,
+  Sparkles,
   UserRound,
 } from "lucide-react";
 import { signOut, useSession } from "@/lib/auth-client";
@@ -65,10 +65,10 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-[#d8d0bc] bg-[#f6f1e8]/90 backdrop-blur-md">
+    <nav className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
-        <Link href="/" className="flex items-center gap-3 text-zinc-900 transition-opacity hover:opacity-90">
-          <span className="inline-flex size-10 items-center justify-center rounded-2xl bg-[#242220] text-[#f5e27f] shadow-sm ring-1 ring-black/10">
+        <Link href="/" className="flex items-center gap-3 text-zinc-100 transition-opacity hover:opacity-90">
+          <span className="inline-flex size-10 items-center justify-center rounded-2xl bg-teal-500/15 text-teal-400 shadow-sm ring-1 ring-inset ring-teal-500/25">
             <Sparkles className="size-5" />
           </span>
           <span className="text-lg font-semibold tracking-tight">DevLinks</span>
@@ -86,8 +86,8 @@ export default function Navbar() {
                 className={cn(
                   "inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-all duration-200",
                   active
-                    ? "bg-[#242220] text-white shadow-[0_10px_22px_rgba(36,34,32,0.16)]"
-                    : "text-zinc-600 hover:bg-black/5 hover:text-zinc-900"
+                    ? "bg-zinc-900 text-teal-400 shadow-[0_10px_22px_rgba(0,0,0,0.16)]"
+                    : "text-zinc-400 hover:bg-zinc-900 hover:text-zinc-100"
                 )}
               >
                 {item.label}
@@ -98,10 +98,10 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-2 md:flex">
           {isPending ? (
-            <div className="h-10 w-40 animate-pulse rounded-full bg-black/5" />
+            <div className="h-10 w-40 animate-pulse rounded-full bg-zinc-900" />
           ) : session ? (
             <>
-              <ButtonLink href="/dashboard" className="rounded-full bg-[#242220] text-white hover:bg-[#35312d]">
+              <ButtonLink href="/dashboard" className="rounded-full bg-teal-500 text-zinc-950 hover:bg-teal-400">
                 Add a Link
                 <Rocket className="size-4" />
               </ButtonLink>
@@ -110,21 +110,21 @@ export default function Navbar() {
                 <DropdownMenuTrigger asChild>
                   <button
                     type="button"
-                    className="inline-flex items-center gap-2 rounded-full border border-[#d8d0bc] bg-white px-2.5 py-2 text-sm font-medium text-zinc-800 transition-all hover:border-[#c9bea5] hover:bg-[#fffdf8]"
+                    className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900 px-2.5 py-2 text-sm font-medium text-zinc-200 transition-all hover:border-zinc-700 hover:bg-zinc-800"
                     aria-label="Open account menu"
                   >
                     <Avatar className="size-8">
                       <AvatarImage src={session.user.image ?? undefined} alt={session.user.name} />
-                      <AvatarFallback className="bg-[#242220] text-xs font-medium text-[#f5e27f]">
+                      <AvatarFallback className="bg-zinc-900 text-xs font-medium text-teal-400">
                         {getInitials(session.user.name)}
                       </AvatarFallback>
                     </Avatar>
-                    <ChevronDown className="size-4 text-zinc-500" />
+                    <ChevronDown className="size-4 text-zinc-400" />
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="end"
-                  className="w-56 border-[#d8d0bc] bg-[#fffdf8] text-zinc-900 shadow-[0_18px_40px_rgba(0,0,0,0.12)]"
+                  className="w-56 border-zinc-800 bg-zinc-900 text-zinc-100 shadow-[0_18px_40px_rgba(0,0,0,0.22)]"
                 >
                   <DropdownMenuItem className="cursor-pointer" onSelect={() => router.push("/profile")}>
                     <UserRound className="mr-2 size-4" />
@@ -134,9 +134,9 @@ export default function Navbar() {
                     <LayoutDashboard className="mr-2 size-4" />
                     Dashboard
                   </DropdownMenuItem>
-                  <DropdownMenuSeparator className="bg-[#d8d0bc]" />
+                  <DropdownMenuSeparator className="bg-zinc-800" />
                   <DropdownMenuItem
-                    className="cursor-pointer text-red-600 focus:bg-red-50 focus:text-red-700"
+                    className="cursor-pointer text-red-400 focus:bg-red-500/10 focus:text-red-300"
                     onClick={handleLogout}
                   >
                     <LogOut className="mr-2 size-4" />
@@ -150,13 +150,13 @@ export default function Navbar() {
               <ButtonLink
                 href="/login"
                 variant="ghost"
-                className="rounded-full text-zinc-600 hover:bg-black/5 hover:text-zinc-900"
+                className="rounded-full text-zinc-400 hover:bg-zinc-900 hover:text-zinc-100"
               >
                 Login
               </ButtonLink>
               <ButtonLink
                 href="/register"
-                className="rounded-full bg-[#b48f67] text-white shadow-[0_12px_28px_rgba(180,143,103,0.28)] hover:bg-[#a97d55]"
+                className="rounded-full bg-teal-500 text-zinc-950 shadow-[0_12px_28px_rgba(20,184,166,0.22)] hover:bg-teal-400"
               >
                 Register
                 <ArrowRight className="size-4" />
@@ -170,17 +170,17 @@ export default function Navbar() {
             <SheetTrigger asChild>
               <button
                 type="button"
-                className="inline-flex size-11 items-center justify-center rounded-full border border-[#d8d0bc] bg-white text-zinc-700 transition-all hover:border-[#c9bea5] hover:bg-[#fffdf8]"
+                className="inline-flex size-11 items-center justify-center rounded-full border border-zinc-800 bg-zinc-900 text-zinc-200 transition-all hover:border-zinc-700 hover:bg-zinc-800"
                 aria-label="Open navigation menu"
               >
                 <Menu className="size-5" />
               </button>
             </SheetTrigger>
 
-            <SheetContent side="right" className="border-[#d8d0bc] bg-[#f6f1e8] text-zinc-900">
-              <SheetHeader className="border-b border-[#e6deca] px-5 py-5">
+            <SheetContent side="right" className="border-zinc-800 bg-zinc-950 text-zinc-100">
+              <SheetHeader className="border-b border-zinc-800 px-5 py-5">
                 <SheetTitle className="flex items-center gap-3 text-left text-xl font-semibold tracking-tight">
-                  <span className="inline-flex size-9 items-center justify-center rounded-2xl bg-[#242220] text-[#f5e27f]">
+                  <span className="inline-flex size-9 items-center justify-center rounded-2xl bg-teal-500/15 text-teal-400">
                     <Sparkles className="size-4" />
                   </span>
                   DevLinks
@@ -200,8 +200,8 @@ export default function Navbar() {
                           className={cn(
                             "rounded-2xl px-4 py-4 text-sm font-medium transition-all duration-200",
                             active
-                              ? "bg-[#242220] text-white"
-                              : "bg-white text-zinc-700 hover:bg-[#fffdf8] hover:text-zinc-900"
+                              ? "bg-zinc-900 text-teal-400"
+                              : "bg-zinc-900/60 text-zinc-300 hover:bg-zinc-900 hover:text-zinc-100"
                           )}
                         >
                           {item.label}
@@ -211,30 +211,30 @@ export default function Navbar() {
                   })}
                 </nav>
 
-                <div className="mt-auto rounded-[24px] border border-[#e6deca] bg-white p-4">
+                <div className="mt-auto rounded-[24px] border border-zinc-800 bg-zinc-900 p-4">
                   {isPending ? (
                     <div className="space-y-3">
-                      <div className="h-12 animate-pulse rounded-2xl bg-zinc-100" />
-                      <div className="h-12 animate-pulse rounded-2xl bg-zinc-100" />
+                      <div className="h-12 animate-pulse rounded-2xl bg-zinc-800" />
+                      <div className="h-12 animate-pulse rounded-2xl bg-zinc-800" />
                     </div>
                   ) : session ? (
                     <div className="space-y-3">
                       <div className="flex items-center gap-3">
                         <Avatar className="size-11">
                           <AvatarImage src={session.user.image ?? undefined} alt={session.user.name} />
-                          <AvatarFallback className="bg-[#242220] text-[#f5e27f]">
+                          <AvatarFallback className="bg-zinc-900 text-teal-400">
                             {getInitials(session.user.name)}
                           </AvatarFallback>
                         </Avatar>
                         <div className="min-w-0">
-                          <p className="truncate font-medium text-zinc-900">{session.user.name}</p>
-                          <p className="truncate text-sm text-zinc-500">{session.user.email}</p>
+                          <p className="truncate font-medium text-zinc-100">{session.user.name}</p>
+                          <p className="truncate text-sm text-zinc-400">{session.user.email}</p>
                         </div>
                       </div>
 
                       <div className="grid gap-2">
                         <SheetClose asChild>
-                          <ButtonLink href="/dashboard" className="w-full justify-start rounded-2xl bg-[#242220] text-white hover:bg-[#35312d]">
+                          <ButtonLink href="/dashboard" className="w-full justify-start rounded-2xl bg-teal-500 text-zinc-950 hover:bg-teal-400">
                             <LayoutDashboard className="size-4" />
                             Add a Link
                           </ButtonLink>
@@ -245,7 +245,7 @@ export default function Navbar() {
                             onClick={handleLogout}
                             className={cn(
                               buttonVariants({ variant: "outline", size: "sm" }),
-                              "h-11 w-full justify-start rounded-2xl border-[#d8d0bc] bg-[#fffdf8] text-zinc-800 hover:bg-white"
+                              "h-11 w-full justify-start rounded-2xl border-zinc-800 bg-zinc-950/60 text-zinc-100 hover:bg-zinc-900"
                             )}
                           >
                             <LogOut className="size-4" />
@@ -260,7 +260,7 @@ export default function Navbar() {
                         <ButtonLink
                           href="/login"
                           variant="ghost"
-                          className="w-full justify-start rounded-2xl text-zinc-700 hover:bg-black/5 hover:text-zinc-900"
+                          className="w-full justify-start rounded-2xl text-zinc-300 hover:bg-zinc-900 hover:text-zinc-100"
                         >
                           Login
                         </ButtonLink>
@@ -268,7 +268,7 @@ export default function Navbar() {
                       <SheetClose asChild>
                         <ButtonLink
                           href="/register"
-                          className="w-full justify-start rounded-2xl bg-[#b48f67] text-white hover:bg-[#a97d55]"
+                          className="w-full justify-start rounded-2xl bg-teal-500 text-zinc-950 hover:bg-teal-400"
                         >
                           Register
                           <ArrowRight className="size-4" />

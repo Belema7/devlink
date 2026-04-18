@@ -16,22 +16,22 @@ export default function Trending({ links }: TrendingProps) {
     <section id="trending" className="py-20">
       <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div className="max-w-xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#8e6f52]">Trending</p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-900 md:text-4xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-400">Trending</p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-100 md:text-4xl">
             Top voted resources surface what matters right now.
           </h2>
-          <p className="mt-3 text-sm leading-7 text-zinc-600 md:text-base">
+          <p className="mt-3 text-sm leading-7 text-zinc-400 md:text-base">
             Use community votes to spotlight the best reads, tools, and workflows for modern development teams.
           </p>
         </div>
 
         <div className="space-y-3">
           {trending.length === 0 ? (
-            <Card className="border border-[#d8d0bc] bg-[#f9f5ec]">
+            <Card className="border border-zinc-800 bg-zinc-900/80">
               <CardHeader>
-                <CardTitle className="text-zinc-900">No trending resources yet</CardTitle>
+                <CardTitle className="text-zinc-100">No trending resources yet</CardTitle>
               </CardHeader>
-              <CardContent className="text-sm text-zinc-600">
+              <CardContent className="text-sm text-zinc-400">
                 Trending links will appear here once the community starts voting.
               </CardContent>
             </Card>
@@ -39,29 +39,29 @@ export default function Trending({ links }: TrendingProps) {
             trending.map((link, index) => (
               <Card
                 key={link.id}
-                className="border border-[#d8d0bc] bg-[#f9f5ec] shadow-[0_14px_34px_rgba(30,27,22,0.05)] transition-transform duration-200 hover:-translate-y-0.5"
+                className="border border-zinc-800 bg-zinc-900/80 shadow-[0_14px_34px_rgba(0,0,0,0.05)] transition-transform duration-200 hover:-translate-y-0.5"
               >
                 <CardContent className="flex items-center gap-4 p-4 md:p-5">
-                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-[#242220] text-[#f5e27f]">
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-teal-500/10 text-teal-400">
                     <span className="text-lg font-semibold">{index + 1}</span>
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="truncate text-base font-semibold text-zinc-900">{link.title}</p>
-                      <Badge variant="outline" className="border-[#d8d0bc] bg-white text-zinc-700">
+                      <p className="truncate text-base font-semibold text-zinc-100">{link.title}</p>
+                      <Badge variant="outline" className="border-zinc-800 bg-zinc-950/60 text-zinc-300">
                         {link.voteCount} votes
                       </Badge>
                     </div>
-                    <p className="mt-1 text-sm text-zinc-600">Shared by {link.createdBy}</p>
+                    <p className="mt-1 text-sm text-zinc-400">Shared by {link.createdBy}</p>
                     <div className="mt-3 flex flex-wrap gap-1.5">
                       {link.tags.slice(0, 3).map((tag) => (
-                        <Badge key={tag.id} variant="outline" className="border-[#d8d0bc] bg-[#fffdf8] text-zinc-700">
+                        <Badge key={tag.id} variant="outline" className="border-zinc-800 bg-zinc-950/60 text-zinc-300">
                           {tag.name}
                         </Badge>
                       ))}
                     </div>
                   </div>
-                  <Button asChild variant="outline" size="sm" className="rounded-full border-[#d8d0bc] bg-white">
+                  <Button asChild variant="outline" size="sm" className="rounded-full border-zinc-800 bg-zinc-950/60 text-zinc-100 hover:bg-zinc-900">
                     <Link href={`/link/${link.id}`}>
                       Open
                       <ArrowUpRight className="size-4" />
@@ -74,9 +74,9 @@ export default function Trending({ links }: TrendingProps) {
         </div>
       </div>
 
-      <div className="mt-8 rounded-[28px] border border-[#d8d0bc] bg-[#242220] p-6 text-white shadow-[0_22px_60px_rgba(0,0,0,0.18)]">
+      <div className="mt-8 rounded-[28px] border border-zinc-800 bg-zinc-900/80 p-6 text-white shadow-[0_22px_60px_rgba(0,0,0,0.18)]">
         <div className="flex items-center gap-3">
-          <span className="flex size-12 items-center justify-center rounded-2xl bg-[#f5e27f]/10 text-[#f5e27f]">
+          <span className="flex size-12 items-center justify-center rounded-2xl bg-teal-500/10 text-teal-400">
             <Flame className="size-5" />
           </span>
           <div>

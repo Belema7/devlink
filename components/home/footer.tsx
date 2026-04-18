@@ -8,21 +8,21 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[#d8d0bc] bg-[#f6f1e8] py-10">
+    <footer className="border-t border-zinc-800 bg-zinc-950 py-10">
       <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-3">
-          <span className="inline-flex size-10 items-center justify-center rounded-2xl bg-[#242220] text-[#f5e27f]">
+          <span className="inline-flex size-10 items-center justify-center rounded-2xl bg-teal-500/15 text-teal-400">
             <Code2 className="size-5" />
           </span>
           <div>
-            <p className="font-semibold text-zinc-900">DevLinks</p>
-            <p className="text-sm text-zinc-600">A curated home for developer resources.</p>
+            <p className="font-semibold text-zinc-100">DevLinks</p>
+            <p className="text-sm text-zinc-400">A curated home for developer resources.</p>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-5 text-sm text-zinc-600">
+        <div className="flex flex-wrap items-center gap-5 text-sm text-zinc-400">
           {footerLinks.map((link) => (
-            <a key={link.label} href={link.href} className="transition-colors hover:text-zinc-900">
+            <a key={link.label} href={link.href} className="transition-colors hover:text-zinc-100">
               {link.label}
             </a>
           ))}

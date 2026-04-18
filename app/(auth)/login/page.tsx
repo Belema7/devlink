@@ -6,13 +6,7 @@ import Link from "next/link";
 import { signIn } from "@/lib/auth-client";
 import { ArrowRight, Eye, EyeOff, Loader2, LogIn } from "lucide-react";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -87,21 +81,21 @@ function LoginPageContent() {
   };
 
   return (
-    <Card className="w-full max-w-md border-[#3a352f] bg-[#242220] text-[#f6f1e8] shadow-[0_24px_70px_rgba(36,34,32,0.22)]">
+    <Card className="w-full max-w-md border border-zinc-800 bg-zinc-900/80 text-zinc-100 shadow-[0_24px_70px_rgba(0,0,0,0.22)]">
       <CardHeader className="space-y-4 pb-2">
         <div className="flex items-center justify-between gap-3">
           <Badge
             variant="outline"
-            className="border-[#4a433a] bg-[#1d1b19] text-[#f5e27f] hover:bg-[#1d1b19]"
+            className="border-teal-500/20 bg-teal-500/10 text-teal-300 hover:bg-teal-500/10"
           >
             <LogIn className="mr-1 size-3.5" />
             Sign in
           </Badge>
-          <span className="text-xs uppercase tracking-[0.24em] text-[#a79c88]">DevLinks</span>
+          <span className="text-xs uppercase tracking-[0.24em] text-zinc-400">DevLinks</span>
         </div>
         <div className="space-y-2">
           <CardTitle className="text-2xl font-semibold tracking-tight text-white">Welcome back</CardTitle>
-          <CardDescription className="max-w-sm text-sm leading-6 text-[#a79c88]">
+          <CardDescription className="max-w-sm text-sm leading-6 text-zinc-400">
             Sign in to manage your resource library, track votes, and keep your stack organized.
           </CardDescription>
         </div>
@@ -109,7 +103,7 @@ function LoginPageContent() {
 
       <CardContent className="space-y-5 pt-2">
         {error && (
-          <div className="rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-100">
+          <div className="rounded-2xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-red-100">
             {error}
           </div>
         )}
@@ -120,7 +114,7 @@ function LoginPageContent() {
             variant="outline"
             disabled={!!oauthLoading}
             onClick={() => handleOAuth("google")}
-            className="h-11 gap-2 border-[#3a352f] bg-[#1c1a18] text-[#f6f1e8] hover:bg-[#2b2724] hover:text-white"
+            className="h-11 gap-2 border-zinc-800 bg-zinc-950/60 text-zinc-100 hover:bg-zinc-900 hover:text-white"
           >
             {oauthLoading === "google" ? <Loader2 className="h-4 w-4 animate-spin" /> : <GoogleIcon />}
             Google
@@ -130,19 +124,19 @@ function LoginPageContent() {
             variant="outline"
             disabled={!!oauthLoading}
             onClick={() => handleOAuth("github")}
-            className="h-11 gap-2 border-[#3a352f] bg-[#1c1a18] text-[#f6f1e8] hover:bg-[#2b2724] hover:text-white"
+            className="h-11 gap-2 border-zinc-800 bg-zinc-950/60 text-zinc-100 hover:bg-zinc-900 hover:text-white"
           >
             {oauthLoading === "github" ? <Loader2 className="h-4 w-4 animate-spin" /> : <GithubIcon />}
             GitHub
           </Button>
         </div>
 
-        <Separator className="bg-[#3a352f]" />
+        <Separator className="bg-zinc-800" />
 
-        <div className="rounded-2xl border border-[#3a352f] bg-[#1b1816] p-4">
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-950/60 p-4">
           <form onSubmit={handleEmailSignIn} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-medium text-[#d7cfbf]">
+              <Label htmlFor="email" className="text-sm font-medium text-zinc-200">
                 Email
               </Label>
               <Input
@@ -153,16 +147,16 @@ function LoginPageContent() {
                 autoComplete="email"
                 value={form.email}
                 onChange={(e) => updateField("email", e.target.value)}
-                className="h-11 border-[#3a352f] bg-[#141210] text-[#f6f1e8] placeholder:text-[#7f7669] focus-visible:border-[#b48f67] focus-visible:ring-[#b48f67]/20"
+                className="h-11 border-zinc-800 bg-zinc-950/60 text-zinc-100 placeholder:text-zinc-500 focus-visible:border-teal-500/60"
               />
             </div>
 
             <div className="space-y-2">
               <div className="flex items-center justify-between gap-2">
-                <Label htmlFor="password" className="text-sm font-medium text-[#d7cfbf]">
+                <Label htmlFor="password" className="text-sm font-medium text-zinc-200">
                   Password
                 </Label>
-                <span className="text-xs text-[#8f8778]">Required</span>
+                <span className="text-xs text-zinc-500">Required</span>
               </div>
               <div className="relative">
                 <Input
@@ -173,12 +167,12 @@ function LoginPageContent() {
                   autoComplete="current-password"
                   value={form.password}
                   onChange={(e) => updateField("password", e.target.value)}
-                  className="h-11 border-[#3a352f] bg-[#141210] pr-10 text-[#f6f1e8] placeholder:text-[#7f7669] focus-visible:border-[#b48f67] focus-visible:ring-[#b48f67]/20"
+                  className="h-11 border-zinc-800 bg-zinc-950/60 pr-10 text-zinc-100 placeholder:text-zinc-500 focus-visible:border-teal-500/60"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8f8778] transition-colors hover:text-[#f6f1e8]"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 transition-colors hover:text-zinc-100"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -189,7 +183,7 @@ function LoginPageContent() {
             <Button
               type="submit"
               disabled={loading}
-              className="h-11 w-full rounded-xl bg-[#b48f67] text-white shadow-[0_12px_28px_rgba(180,143,103,0.28)] hover:bg-[#a97d55]"
+              className="h-11 w-full rounded-xl bg-teal-500 text-zinc-950 shadow-[0_12px_28px_rgba(20,184,166,0.22)] hover:bg-teal-400"
             >
               {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <ArrowRight className="mr-2 size-4" />}
               Sign in
@@ -197,9 +191,9 @@ function LoginPageContent() {
           </form>
         </div>
 
-        <p className="text-center text-sm text-[#a79c88]">
+        <p className="text-center text-sm text-zinc-400">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="font-medium text-[#f5e27f] hover:underline underline-offset-4">
+          <Link href="/register" className="font-medium text-teal-400 hover:underline underline-offset-4">
             Sign up
           </Link>
         </p>
@@ -210,7 +204,7 @@ function LoginPageContent() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="text-sm text-muted-foreground">Loading login...</div>}>
+    <Suspense fallback={<div className="text-sm text-zinc-400">Loading login...</div>}>
       <LoginPageContent />
     </Suspense>
   );
