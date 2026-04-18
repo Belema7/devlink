@@ -96,11 +96,11 @@ export function TagsManagement({ initialTags }: TagsManagementProps) {
 
   return (
     <>
-      <div className="space-y-4 rounded-[28px] border border-zinc-800 bg-zinc-900/80 p-5 shadow-[0_24px_60px_rgba(0,0,0,0.22)] md:p-6">
+      <div className="space-y-4 rounded-lg border border-zinc-800 bg-zinc-950 p-5 md:p-6">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex-1 space-y-2">
             <div className="flex items-center gap-2">
-              <div className="inline-flex size-8 items-center justify-center rounded-2xl bg-teal-500/10 text-teal-400 ring-1 ring-inset ring-teal-500/20">
+              <div className="inline-flex size-8 items-center justify-center rounded-full border border-zinc-800 text-zinc-300">
                 <Search className="size-4" />
               </div>
               <p className="text-sm font-medium text-zinc-200">Search your tags</p>
@@ -109,7 +109,7 @@ export function TagsManagement({ initialTags }: TagsManagementProps) {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search by tag name..."
-              className="h-10 border-zinc-800 bg-zinc-950/60 text-zinc-100 placeholder:text-zinc-500 focus-visible:border-teal-500/60"
+              className="h-10 border-zinc-800 bg-zinc-950 text-zinc-100 placeholder:text-zinc-500 focus-visible:border-teal-500/60"
             />
           </div>
 
@@ -117,7 +117,7 @@ export function TagsManagement({ initialTags }: TagsManagementProps) {
             <Button
               type="button"
               variant="outline"
-              className="border-white/10 bg-white/5 text-zinc-100 hover:bg-white/10"
+              className="border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900"
               onClick={() => setIsCreateOpen(true)}
             >
               <Plus className="size-4" />
@@ -129,7 +129,7 @@ export function TagsManagement({ initialTags }: TagsManagementProps) {
         {message ? <p className="text-sm text-zinc-400">{message}</p> : null}
 
         {visibleTags.length === 0 ? (
-          <Empty className="border border-dashed border-zinc-800 bg-zinc-950/60 py-14">
+          <Empty className="border border-dashed border-zinc-800 bg-zinc-950 py-14">
             <EmptyHeader>
               <EmptyTitle className="text-zinc-100">
                 {query ? "No tags match this search" : "No tags yet"}
@@ -142,7 +142,7 @@ export function TagsManagement({ initialTags }: TagsManagementProps) {
             </EmptyHeader>
             <EmptyContent>
               {!query ? (
-                <Button className="bg-teal-500 text-zinc-950 hover:bg-teal-400" onClick={() => setIsCreateOpen(true)}>
+                <Button className="border border-zinc-800 bg-zinc-100 text-zinc-950 hover:bg-zinc-200" onClick={() => setIsCreateOpen(true)}>
                   <Plus className="size-4" />
                   New Tag
                 </Button>
@@ -157,7 +157,7 @@ export function TagsManagement({ initialTags }: TagsManagementProps) {
               </p>
               {featuredTag ? (
                 <p className="text-xs text-zinc-500">
-                  Highlighted tag: <span className="text-teal-400">{featuredTag.name}</span>
+                  Highlighted tag: <span className="text-zinc-100">{featuredTag.name}</span>
                 </p>
               ) : null}
             </div>
@@ -201,15 +201,15 @@ export function TagsManagement({ initialTags }: TagsManagementProps) {
       />
 
       <AlertDialog open={Boolean(deletingTag)} onOpenChange={(open) => !open && setDeletingTag(null)}>
-        <AlertDialogContent className="border-zinc-800 bg-zinc-900 text-zinc-100">
+        <AlertDialogContent className="border-zinc-800 bg-zinc-950 text-zinc-100">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-zinc-50">Delete tag?</AlertDialogTitle>
             <AlertDialogDescription className="text-zinc-400">
               This removes the tag from your dashboard and disconnects it from your links. This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="border-zinc-800 bg-zinc-950/60">
-            <AlertDialogCancel className="border-zinc-800 bg-zinc-950/60 text-zinc-100 hover:bg-zinc-900">
+          <AlertDialogFooter className="border-zinc-800 bg-zinc-950">
+            <AlertDialogCancel className="border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900">
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction

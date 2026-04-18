@@ -23,12 +23,13 @@ export default function DashboardFilterBar({
   return (
     <div className="grid gap-3 md:grid-cols-2">
       <div className="space-y-1">
-        <p className="text-sm font-medium">Filter by tag</p>
+        <p className="text-sm font-medium text-zinc-200">Filter by tag</p>
         <Input
           list="dashboard-tags"
           placeholder="Type a tag (e.g. react)"
           value={tagFilter}
           onChange={(event) => onTagFilterChange(event.target.value)}
+          className="border-zinc-800 bg-zinc-950 text-zinc-100 placeholder:text-zinc-500"
         />
         <datalist id="dashboard-tags">
           {availableTags.map((tag) => (
@@ -38,10 +39,11 @@ export default function DashboardFilterBar({
       </div>
 
       <div className="space-y-1">
-        <p className="text-sm font-medium">Visibility</p>
+        <p className="text-sm font-medium text-zinc-200">Visibility</p>
         <NativeSelect
           value={visibility}
           onChange={(event) => onVisibilityChange(event.target.value as VisibilityFilter)}
+          className="border-zinc-800 bg-zinc-950 text-zinc-100"
         >
           <NativeSelectOption value="all">All</NativeSelectOption>
           <NativeSelectOption value="public">Public</NativeSelectOption>

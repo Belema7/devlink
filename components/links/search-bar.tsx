@@ -50,7 +50,7 @@ export default function SearchBar() {
                 type="search"
                 aria-label="Search links by title or tag"
                 placeholder="Search by title or tag..."
-                className="rounded-2xl border-zinc-800 bg-zinc-900/80 pl-10 pr-24 text-zinc-100 placeholder:text-zinc-500 focus-visible:border-teal-500/60"
+                className="rounded-lg border-zinc-800 bg-zinc-950 pl-10 pr-24 text-zinc-100 placeholder:text-zinc-500 focus-visible:border-teal-500/60"
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
             />

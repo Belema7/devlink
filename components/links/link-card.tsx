@@ -24,13 +24,13 @@ type LinkCardProps = {
 
 export default function LinkCard({ link, onDelete, isDeleting }: LinkCardProps) {
   return (
-    <Card className="h-full border border-zinc-800 bg-zinc-900/80 text-zinc-100 shadow-sm backdrop-blur">
-      <CardHeader className="space-y-2">
+    <Card className="h-full border border-zinc-800 bg-zinc-950 text-zinc-100">
+      <CardHeader className="space-y-2 border-b border-zinc-800 pb-4">
         <div className="flex items-start justify-between gap-2">
           <CardTitle className="line-clamp-2 text-zinc-100">{link.title}</CardTitle>
           <Badge
             variant={link.isPublic ? "secondary" : "outline"}
-            className={link.isPublic ? "border-teal-500/20 bg-teal-500/10 text-teal-300" : "border-zinc-800 text-zinc-300"}
+            className={link.isPublic ? "border-zinc-800 bg-zinc-900/40 text-zinc-200" : "border-zinc-800 bg-zinc-950 text-zinc-300"}
           >
             {link.isPublic ? "Public" : "Private"}
           </Badge>
@@ -39,15 +39,15 @@ export default function LinkCard({ link, onDelete, isDeleting }: LinkCardProps) 
           href={link.url}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-1 text-sm text-teal-400 hover:underline"
+          className="inline-flex items-center gap-1 text-sm text-zinc-400 hover:text-zinc-100"
         >
           Open Link
           <ExternalLink className="size-3.5" />
         </Link>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-3 py-4">
         {link.description ? (
-          <p className="line-clamp-3 text-sm text-zinc-400">{link.description}</p>
+          <p className="line-clamp-3 text-sm text-zinc-300">{link.description}</p>
         ) : (
           <p className="text-sm text-zinc-500">No description added.</p>
         )}
@@ -55,7 +55,7 @@ export default function LinkCard({ link, onDelete, isDeleting }: LinkCardProps) 
         <div className="flex flex-wrap gap-1.5">
           {link.tags.length > 0 ? (
             link.tags.map((tag) => (
-              <Badge key={tag.id} variant="outline" className="border-zinc-800 bg-zinc-950/60 text-zinc-300">
+              <Badge key={tag.id} variant="outline" className="border-zinc-800 bg-zinc-950 text-zinc-300">
                 {tag.name}
               </Badge>
             ))
@@ -64,7 +64,7 @@ export default function LinkCard({ link, onDelete, isDeleting }: LinkCardProps) 
           )}
         </div>
       </CardContent>
-      <CardFooter className="justify-between gap-2 border-zinc-800 bg-zinc-950/60">
+      <CardFooter className="justify-between gap-2 border-t border-zinc-800 pt-4">
         <p className="text-xs text-zinc-500">
           Added {new Date(link.createdAt).toLocaleDateString()}
         </p>
@@ -73,8 +73,8 @@ export default function LinkCard({ link, onDelete, isDeleting }: LinkCardProps) 
             asChild
             type="button"
             size="sm"
-            variant="secondary"
-            className="border border-white/5 bg-white/5 text-zinc-100 hover:bg-white/10"
+            variant="outline"
+            className="border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900"
           >
             <Link href={`/links/${link.id}`}>
               <Eye className="size-3.5" />
@@ -86,7 +86,7 @@ export default function LinkCard({ link, onDelete, isDeleting }: LinkCardProps) 
             type="button"
             size="sm"
             variant="outline"
-            className="border-white/10 bg-white/5 text-zinc-100 hover:bg-white/10"
+            className="border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900"
           >
             <Link href={`/links/edit/${link.id}`}>
               <Pencil className="size-3.5" />

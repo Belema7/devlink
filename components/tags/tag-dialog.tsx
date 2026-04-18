@@ -81,7 +81,7 @@ export function TagDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border-zinc-800 bg-zinc-900 text-zinc-100 sm:max-w-md">
+      <DialogContent className="border-zinc-800 bg-zinc-950 text-zinc-100 sm:max-w-md">
         <form className="space-y-5" onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle className="text-zinc-50">{title}</DialogTitle>
@@ -97,7 +97,7 @@ export function TagDialog({
               value={value}
               onChange={(event) => setValue(event.target.value)}
               placeholder="react"
-              className="border-zinc-800 bg-zinc-950/60 text-zinc-100 placeholder:text-zinc-500 focus-visible:border-teal-500/60"
+              className="border-zinc-800 bg-zinc-950 text-zinc-100 placeholder:text-zinc-500 focus-visible:border-teal-500/60"
               autoComplete="off"
               autoFocus
             />
@@ -106,16 +106,16 @@ export function TagDialog({
 
           {error ? <p className="text-sm text-destructive">{error}</p> : null}
 
-          <DialogFooter className="border-zinc-800 bg-zinc-950/60 px-0 pb-0">
+          <DialogFooter className="border-zinc-800 bg-zinc-950 px-0 pb-0">
             <Button
               type="button"
               variant="outline"
-              className="border-zinc-800 bg-zinc-950/60 text-zinc-100 hover:bg-zinc-900"
+              className="border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900"
               onClick={() => onOpenChange(false)}
             >
               Cancel
             </Button>
-            <Button type="submit" className="bg-teal-500 text-zinc-950 hover:bg-teal-400" disabled={isPending}>
+            <Button type="submit" className="border border-zinc-800 bg-zinc-100 text-zinc-950 hover:bg-zinc-200" disabled={isPending}>
               {isPending ? "Saving..." : submitLabel}
             </Button>
           </DialogFooter>

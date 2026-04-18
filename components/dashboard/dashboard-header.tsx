@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bell, Search, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import MobileSidebar from "@/components/dashboard/mobile-sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -30,7 +30,7 @@ export default function DashboardHeader({ userName, userImage }: DashboardHeader
       .slice(0, 2) || "U";
 
   return (
-    <header className="sticky top-0 z-20 border-b border-zinc-800 bg-zinc-950/90 px-4 py-4 backdrop-blur-xl md:px-6">
+    <header className="sticky top-0 z-20 border-b border-zinc-800 bg-zinc-950 px-6 py-4">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2 md:gap-3">
           <MobileSidebar />
@@ -43,37 +43,17 @@ export default function DashboardHeader({ userName, userImage }: DashboardHeader
         </div>
 
         <div className="flex items-center gap-2 md:gap-3">
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            className="hidden text-zinc-300 hover:bg-zinc-900 hover:text-zinc-50 md:inline-flex"
-            aria-label="Search dashboard"
-          >
-            <Search className="size-4" />
-          </Button>
-
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            className="hidden text-zinc-300 hover:bg-zinc-900 hover:text-zinc-50 md:inline-flex"
-            aria-label="Notifications"
-          >
-            <Bell className="size-4" />
-          </Button>
-
-          <Button asChild size="sm" className="bg-teal-500 text-zinc-950 shadow-[0_0_24px_rgba(20,184,166,0.22)] hover:bg-teal-400">
+          <Button asChild size="sm" className="border border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900">
             <Link href="/links/new">
               <Plus className="size-4" />
               Add Link
             </Link>
           </Button>
 
-          <Link href="/profile" className="flex items-center gap-2 rounded-2xl px-1.5 py-1 transition-colors hover:bg-zinc-900">
+          <Link href="/profile" className="flex items-center gap-2 rounded-full px-1.5 py-1 transition-colors hover:bg-zinc-900">
             <Avatar size="sm">
               <AvatarImage src={userImage ?? undefined} alt={userName} />
-              <AvatarFallback className="bg-zinc-900 text-teal-400">{initials}</AvatarFallback>
+              <AvatarFallback className="bg-zinc-900 text-zinc-300">{initials}</AvatarFallback>
             </Avatar>
             <span className="hidden text-sm font-medium text-zinc-300 md:inline">{userName}</span>
           </Link>

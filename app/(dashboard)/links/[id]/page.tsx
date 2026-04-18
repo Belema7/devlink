@@ -30,14 +30,14 @@ const LinkDetailsPage = async ({ params }: LinkDetailsPageProps) => {
         </Link>
       </Button>
 
-      <Card className="overflow-hidden border border-zinc-800 bg-zinc-900/80 text-zinc-100 shadow-[0_18px_48px_rgba(0,0,0,0.2)]">
+      <Card className="overflow-hidden border border-zinc-800 bg-zinc-950 text-zinc-100">
         <CardHeader className="space-y-4 border-b border-zinc-800">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-teal-500/20 bg-teal-500/10 px-3 py-1 text-xs font-medium text-teal-300">
+            <span className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/40 px-3 py-1 text-xs font-medium text-zinc-300">
               <Sparkles className="size-3.5" />
               Link detail
             </span>
-            <Badge className="border border-zinc-800 bg-zinc-950/60 text-zinc-300">
+            <Badge className="border border-zinc-800 bg-zinc-900/40 text-zinc-300">
               {link.isPublic ? "Public" : "Private"}
             </Badge>
           </div>
@@ -46,18 +46,18 @@ const LinkDetailsPage = async ({ params }: LinkDetailsPageProps) => {
             href={link.url}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex w-fit items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950/60 px-4 py-2 text-sm text-teal-400 transition-all hover:bg-zinc-900 hover:text-teal-300"
+            className="inline-flex w-fit items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950 px-4 py-2 text-sm text-zinc-300 transition-colors hover:bg-zinc-900 hover:text-zinc-100"
           >
             Open resource
             <ExternalLink className="size-4" />
           </Link>
         </CardHeader>
         <CardContent className="space-y-6">
-          {link.description ? <p className="text-sm leading-7 text-zinc-400">{link.description}</p> : null}
+          {link.description ? <p className="text-sm leading-7 text-zinc-300">{link.description}</p> : null}
           <div className="flex flex-wrap gap-2">
             {link.tags.length > 0 ? (
               link.tags.map((tag) => (
-                <Badge key={tag.id} variant="outline" className="border-zinc-800 bg-zinc-950/60 text-zinc-300">
+                <Badge key={tag.id} variant="outline" className="border-zinc-800 bg-zinc-950 text-zinc-300">
                   <Hash className="mr-1 size-3" />
                   {tag.name}
                 </Badge>
@@ -71,19 +71,19 @@ const LinkDetailsPage = async ({ params }: LinkDetailsPageProps) => {
       </Card>
 
       <div className="grid gap-4 md:grid-cols-3">
-        <Card className="border border-zinc-800 bg-zinc-900/80">
+        <Card className="border border-zinc-800 bg-zinc-950">
           <CardHeader>
             <CardTitle className="text-base text-zinc-100">URL</CardTitle>
           </CardHeader>
           <CardContent className="text-sm text-zinc-400">{link.url}</CardContent>
         </Card>
-        <Card className="border border-zinc-800 bg-zinc-900/80">
+        <Card className="border border-zinc-800 bg-zinc-950">
           <CardHeader>
             <CardTitle className="text-base text-zinc-100">Visibility</CardTitle>
           </CardHeader>
           <CardContent className="text-sm text-zinc-400">{link.isPublic ? "Public" : "Private"}</CardContent>
         </Card>
-        <Card className="border border-zinc-800 bg-zinc-900/80">
+        <Card className="border border-zinc-800 bg-zinc-950">
           <CardHeader>
             <CardTitle className="text-base text-zinc-100">Actions</CardTitle>
           </CardHeader>
