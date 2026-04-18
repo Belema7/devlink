@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { auth } from "@/lib/auth";
 import { getTrendingLinks } from "@/lib/public-links";
-import { cn } from "@/lib/utils";
 
 export const metadata = {
   title: "Trending Resources",
@@ -36,17 +35,26 @@ export default async function TrendingPage() {
           </p>
         </section>
 
-        <section className="mt-12 grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="space-y-4 rounded-3xl border border-zinc-800 px-6 py-6">
-            <div className="flex items-center justify-between gap-3">
+        <section className="mt-12 space-y-6">
+          <div className="rounded-3xl border border-zinc-800 px-6 py-6">
+            <div className="flex flex-col gap-4 border-b border-zinc-800 pb-5 lg:flex-row lg:items-end lg:justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.24em] text-zinc-500">Leaderboard</p>
                 <p className="mt-2 text-2xl font-semibold text-zinc-100">{links.length} live picks</p>
+                <p className="mt-2 text-sm text-zinc-500">Community favorites ranked by votes.</p>
               </div>
-              <p className="text-sm text-zinc-500">Top 10</p>
+
+              <div className="flex flex-wrap gap-3">
+                <Button asChild variant="outline" className="border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900">
+                  <Link href="/feed">View feed</Link>
+                </Button>
+                <Button asChild variant="outline" className="border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900">
+                  <Link href="/dashboard">Dashboard</Link>
+                </Button>
+              </div>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-3">
+            <div className="mt-5 grid gap-3 sm:grid-cols-3">
               <div className="rounded-2xl border border-zinc-800 px-4 py-4">
                 <p className="text-[11px] uppercase tracking-[0.2em] text-zinc-500">Public only</p>
                 <p className="mt-2 text-sm text-zinc-300">Hidden links stay off the board.</p>
@@ -59,15 +67,6 @@ export default async function TrendingPage() {
                 <p className="text-[11px] uppercase tracking-[0.2em] text-zinc-500">Ranked by</p>
                 <p className="mt-2 text-sm text-zinc-300">Highest vote count first.</p>
               </div>
-            </div>
-
-            <div className="flex flex-wrap gap-3">
-              <Button asChild variant="outline" className="border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900">
-                <Link href="/feed">View feed</Link>
-              </Button>
-              <Button asChild variant="outline" className="border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900">
-                <Link href="/dashboard">Dashboard</Link>
-              </Button>
             </div>
           </div>
 
@@ -94,16 +93,9 @@ export default async function TrendingPage() {
                   </CardContent>
                 </Card>
               ) : (
-                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-2">
-                  {links.map((link, index) => (
-                    <div key={link.id} className={cn("rounded-3xl border border-zinc-800 bg-zinc-950 p-4", index === 0 ? "border-zinc-700" : "")}>
-                      <div className="mb-4 flex items-center justify-between gap-3 border-b border-zinc-800 pb-4">
-                        <div className="text-sm font-medium text-zinc-100">#{index + 1}</div>
-                        <div className="text-sm text-zinc-500">{link.voteCount} votes</div>
-                      </div>
-
-                      <PublicLinkCard link={link} allowVoting={allowVoting} />
-                    </div>
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                  {links.map((link) => (
+                    <PublicLinkCard key={link.id} link={link} allowVoting={allowVoting} />
                   ))}
                 </div>
               )}

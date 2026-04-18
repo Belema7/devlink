@@ -45,28 +45,31 @@ export default async function PublicFeedPage({ searchParams }: FeedPageProps) {
           </p>
         </section>
 
-        <section className="mt-12 grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="space-y-4 rounded-3xl border border-zinc-800 px-6 py-6">
-            <div className="flex items-center justify-between gap-3">
+        <section className="mt-12 space-y-6">
+          <div className="rounded-3xl border border-zinc-800 px-6 py-6">
+            <div className="flex flex-col gap-4 border-b border-zinc-800 pb-5 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.24em] text-zinc-500">Results</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-zinc-500">Search</p>
                 <p className="mt-2 text-2xl font-semibold text-zinc-100">{currentResultLabel}</p>
+                <p className="mt-2 text-sm text-zinc-500">
+                  {search || tag ? "Filtered results from the public feed." : "Search by title or tag."}
+                </p>
               </div>
-              <p className="text-sm text-zinc-500">{hasFilters ? "Filtered" : "All"}</p>
+
+              {hasFilters ? (
+                <Button asChild variant="outline" className="w-full border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900 lg:w-auto">
+                  <Link href="/feed">Clear filters</Link>
+                </Button>
+              ) : null}
             </div>
 
-            <FeedSearch />
-
-            <div className="flex flex-wrap gap-2 text-xs text-zinc-500">
-              <span className="rounded-full border border-zinc-800 px-3 py-1">Search title and tags</span>
-              <span className="rounded-full border border-zinc-800 px-3 py-1">Click a tag to filter</span>
+            <div className="mt-5 space-y-4">
+              <FeedSearch />
+              <div className="flex flex-wrap gap-2 text-xs text-zinc-500">
+                <span className="rounded-full border border-zinc-800 px-3 py-1">Search title and tags</span>
+                <span className="rounded-full border border-zinc-800 px-3 py-1">Click a tag to filter</span>
+              </div>
             </div>
-
-            {hasFilters ? (
-              <Button asChild variant="outline" className="w-full border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900">
-                <Link href="/feed">Clear filters</Link>
-              </Button>
-            ) : null}
           </div>
 
           <div className="rounded-3xl border border-zinc-800 px-6 py-6">
@@ -100,7 +103,7 @@ export default async function PublicFeedPage({ searchParams }: FeedPageProps) {
                   </CardContent>
                 </Card>
               ) : (
-                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-2">
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                   {links.map((link) => (
                     <PublicLinkCard key={link.id} link={link} allowVoting={allowVoting} />
                   ))}
