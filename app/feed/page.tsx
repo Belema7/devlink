@@ -28,8 +28,6 @@ export default async function PublicFeedPage({ searchParams }: FeedPageProps) {
 
   const allowVoting = Boolean(session?.user);
   const hasFilters = Boolean(search || tag);
-  const currentResultLabel = `${links.length} ${links.length === 1 ? "resource" : "resources"}`;
-
   return (
     <>
       <Navbar />
@@ -85,35 +83,48 @@ export default async function PublicFeedPage({ searchParams }: FeedPageProps) {
             </p>
           </section>
 
-          <section className="mt-12 space-y-6">
-            <div className="rounded-3xl border border-white/10 bg-black/45 px-6 py-6 backdrop-blur-sm">
-              <div className="flex flex-col gap-4 border-b border-white/10 pb-5 lg:flex-row lg:items-end lg:justify-between">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.24em] text-zinc-500">Search</p>
-                  <p className="mt-2 text-2xl font-semibold text-zinc-100">{currentResultLabel}</p>
-                  <p className="mt-2 text-sm text-zinc-400">
-                    {search || tag ? "Filtered results from the public feed." : "Search by title or tag."}
-                  </p>
+          <section className="mt-12 space-y-8">
+            <div className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start">
+              <div className="rounded-3xl border border-white/10 bg-black/45 px-6 py-6 backdrop-blur-sm">
+                <p className="text-xs font-medium uppercase tracking-[0.24em] text-zinc-500">Public feed</p>
+                <h2 className="mt-2 text-2xl font-semibold text-zinc-100">
+                  {links.length} {links.length === 1 ? "resource" : "resources"}
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm leading-7 text-zinc-400">
+                  {search || tag
+                    ? "Showing filtered results from the public feed."
+                    : "Browse community-shared resources and open the ones that matter most."}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2 text-xs text-zinc-500">
+                  <span className="rounded-full border border-white/10 bg-black/40 px-3 py-1">Search titles and tags</span>
+                  <span className="rounded-full border border-white/10 bg-black/40 px-3 py-1">Click a tag to filter</span>
                 </div>
-
-                {hasFilters ? (
-                  <Button asChild variant="outline" className="w-full border-white/10 bg-black/70 text-zinc-100 hover:bg-white/5 lg:w-auto">
-                    <Link href="/feed">Clear filters</Link>
-                  </Button>
-                ) : null}
               </div>
 
-              <div className="mt-5 space-y-4">
-                <FeedSearch />
-                <div className="flex flex-wrap gap-2 text-xs text-zinc-500">
-                  <span className="rounded-full border border-white/10 bg-black/40 px-3 py-1">Search title and tags</span>
-                  <span className="rounded-full border border-white/10 bg-black/40 px-3 py-1">Click a tag to filter</span>
+              <div className="rounded-3xl border border-white/10 bg-black/45 px-6 py-6 backdrop-blur-sm">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.24em] text-zinc-500">Search</p>
+                    <p className="mt-2 text-sm text-zinc-400">
+                      {search || tag ? "Refine the current results." : "Search by title, description, or tag."}
+                    </p>
+                  </div>
+
+                  {hasFilters ? (
+                    <Button asChild variant="outline" className="w-full border-white/10 bg-black/70 text-zinc-100 hover:bg-white/5 sm:w-auto">
+                      <Link href="/feed">Clear filters</Link>
+                    </Button>
+                  ) : null}
+                </div>
+
+                <div className="mt-5 space-y-4">
+                  <FeedSearch />
                 </div>
               </div>
             </div>
 
-            <div className="rounded-3xl border border-white/10 bg-black/45 px-6 py-6 backdrop-blur-sm">
-              <div className="flex items-end justify-between gap-3 border-b border-white/10 pb-4">
+            <div className="space-y-4">
+              <div className="flex items-end justify-between gap-3">
                 <div>
                   <h2 className="text-lg font-semibold text-zinc-100">All public resources</h2>
                   <p className="text-sm text-zinc-400">
@@ -157,6 +168,5 @@ export default async function PublicFeedPage({ searchParams }: FeedPageProps) {
     </>
   );
 }
-
 
 
