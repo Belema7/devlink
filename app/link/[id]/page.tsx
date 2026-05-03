@@ -165,6 +165,14 @@ const PublicLinkDetailsPage = async ({ params }: PublicLinkDetailsPageProps) => 
                     <ArrowUpRight className="size-4" />
                   </Link>
                 </Button>
+
+                {session?.user?.id === link.creatorId && (
+                  <Button asChild variant="outline" className="rounded-full border-zinc-800 text-zinc-300 hover:bg-zinc-900 hover:text-zinc-100">
+                    <Link href={`/edit-link/${link.id}`}>
+                      Edit Resource
+                    </Link>
+                  </Button>
+                )}
               </div>
           </CardContent>
           </Card>

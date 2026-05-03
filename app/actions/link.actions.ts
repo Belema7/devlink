@@ -7,7 +7,7 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { Prisma } from "@/lib/generated/prisma/client";
 import { createLinkSchema } from "@/lib/validators/link.schema";
-import { normalizeSearchQuery, normalizeTagList } from "@/lib/dashboard-filters";
+// No imports needed for local normalization
 
 type CreateLinkActionInput = {
   title: string;
@@ -70,8 +70,8 @@ export async function getUserLinks(filters: GetUserLinksInput = {}) {
     return [];
   }
 
-  const search = normalizeSearchQuery(filters.search);
-  const tags = normalizeTagList(filters.tags);
+  const search = filters.search?.trim() ?? "";
+  const tags = filters.tags ?? [];
   const visibility = filters.visibility;
 
   const andFilters: Prisma.LinkWhereInput[] = [];
@@ -267,8 +267,8 @@ export async function deleteLinkAction(linkId: string): Promise<DeleteLinkAction
       };
     }
 
-    revalidatePath("/dashboard");
-    revalidatePath("/links");
+    revalidatePath("/feed");
+    revalidatePath("/trending");
 
     return {
       success: true,
@@ -344,10 +344,10 @@ export async function updateLinkAction(
       },
     });
 
-    revalidatePath("/dashboard");
-    revalidatePath("/links");
-    revalidatePath(`/links/${parsed.data.id}`);
-    revalidatePath(`/links/edit/${parsed.data.id}`);
+    revalidatePath("/feed");
+    revalidatePath("/trending");
+    revalidatePath(`/link/${parsed.data.id}`);
+    revalidatePath(`/edit-link/${parsed.data.id}`);
 
     return {
       success: true,

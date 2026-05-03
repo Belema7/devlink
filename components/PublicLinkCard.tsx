@@ -17,6 +17,7 @@ export type PublicLink = {
   description: string | null;
   tags: Array<{ id: string; name: string }>;
   createdBy: string;
+  creatorId: string;
   voteCount: number;
   hasVoted: boolean;
 };
@@ -24,9 +25,10 @@ export type PublicLink = {
 type PublicLinkCardProps = {
   link: PublicLink;
   allowVoting: boolean;
+  currentUserId?: string | null;
 };
 
-export default function PublicLinkCard({ link, allowVoting }: PublicLinkCardProps) {
+export default function PublicLinkCard({ link, allowVoting, currentUserId }: PublicLinkCardProps) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const pathname = usePathname();
@@ -143,14 +145,25 @@ export default function PublicLinkCard({ link, allowVoting }: PublicLinkCardProp
         <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {/* Action buttons */}
           <div className="flex flex-wrap items-center gap-2">
-            <Button
-              asChild
-              variant="outline"
-              size="sm"
-              className="h-9 border-zinc-700 bg-zinc-950 text-zinc-100 hover:bg-zinc-900 hover:text-white"
-            >
-              <Link href={`/link/${link.id}`}>Open details</Link>
-            </Button>
+            {currentUserId === link.creatorId ? (
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="h-9 border-zinc-700 bg-zinc-950 text-zinc-100 hover:bg-zinc-900 hover:text-white"
+              >
+                <Link href={`/edit-link/${link.id}`}>Edit link</Link>
+              </Button>
+            ) : (
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="h-9 border-zinc-700 bg-zinc-950 text-zinc-100 hover:bg-zinc-900 hover:text-white"
+              >
+                <Link href={`/link/${link.id}`}>Open details</Link>
+              </Button>
+            )}
 
             <Button
               asChild

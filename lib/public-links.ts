@@ -87,6 +87,7 @@ export async function getPublicLinks(options: GetPublicLinksOptions = {}) {
       description: link.description,
       tags: link.tags,
       createdBy: link.user.name,
+      creatorId: link.user.id,
       voteCount: link._count.votes,
       hasVoted: userId ? link.votes.length > 0 : false,
     }));
@@ -164,6 +165,7 @@ export async function getTrendingLinks() {
       description: link.description,
       tags: link.tags,
       createdBy: link.user.name,
+      creatorId: link.user.id,
       voteCount: link._count.votes,
       hasVoted: userId ? link.votes.length > 0 : false,
     }));
@@ -212,6 +214,7 @@ export async function getPublicLinkById(linkId: string) {
       description: link.description,
       tags: link.tags,
       createdBy: link.user.name,
+      creatorId: link.user.id,
       voteCount: link._count.votes,
       hasVoted: userId ? link.votes.length > 0 : false,
       createdAt: link.createdAt.toISOString(),
@@ -245,6 +248,7 @@ export async function getPublicLinkById(linkId: string) {
       description: link.description,
       tags: link.tags,
       createdBy: link.user.name,
+      creatorId: link.user.id,
       voteCount: 0,
       hasVoted: false,
       createdAt: link.createdAt.toISOString(),

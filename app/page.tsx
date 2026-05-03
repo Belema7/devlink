@@ -39,16 +39,16 @@ export default async function Home() {
 
             <div className="mt-10 flex flex-wrap items-center gap-3">
               <Link
-                href={isSignedIn ? "/dashboard" : "/register"}
+                href={isSignedIn ? "/feed" : "/register"}
                 className="inline-flex h-11 items-center justify-center rounded-full bg-zinc-100 px-5 text-sm font-medium text-zinc-950 transition-colors hover:bg-zinc-200"
               >
-                {isSignedIn ? "Open dashboard" : "Get started"}
+                {isSignedIn ? "Browse feed" : "Get started"}
               </Link>
               <Link
-                href="/feed"
+                href="/add-link"
                 className="inline-flex h-11 items-center justify-center rounded-full border border-zinc-800 px-5 text-sm font-medium text-zinc-300 transition-colors hover:border-zinc-700 hover:text-zinc-100"
               >
-                Browse feed
+                Add a link
               </Link>
             </div>
           </div>
@@ -90,7 +90,7 @@ export default async function Home() {
                 <ul className="mt-4 space-y-3 text-sm text-zinc-300">
                   <li>• Simple navigation</li>
                   <li>• Fast tag management</li>
-                  <li>• A calm dashboard experience</li>
+                  <li>• A calm community experience</li>
                 </ul>
               </div>
             </div>
@@ -104,9 +104,6 @@ export default async function Home() {
               </Link>
               <Link href="/feed" className="transition-colors hover:text-zinc-300">
                 Feed
-              </Link>
-              <Link href="/dashboard" className="transition-colors hover:text-zinc-300">
-                Dashboard
               </Link>
             </div>
           </div>

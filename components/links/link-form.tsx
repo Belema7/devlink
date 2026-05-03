@@ -95,7 +95,7 @@ export default function LinkForm({
     setSubmitSuccess(result.message);
 
     if (isEditMode) {
-      router.push("/dashboard");
+      router.push("/feed");
       router.refresh();
       return;
     }

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { auth } from "@/lib/auth";
 import { getTrendingLinks } from "@/lib/public-links";
+import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Trending Resources",
@@ -13,10 +14,13 @@ export const metadata = {
 };
 
 export default async function TrendingPage() {
-  const [links, session] = await Promise.all([
-    getTrendingLinks(),
-    auth.api.getSession({ headers: await headers() }),
-  ]);
+  const session = await auth.api.getSession({ headers: await headers() });
+  
+  if (!session) {
+    redirect("/login");
+  }
+
+  const links = await getTrendingLinks();
 
   const allowVoting = Boolean(session?.user);
 
@@ -25,6 +29,7 @@ export default async function TrendingPage() {
       <Navbar />
 
       <main className="relative min-h-screen overflow-hidden bg-black text-zinc-100">
+        {/* Background implementation remains the same */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 z-0"
@@ -88,9 +93,6 @@ export default async function TrendingPage() {
                   <Button asChild variant="outline" className="border-white/10 bg-black/70 text-zinc-100 hover:bg-white/5">
                     <Link href="/feed">View feed</Link>
                   </Button>
-                  <Button asChild variant="outline" className="border-white/10 bg-black/70 text-zinc-100 hover:bg-white/5">
-                    <Link href="/dashboard">Dashboard</Link>
-                  </Button>
                 </div>
               </div>
 
@@ -135,7 +137,12 @@ export default async function TrendingPage() {
                 ) : (
                   <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                     {links.map((link) => (
-                      <PublicLinkCard key={link.id} link={link} allowVoting={allowVoting} />
+                      <PublicLinkCard 
+                        key={link.id} 
+                        link={link as any} 
+                        allowVoting={allowVoting} 
+                        currentUserId={session?.user?.id}
+                      />
                     ))}
                   </div>
                 )}

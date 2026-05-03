@@ -144,7 +144,7 @@ export default async function PublicFeedPage({ searchParams }: FeedPageProps) {
                       <p>
                         {hasFilters
                           ? "Try clearing the search or tag filter."
-                          : "Share your first public link from the dashboard to seed the feed."}
+                          : "Add your first link to see it appear in the feed."}
                       </p>
                       {hasFilters ? (
                         <Button asChild className="rounded-full border border-white/10 bg-white/10 text-zinc-100 hover:bg-white/15">
@@ -156,7 +156,12 @@ export default async function PublicFeedPage({ searchParams }: FeedPageProps) {
                 ) : (
                   <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                     {links.map((link) => (
-                      <PublicLinkCard key={link.id} link={link} allowVoting={allowVoting} />
+                      <PublicLinkCard 
+                        key={link.id} 
+                        link={link as any} 
+                        allowVoting={allowVoting} 
+                        currentUserId={session?.user?.id}
+                      />
                     ))}
                   </div>
                 )}
