@@ -18,6 +18,7 @@ export type PublicLink = {
   tags: Array<{ id: string; name: string }>;
   createdBy: string;
   isOwner: boolean;
+  isPublic?: boolean;
   voteCount: number;
   hasVoted: boolean;
 };
@@ -86,12 +87,17 @@ export default function PublicLinkCard({ link, allowVoting }: PublicLinkCardProp
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0 flex-1 space-y-2">
             <p className="text-xs font-medium tracking-widest text-zinc-500">
-              Shared by{" "}
+              {link.isOwner ? "Saved by" : "Shared by"}{" "}
               <span className="font-semibold text-zinc-400">{link.createdBy}</span>
             </p>
             <CardTitle className="line-clamp-2 text-2xl font-semibold leading-tight tracking-tighter text-zinc-50">
               {link.title}
             </CardTitle>
+            {typeof link.isPublic === "boolean" ? (
+              <span className="inline-flex w-fit rounded-full border border-zinc-700 bg-zinc-950 px-3 py-1 text-xs font-medium text-zinc-400">
+                {link.isPublic ? "Public" : "Private"}
+              </span>
+            ) : null}
           </div>
         </div>
 

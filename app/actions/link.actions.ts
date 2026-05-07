@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import { z } from "zod";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/db";
+import { Prisma } from "@/lib/generated/prisma/client";
 import { createLinkSchema } from "@/lib/validators/link.schema";
 
 type CreateLinkActionInput = {
@@ -50,6 +51,106 @@ const getAuthUserId = async () => {
 
   return session?.user?.id ?? null;
 };
+
+const isVoteTableMissingError = (error: unknown) =>
+  error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2021";
+
+export async function getUserLinks() {
+  const userId = await getAuthUserId();
+
+  if (!userId) {
+    return [];
+  }
+
+  try {
+    const links = await prisma.link.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        tags: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        user: {
+          select: {
+            name: true,
+          },
+        },
+        _count: {
+          select: {
+            votes: true,
+          },
+        },
+        votes: {
+          where: {
+            userId,
+          },
+          select: {
+            id: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return links.map((link) => ({
+      id: link.id,
+      title: link.title,
+      url: link.url,
+      description: link.description,
+      tags: link.tags,
+      createdBy: link.user.name,
+      isOwner: true,
+      isPublic: link.isPublic,
+      voteCount: link._count.votes,
+      hasVoted: link.votes.length > 0,
+    }));
+  } catch (error) {
+    if (!isVoteTableMissingError(error)) {
+      throw error;
+    }
+
+    const links = await prisma.link.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        tags: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        user: {
+          select: {
+            name: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return links.map((link) => ({
+      id: link.id,
+      title: link.title,
+      url: link.url,
+      description: link.description,
+      tags: link.tags,
+      createdBy: link.user.name,
+      isOwner: true,
+      isPublic: link.isPublic,
+      voteCount: 0,
+      hasVoted: false,
+    }));
+  }
+}
 
 export async function getUserLinkById(linkId: string) {
   const parsed = deleteLinkSchema.safeParse({ id: linkId });
@@ -125,6 +226,7 @@ export async function createLinkAction(
 
     revalidatePath("/feed");
     revalidatePath("/trending");
+    revalidatePath("/dashboard");
     revalidatePath("/add-link");
     revalidatePath(`/edit-link/${link.id}`);
 
@@ -204,6 +306,7 @@ export async function updateLinkAction(
 
     revalidatePath("/feed");
     revalidatePath("/trending");
+    revalidatePath("/dashboard");
     revalidatePath("/add-link");
     revalidatePath(`/edit-link/${parsed.data.id}`);
 
