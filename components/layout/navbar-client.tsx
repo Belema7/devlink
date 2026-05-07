@@ -40,6 +40,7 @@ export default function NavbarClient({ user }: NavbarClientProps) {
   const pathname = usePathname();
   const router = useRouter();
   const isAuthenticated = Boolean(user);
+  const addLinkHref = isAuthenticated ? "/add-link" : "/login?redirectTo=/add-link";
   const navItems = [
     { href: "/feed", label: "Feed" },
     ...(isAuthenticated ? [{ href: "/trending", label: "Trending" }] : []),
@@ -88,7 +89,7 @@ export default function NavbarClient({ user }: NavbarClientProps) {
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
-          <ButtonLink href="/add-link" className="rounded-full border border-zinc-700 bg-zinc-100 text-zinc-950 hover:bg-zinc-200">
+          <ButtonLink href={addLinkHref} className="rounded-full border border-zinc-700 bg-zinc-100 text-zinc-950 hover:bg-zinc-200">
             Add Link
             <ArrowRight className="size-4" />
           </ButtonLink>
@@ -103,7 +104,7 @@ export default function NavbarClient({ user }: NavbarClientProps) {
         </div>
 
         <div className="flex items-center gap-4 md:hidden">
-          <ButtonLink href="/add-link" className="h-9 rounded-full border border-zinc-700 bg-zinc-100 px-3 text-zinc-950 hover:bg-zinc-200">
+          <ButtonLink href={addLinkHref} className="h-9 rounded-full border border-zinc-700 bg-zinc-100 px-3 text-zinc-950 hover:bg-zinc-200">
             Add Link
           </ButtonLink>
         </div>

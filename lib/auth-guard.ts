@@ -8,7 +8,7 @@ export async function requireUser() {
   });
 
   if (!session?.user) {
-    redirect("/");
+    redirect("/login");
   }
 
   return session.user;

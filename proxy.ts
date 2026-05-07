@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-const HOME_PATH = "/";
+const LOGIN_PATH = "/login";
 const SESSION_ENDPOINT = "/api/auth/get-session";
 
 type SessionResponse = {
@@ -37,7 +37,8 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const loginUrl = new URL(HOME_PATH, request.url);
+  const loginUrl = new URL(LOGIN_PATH, request.url);
+  loginUrl.searchParams.set("redirectTo", `${request.nextUrl.pathname}${request.nextUrl.search}`);
 
   return NextResponse.redirect(loginUrl);
 }

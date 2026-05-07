@@ -113,17 +113,42 @@ export async function getPublicLinks(options: GetPublicLinksOptions = {}) {
   }
 }
 
-export async function getTrendingLinks() {
+export async function getTrendingLinks(options: GetPublicLinksOptions = {}) {
   const userId = await getAuthUserId();
+  const search = normalizeFeedSearchQuery(options.search);
+  const tag = normalizeFeedTag(options.tag);
+
+  const where: Prisma.LinkWhereInput = {
+    isPublic: true,
+    votes: {
+      some: {},
+    },
+  };
+
+  if (search) {
+    where.OR = [
+      { title: { contains: search, mode: "insensitive" } },
+      {
+        tags: {
+          some: {
+            name: { contains: search, mode: "insensitive" },
+          },
+        },
+      },
+    ];
+  }
+
+  if (tag) {
+    where.tags = {
+      some: {
+        name: tag,
+      },
+    };
+  }
 
   try {
     const links = await prisma.link.findMany({
-      where: {
-        isPublic: true,
-        votes: {
-          some: {},
-        },
-      },
+      where,
       include: {
         tags: {
           select: { id: true, name: true },

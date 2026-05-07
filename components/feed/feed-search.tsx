@@ -40,7 +40,7 @@ export default function FeedSearch() {
   }, [activeSearch, pathname, router, searchParams, searchValue, startTransition]);
 
   return (
-    <div className="relative w-full max-w-2xl">
+    <div className="relative w-full">
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
         <Search className="size-4 text-zinc-500" />
       </div>

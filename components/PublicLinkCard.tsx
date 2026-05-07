@@ -74,7 +74,9 @@ export default function PublicLinkCard({ link, isAuthenticated }: PublicLinkCard
       params.set("tag", normalizedTag);
     }
 
-    const destination = pathname === "/feed" ? buildFeedHref(pathname, params) : buildFeedHref("/feed", params);
+    const destination = pathname === "/feed" || pathname === "/trending"
+      ? buildFeedHref(pathname, params)
+      : buildFeedHref("/feed", params);
     router.push(destination, { scroll: false });
   };
 
