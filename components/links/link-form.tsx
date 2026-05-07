@@ -52,7 +52,7 @@ export default function LinkForm({
       title: initialValues?.title ?? "",
       url: initialValues?.url ?? "",
       description: initialValues?.description ?? "",
-      isPublic: initialValues?.isPublic ?? false,
+      isPublic: initialValues?.isPublic ?? true,
       tagsInput: initialValues?.tags?.join(", ") ?? "",
     },
   });
@@ -95,18 +95,12 @@ export default function LinkForm({
     setSubmitSuccess(result.message);
 
     if (isEditMode) {
-      router.push("/dashboard");
+      router.push("/feed");
       router.refresh();
       return;
     }
 
-    form.reset({
-      title: "",
-      url: "",
-      description: "",
-      isPublic: false,
-      tagsInput: "",
-    });
+    router.push("/feed");
     router.refresh();
   });
 

@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-const LOGIN_PATH = "/login";
+const HOME_PATH = "/";
 const SESSION_ENDPOINT = "/api/auth/get-session";
 
 type SessionResponse = {
@@ -37,12 +37,11 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const loginUrl = new URL(LOGIN_PATH, request.url);
-  loginUrl.searchParams.set("redirectTo", request.nextUrl.pathname + request.nextUrl.search);
+  const loginUrl = new URL(HOME_PATH, request.url);
 
   return NextResponse.redirect(loginUrl);
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/links/:path*", "/profile/:path*", "/tags/:path*"],
+  matcher: ["/add-link/:path*", "/edit-link/:path*", "/trending"],
 };

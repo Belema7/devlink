@@ -144,7 +144,7 @@ export default async function PublicFeedPage({ searchParams }: FeedPageProps) {
                       <p>
                         {hasFilters
                           ? "Try clearing the search or tag filter."
-                          : "Share your first public link from the dashboard to seed the feed."}
+                          : "Share your first public link to seed the feed."}
                       </p>
                       {hasFilters ? (
                         <Button asChild className="rounded-full border border-white/10 bg-white/10 text-zinc-100 hover:bg-white/15">
@@ -168,5 +168,4 @@ export default async function PublicFeedPage({ searchParams }: FeedPageProps) {
     </>
   );
 }
-
 

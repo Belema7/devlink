@@ -5,9 +5,7 @@ import { headers } from "next/headers";
 import { z } from "zod";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/db";
-import { Prisma } from "@/lib/generated/prisma/client";
 import { createLinkSchema } from "@/lib/validators/link.schema";
-import { normalizeSearchQuery, normalizeTagList } from "@/lib/dashboard-filters";
 
 type CreateLinkActionInput = {
   title: string;
@@ -20,10 +18,6 @@ type CreateLinkActionInput = {
 type CreateLinkActionResult =
   | { success: true; message: string }
   | { success: false; message: string; fieldErrors?: Record<string, string[]> };
-
-type DeleteLinkActionResult =
-  | { success: true; message: string }
-  | { success: false; message: string };
 
 type UpdateLinkActionInput = {
   id: string;
@@ -56,99 +50,6 @@ const getAuthUserId = async () => {
 
   return session?.user?.id ?? null;
 };
-
-export type GetUserLinksInput = {
-  search?: string;
-  tags?: string[];
-  visibility?: "all" | "public" | "private";
-};
-
-export async function getUserLinks(filters: GetUserLinksInput = {}) {
-  const userId = await getAuthUserId();
-
-  if (!userId) {
-    return [];
-  }
-
-  const search = normalizeSearchQuery(filters.search);
-  const tags = normalizeTagList(filters.tags);
-  const visibility = filters.visibility;
-
-  const andFilters: Prisma.LinkWhereInput[] = [];
-
-  if (search) {
-    andFilters.push({
-      OR: [
-        { title: { contains: search, mode: "insensitive" } },
-        {
-          tags: {
-            some: {
-              name: { contains: search, mode: "insensitive" },
-            },
-          },
-        },
-      ],
-    });
-  }
-
-  if (tags.length > 0) {
-    andFilters.push({
-      tags: {
-        some: {
-          name: { in: tags },
-        },
-      },
-    });
-  }
-
-  if (visibility && visibility !== "all") {
-    andFilters.push({ isPublic: visibility === "public" });
-  }
-
-  return prisma.link.findMany({
-    where: {
-      userId,
-      ...(andFilters.length > 0 ? { AND: andFilters } : {}),
-    },
-    include: {
-      tags: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
-}
-
-export async function getUserTagNames() {
-  const userId = await getAuthUserId();
-
-  if (!userId) {
-    return [];
-  }
-
-  const tags = await prisma.tag.findMany({
-    where: {
-      links: {
-        some: {
-          userId,
-        },
-      },
-    },
-    select: {
-      name: true,
-    },
-    orderBy: {
-      name: "asc",
-    },
-  });
-
-  return tags.map((tag) => tag.name);
-}
 
 export async function getUserLinkById(linkId: string) {
   const parsed = deleteLinkSchema.safeParse({ id: linkId });
@@ -206,7 +107,7 @@ export async function createLinkAction(
   try {
     const normalizedTags = normalizeTags(parsed.data.tags);
 
-    await prisma.link.create({
+    const link = await prisma.link.create({
       data: {
         title: parsed.data.title,
         url: parsed.data.url,
@@ -222,6 +123,11 @@ export async function createLinkAction(
       },
     });
 
+    revalidatePath("/feed");
+    revalidatePath("/trending");
+    revalidatePath("/add-link");
+    revalidatePath(`/edit-link/${link.id}`);
+
     return {
       success: true,
       message: "Link saved successfully.",
@@ -231,54 +137,6 @@ export async function createLinkAction(
     return {
       success: false,
       message: "Something went wrong while saving your link. Please try again.",
-    };
-  }
-}
-
-export async function deleteLinkAction(linkId: string): Promise<DeleteLinkActionResult> {
-  const parsed = deleteLinkSchema.safeParse({ id: linkId });
-  if (!parsed.success) {
-    return {
-      success: false,
-      message: parsed.error.issues[0]?.message ?? "Invalid link ID.",
-    };
-  }
-
-  const userId = await getAuthUserId();
-  if (!userId) {
-    return {
-      success: false,
-      message: "You must be logged in to delete a link.",
-    };
-  }
-
-  try {
-    const deleted = await prisma.link.deleteMany({
-      where: {
-        id: parsed.data.id,
-        userId,
-      },
-    });
-
-    if (deleted.count === 0) {
-      return {
-        success: false,
-        message: "Link not found or you do not have access.",
-      };
-    }
-
-    revalidatePath("/dashboard");
-    revalidatePath("/links");
-
-    return {
-      success: true,
-      message: "Link deleted.",
-    };
-  } catch (error) {
-    console.error("Failed to delete link:", error);
-    return {
-      success: false,
-      message: "Something went wrong while deleting the link.",
     };
   }
 }
@@ -344,10 +202,10 @@ export async function updateLinkAction(
       },
     });
 
-    revalidatePath("/dashboard");
-    revalidatePath("/links");
-    revalidatePath(`/links/${parsed.data.id}`);
-    revalidatePath(`/links/edit/${parsed.data.id}`);
+    revalidatePath("/feed");
+    revalidatePath("/trending");
+    revalidatePath("/add-link");
+    revalidatePath(`/edit-link/${parsed.data.id}`);
 
     return {
       success: true,

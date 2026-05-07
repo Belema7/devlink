@@ -32,7 +32,7 @@ function GoogleIcon() {
 function LoginPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo") || "/dashboard";
+  const redirectTo = searchParams.get("redirectTo") || "/add-link";
 
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");

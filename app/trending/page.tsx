@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { headers } from "next/headers";
 import Navbar from "@/components/layout/navbar";
 import PublicLinkCard from "@/components/PublicLinkCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { auth } from "@/lib/auth";
+import { requireUser } from "@/lib/auth-guard";
 import { getTrendingLinks } from "@/lib/public-links";
 
 export const metadata = {
@@ -13,12 +12,8 @@ export const metadata = {
 };
 
 export default async function TrendingPage() {
-  const [links, session] = await Promise.all([
-    getTrendingLinks(),
-    auth.api.getSession({ headers: await headers() }),
-  ]);
-
-  const allowVoting = Boolean(session?.user);
+  await requireUser();
+  const links = await getTrendingLinks();
 
   return (
     <>
@@ -89,7 +84,7 @@ export default async function TrendingPage() {
                     <Link href="/feed">View feed</Link>
                   </Button>
                   <Button asChild variant="outline" className="border-white/10 bg-black/70 text-zinc-100 hover:bg-white/5">
-                    <Link href="/dashboard">Dashboard</Link>
+                    <Link href="/add-link">Add Link</Link>
                   </Button>
                 </div>
               </div>
@@ -135,7 +130,7 @@ export default async function TrendingPage() {
                 ) : (
                   <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                     {links.map((link) => (
-                      <PublicLinkCard key={link.id} link={link} allowVoting={allowVoting} />
+                      <PublicLinkCard key={link.id} link={link} allowVoting />
                     ))}
                   </div>
                 )}

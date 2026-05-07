@@ -52,7 +52,7 @@ export default function RegisterPage() {
         password: form.password,
         name: form.name,
         fetchOptions: {
-          onSuccess: () => router.push("/dashboard"),
+          onSuccess: () => router.push("/add-link"),
           onError: (ctx) => setError(ctx.error.message),
         },
       });
@@ -68,7 +68,7 @@ export default function RegisterPage() {
     try {
       await signIn.social({
         provider,
-        callbackURL: "/dashboard",
+        callbackURL: "/add-link",
         fetchOptions: {
           onError: (ctx) => setError(ctx.error.message),
         },

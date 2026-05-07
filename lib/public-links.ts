@@ -87,6 +87,7 @@ export async function getPublicLinks(options: GetPublicLinksOptions = {}) {
       description: link.description,
       tags: link.tags,
       createdBy: link.user.name,
+      isOwner: userId === link.user.id,
       voteCount: link._count.votes,
       hasVoted: userId ? link.votes.length > 0 : false,
     }));
@@ -115,6 +116,7 @@ export async function getPublicLinks(options: GetPublicLinksOptions = {}) {
       description: link.description,
       tags: link.tags,
       createdBy: link.user.name,
+      isOwner: userId === link.user.id,
       voteCount: 0,
       hasVoted: false,
     }));
@@ -164,6 +166,7 @@ export async function getTrendingLinks() {
       description: link.description,
       tags: link.tags,
       createdBy: link.user.name,
+      isOwner: userId === link.user.id,
       voteCount: link._count.votes,
       hasVoted: userId ? link.votes.length > 0 : false,
     }));
@@ -173,81 +176,5 @@ export async function getTrendingLinks() {
     }
 
     return [];
-  }
-}
-
-export async function getPublicLinkById(linkId: string) {
-  const userId = await getAuthUserId();
-  try {
-    const link = await prisma.link.findFirst({
-      where: {
-        id: linkId,
-        isPublic: true,
-      },
-      include: {
-        tags: {
-          select: { id: true, name: true },
-        },
-        user: {
-          select: { id: true, name: true },
-        },
-        _count: {
-          select: { votes: true },
-        },
-        votes: userId
-          ? {
-              where: { userId },
-              select: { id: true },
-            }
-          : false,
-      },
-    });
-
-    if (!link) return null;
-
-    return {
-      id: link.id,
-      title: link.title,
-      url: link.url,
-      description: link.description,
-      tags: link.tags,
-      createdBy: link.user.name,
-      voteCount: link._count.votes,
-      hasVoted: userId ? link.votes.length > 0 : false,
-      createdAt: link.createdAt.toISOString(),
-    };
-  } catch (error) {
-    if (!isVoteTableMissingError(error)) {
-      throw error;
-    }
-
-    const link = await prisma.link.findFirst({
-      where: {
-        id: linkId,
-        isPublic: true,
-      },
-      include: {
-        tags: {
-          select: { id: true, name: true },
-        },
-        user: {
-          select: { id: true, name: true },
-        },
-      },
-    });
-
-    if (!link) return null;
-
-    return {
-      id: link.id,
-      title: link.title,
-      url: link.url,
-      description: link.description,
-      tags: link.tags,
-      createdBy: link.user.name,
-      voteCount: 0,
-      hasVoted: false,
-      createdAt: link.createdAt.toISOString(),
-    };
   }
 }

@@ -121,7 +121,7 @@ export async function upvoteLink(linkId: string): Promise<VoteActionResult> {
 
   const currentState = await getVoteState(parsed.data.linkId, userId);
   revalidatePath("/feed");
-  revalidatePath(`/link/${parsed.data.linkId}`);
+  revalidatePath("/trending");
   return {
     success: true,
     ...currentState,
@@ -171,7 +171,7 @@ export async function removeVote(linkId: string): Promise<VoteActionResult> {
 
   const currentState = await getVoteState(parsed.data.linkId, userId);
   revalidatePath("/feed");
-  revalidatePath(`/link/${parsed.data.linkId}`);
+  revalidatePath("/trending");
 
   return {
     success: true,

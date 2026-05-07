@@ -39,10 +39,10 @@ export default async function Home() {
 
             <div className="mt-10 flex flex-wrap items-center gap-3">
               <Link
-                href={isSignedIn ? "/dashboard" : "/register"}
+                href={isSignedIn ? "/add-link" : "/register"}
                 className="inline-flex h-11 items-center justify-center rounded-full bg-zinc-100 px-5 text-sm font-medium text-zinc-950 transition-colors hover:bg-zinc-200"
               >
-                {isSignedIn ? "Open dashboard" : "Get started"}
+                {isSignedIn ? "Add link" : "Get started"}
               </Link>
               <Link
                 href="/feed"
@@ -90,7 +90,7 @@ export default async function Home() {
                 <ul className="mt-4 space-y-3 text-sm text-zinc-300">
                   <li>• Simple navigation</li>
                   <li>• Fast tag management</li>
-                  <li>• A calm dashboard experience</li>
+                  <li>• A calm sharing experience</li>
                 </ul>
               </div>
             </div>
@@ -99,14 +99,16 @@ export default async function Home() {
           <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-zinc-800 pt-6 text-sm text-zinc-500">
             <p>Built for developers who prefer clarity over clutter.</p>
             <div className="flex items-center gap-4">
-              <Link href="/trending" className="transition-colors hover:text-zinc-300">
-                Trending
-              </Link>
+              {isSignedIn ? (
+                <Link href="/trending" className="transition-colors hover:text-zinc-300">
+                  Trending
+                </Link>
+              ) : null}
               <Link href="/feed" className="transition-colors hover:text-zinc-300">
                 Feed
               </Link>
-              <Link href="/dashboard" className="transition-colors hover:text-zinc-300">
-                Dashboard
+              <Link href="/add-link" className="transition-colors hover:text-zinc-300">
+                Add Link
               </Link>
             </div>
           </div>

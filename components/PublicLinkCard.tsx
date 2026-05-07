@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
-import { ExternalLink, Hash, ThumbsUp } from "lucide-react";
+import { ExternalLink, Hash, Pencil, ThumbsUp } from "lucide-react";
 import { removeVote, upvoteLink } from "@/app/actions/vote.actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,6 +17,7 @@ export type PublicLink = {
   description: string | null;
   tags: Array<{ id: string; name: string }>;
   createdBy: string;
+  isOwner: boolean;
   voteCount: number;
   hasVoted: boolean;
 };
@@ -143,14 +144,19 @@ export default function PublicLinkCard({ link, allowVoting }: PublicLinkCardProp
         <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {/* Action buttons */}
           <div className="flex flex-wrap items-center gap-2">
-            <Button
-              asChild
-              variant="outline"
-              size="sm"
-              className="h-9 border-zinc-700 bg-zinc-950 text-zinc-100 hover:bg-zinc-900 hover:text-white"
-            >
-              <Link href={`/link/${link.id}`}>Open details</Link>
-            </Button>
+            {link.isOwner ? (
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="h-9 border-zinc-700 bg-zinc-950 text-zinc-100 hover:bg-zinc-900 hover:text-white"
+              >
+                <Link href={`/edit-link/${link.id}`}>
+                  <Pencil className="size-3.5" />
+                  Edit
+                </Link>
+              </Button>
+            ) : null}
 
             <Button
               asChild
@@ -194,7 +200,7 @@ export default function PublicLinkCard({ link, allowVoting }: PublicLinkCardProp
                 variant="outline"
                 className="h-9 w-9 items-center justify-center gap-1 rounded-3xl border border-zinc-700 bg-zinc-950 px-5 text-sm font-semibold text-zinc-100 hover:bg-zinc-900"
               >
-                <Link href="/login">
+                <Link href="/">
                   <ThumbsUp className="size-4" />
                   <span className="tabular-nums">{voteCount}</span>
                 </Link>
