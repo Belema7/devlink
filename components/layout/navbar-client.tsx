@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowRight, LayoutDashboard, LogOut, Sparkles, UserRound } from "lucide-react";
+import { ArrowRight, BookOpenText, LayoutDashboard, LogOut, UserRound } from "lucide-react";
 import { signOut } from "@/lib/auth-client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
@@ -58,14 +58,14 @@ export default function NavbarClient({ user }: NavbarClientProps) {
   };
 
   return (
-    <nav className="border-b border-zinc-800 bg-zinc-950">
+    <nav className="border-b border-border bg-background/95 text-foreground backdrop-blur-sm">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-        <Link href="/" className="flex items-center gap-3 text-zinc-100">
-          <span className="inline-flex size-9 items-center justify-center rounded-full border border-zinc-700 text-zinc-100">
-            <Sparkles className="size-4" />
+        <Link href="/" className="flex items-center gap-3 text-foreground transition-transform duration-300 ease-out hover:scale-105">
+          <span className="inline-flex size-9 items-center justify-center rounded-full border border-primary/40 bg-card text-primary">
+            <BookOpenText className="size-4 stroke-[1.5]" />
           </span>
-          <span className="hidden text-base font-semibold tracking-tight md:inline">DevLinks</span>
-          <span className="text-base font-semibold tracking-tight md:hidden">Devlink</span>
+          <span className="hidden font-heading text-2xl font-medium tracking-normal md:inline">DevLinks</span>
+          <span className="font-heading text-2xl font-medium tracking-normal md:hidden">Devlink</span>
         </Link>
 
         <div className="hidden items-center gap-8 lg:flex">
@@ -78,8 +78,8 @@ export default function NavbarClient({ user }: NavbarClientProps) {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "text-sm font-medium transition-colors",
-                  active ? "text-zinc-100" : "text-zinc-500 hover:text-zinc-100"
+                  "font-display text-xs font-medium uppercase tracking-[0.2em] transition-all duration-300 ease-out",
+                  active ? "text-primary" : "text-muted-foreground hover:text-primary hover:tracking-[0.25em]"
                 )}
               >
                 {item.label}
@@ -89,7 +89,7 @@ export default function NavbarClient({ user }: NavbarClientProps) {
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
-          <ButtonLink href={addLinkHref} className="rounded-full border border-zinc-700 bg-zinc-100 text-zinc-950 hover:bg-zinc-200">
+          <ButtonLink href={addLinkHref}>
             Add Link
             <ArrowRight className="size-4" />
           </ButtonLink>
@@ -104,13 +104,13 @@ export default function NavbarClient({ user }: NavbarClientProps) {
         </div>
 
         <div className="flex items-center gap-4 md:hidden">
-          <ButtonLink href={addLinkHref} className="h-9 rounded-full border border-zinc-700 bg-zinc-100 px-3 text-zinc-950 hover:bg-zinc-200">
+          <ButtonLink href={addLinkHref} className="h-10 px-4">
             Add Link
           </ButtonLink>
         </div>
       </div>
 
-      <div className="border-t border-zinc-900 px-6 py-3 md:hidden">
+      <div className="border-t border-border px-6 py-3 md:hidden">
         <div className="mx-auto flex max-w-6xl items-center gap-2">
           <MobileTab href="/feed" active={isActiveRoute(pathname, "/feed")}>
             Feed
@@ -154,23 +154,23 @@ function ProfileMenu({
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className="inline-flex size-10 items-center justify-center rounded-full border border-zinc-800 bg-zinc-950 text-zinc-200 transition-colors hover:border-zinc-700 hover:bg-zinc-900"
+          className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-primary/60 hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-label="Open profile menu"
         >
           <Avatar className="size-8">
             <AvatarImage src={image ?? undefined} alt={name ?? "User"} />
-            <AvatarFallback className="bg-zinc-900 text-xs font-medium text-zinc-300">
+            <AvatarFallback className="bg-muted font-display text-xs font-medium text-primary">
               {getInitials(name)}
             </AvatarFallback>
           </Avatar>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-64 border-zinc-800 bg-zinc-950 text-zinc-100">
-        <DropdownMenuLabel className="flex min-w-0 items-center gap-2 text-xs font-normal text-zinc-400">
+      <DropdownMenuContent align="end" className="w-64 border-border bg-card text-foreground">
+        <DropdownMenuLabel className="flex min-w-0 items-center gap-2 font-body text-xs font-normal text-muted-foreground">
           <UserRound className="size-4 shrink-0" />
           <span className="truncate">{email}</span>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator className="bg-zinc-800" />
+        <DropdownMenuSeparator className="bg-border" />
         <DropdownMenuItem className="cursor-pointer" asChild>
           <Link href="/dashboard">
             <LayoutDashboard className="mr-2 size-4" />
@@ -203,10 +203,10 @@ function MobileTab({
       href={href}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "inline-flex h-9 items-center rounded-full border px-4 text-sm font-medium transition-colors",
+        "inline-flex h-10 items-center rounded border px-4 font-display text-[0.7rem] font-medium uppercase tracking-[0.16em] transition-colors",
         active
-          ? "border-zinc-700 bg-zinc-100 text-zinc-950"
-          : "border-zinc-800 bg-zinc-950 text-zinc-400 hover:bg-zinc-900 hover:text-zinc-100"
+          ? "brass-gradient border-primary text-primary-foreground"
+          : "border-border bg-card text-muted-foreground hover:border-primary/60 hover:text-primary"
       )}
     >
       {children}
@@ -231,7 +231,7 @@ function ButtonLink({
           variant: "default",
           size: "sm",
         }),
-        "inline-flex h-11 items-center gap-2 px-4",
+        "inline-flex items-center gap-2",
         className
       )}
     >

@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import Link from "next/link";
+import { ArrowRight, BookOpenText, Library, Search, Tags } from "lucide-react";
 import { auth } from "@/lib/auth";
 import Navbar from "@/components/layout/navbar";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "DevLinks",
@@ -10,9 +12,24 @@ export const metadata: Metadata = {
 };
 
 const features = [
-  "Save links without noise",
-  "Organize by tags",
-  "Find what you need fast",
+  {
+    title: "Archive Without Noise",
+    description: "Preserve useful resources in a quiet catalogue built for return visits.",
+    icon: BookOpenText,
+    numeral: "I",
+  },
+  {
+    title: "Index By Tags",
+    description: "Group references by language, framework, pattern, or whatever your work demands.",
+    icon: Tags,
+    numeral: "II",
+  },
+  {
+    title: "Retrieve With Ease",
+    description: "Search the shelves quickly when a decision, bug, or idea needs the right source.",
+    icon: Search,
+    numeral: "III",
+  },
 ];
 
 export default async function Home() {
@@ -23,91 +40,133 @@ export default async function Home() {
   const isSignedIn = Boolean(session?.user);
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
+    <div className="academia-shell min-h-screen text-foreground">
       <Navbar />
 
-      <main className="mx-auto flex w-full max-w-6xl flex-col px-6">
-        <section className="flex flex-1 flex-col justify-center py-20 sm:py-24 lg:py-28">
-          <div className="max-w-3xl">
-            <p className="text-sm font-medium uppercase tracking-[0.28em] text-zinc-500">Developer link organizer</p>
-            <h1 className="mt-6 text-5xl font-semibold tracking-tight text-zinc-100 sm:text-6xl lg:text-7xl">
-              Keep your favorite links simple, searchable, and in one place.
-            </h1>
-            <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-400 sm:text-lg">
-              DevLinks gives you a calm, focused place to save resources, tag them clearly, and get back to work.
-            </p>
-
-            <div className="mt-10 flex flex-wrap items-center gap-3">
-              <Link
-                href={isSignedIn ? "/add-link" : "/register"}
-                className="inline-flex h-11 items-center justify-center rounded-full bg-zinc-100 px-5 text-sm font-medium text-zinc-950 transition-colors hover:bg-zinc-200"
-              >
-                {isSignedIn ? "Add link" : "Get started"}
-              </Link>
-              <Link
-                href="/feed"
-                className="inline-flex h-11 items-center justify-center rounded-full border border-zinc-800 px-5 text-sm font-medium text-zinc-300 transition-colors hover:border-zinc-700 hover:text-zinc-100"
-              >
-                Browse feed
-              </Link>
-            </div>
-          </div>
-
-          <div className="mt-16 grid gap-6 lg:grid-cols-[1.3fr_0.7fr]">
-            <div className="rounded-3xl border border-zinc-800 bg-zinc-950 p-4">
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4 sm:p-6">
-                <div className="flex items-center gap-2 border-b border-zinc-800 pb-4">
-                  <span className="size-3 rounded-full border border-zinc-700" />
-                  <span className="size-3 rounded-full border border-zinc-700" />
-                  <span className="size-3 rounded-full border border-zinc-700" />
-                </div>
-
-                <div className="grid gap-4 py-8 sm:grid-cols-2">
-                  {features.map((feature) => (
-                    <div key={feature} className="rounded-2xl border border-zinc-800 px-4 py-5">
-                      <p className="text-sm text-zinc-300">{feature}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="border-t border-zinc-800 pt-4">
-                  <div className="h-10 w-full rounded-full border border-zinc-800 bg-zinc-950" />
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-col justify-between gap-6">
-              <div className="rounded-3xl border border-zinc-800 px-6 py-7">
-                <p className="text-sm uppercase tracking-[0.24em] text-zinc-500">Designed for focus</p>
-                <p className="mt-4 text-2xl font-semibold tracking-tight text-zinc-100">Clean UI. Clear structure. Less friction.</p>
-                <p className="mt-3 text-sm leading-6 text-zinc-400">
-                  A minimal workspace for saving dev links, organizing them by tags, and staying organized without distraction.
+      <main className="mx-auto flex w-full max-w-7xl flex-col px-6">
+        <section className="flex flex-1 flex-col justify-center py-16 sm:py-20 lg:py-24">
+          <div className="ornate-frame border border-border bg-card/80 p-8 md:p-10 lg:p-12">
+            <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+              <div>
+                <p className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-primary">Volume I</p>
+                <h1 className="mt-6 font-heading text-5xl font-medium leading-[1.05] tracking-normal text-foreground sm:text-6xl lg:text-7xl">
+                  DevLinks
+                </h1>
+                <p className="mt-4 max-w-2xl font-heading text-3xl leading-tight text-foreground/90 sm:text-4xl">
+                  A private reference library for the links that shape your craft.
                 </p>
+                <p className="drop-cap mt-7 max-w-2xl font-body text-lg leading-relaxed text-muted-foreground">
+                  Keep developer resources ordered, searchable, and ready at hand in a warm catalogue that feels closer to a study desk than another disposable dashboard.
+                </p>
+
+                <div className="mt-10 flex flex-wrap items-center gap-3">
+                  <Button asChild>
+                    <Link href={isSignedIn ? "/add-link" : "/register"}>
+                      {isSignedIn ? "Add Link" : "Begin Archive"}
+                      <ArrowRight className="size-4" />
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline">
+                    <Link href="/feed">Browse Catalogue</Link>
+                  </Button>
+                </div>
               </div>
 
-              <div className="rounded-3xl border border-zinc-800 px-6 py-7">
-                <p className="text-sm uppercase tracking-[0.24em] text-zinc-500">What you get</p>
-                <ul className="mt-4 space-y-3 text-sm text-zinc-300">
-                  <li>• Simple navigation</li>
-                  <li>• Fast tag management</li>
-                  <li>• A calm sharing experience</li>
-                </ul>
+              <div className="group mx-auto w-full max-w-md">
+                <div className="arch-top overflow-hidden border border-primary/40 bg-background p-4">
+                  <div className="sepia-reveal arch-top min-h-[420px] border border-border bg-[radial-gradient(circle_at_50%_10%,rgba(201,169,98,0.22),transparent_30%),linear-gradient(180deg,#3D332B_0%,#251E19_45%,#1C1714_100%)] p-6">
+                    <div className="flex h-full min-h-[372px] flex-col justify-between border border-primary/25 bg-background/45 p-5">
+                      <div>
+                        <div className="flex items-center justify-between border-b border-border pb-4">
+                          <span className="font-display text-[10px] uppercase tracking-[0.28em] text-primary">Ledger</span>
+                          <Library className="size-5 text-primary" />
+                        </div>
+                        <div className="mt-8 space-y-4">
+                          {["React patterns", "Database guides", "Design systems"].map((entry, index) => (
+                            <div key={entry} className="corner-flourish border border-border bg-card/80 p-4">
+                              <p className="font-display text-[10px] uppercase tracking-[0.2em] text-primary">
+                                {["I", "II", "III"][index]}
+                              </p>
+                              <p className="mt-2 font-heading text-2xl leading-tight text-foreground">{entry}</p>
+                              <div className="mt-4 h-1 w-24 bg-primary/50" />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="ornate-divider mt-8" aria-hidden="true" />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-zinc-800 pt-6 text-sm text-zinc-500">
+          <div className="my-12 ornate-divider" aria-hidden="true" />
+
+          <div>
+            <p className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-primary">Volume II</p>
+            <div className="mt-5 grid gap-6 md:grid-cols-3">
+              {features.map((feature) => {
+                const Icon = feature.icon;
+
+                return (
+                  <div key={feature.title} className="corner-flourish border border-border bg-card p-7 transition-all duration-300 ease-out hover:border-primary/50 hover:shadow-[0_8px_24px_rgba(0,0,0,0.3)]">
+                    <div className="flex size-12 items-center justify-center rounded-full border border-primary/30 bg-background text-primary">
+                      <Icon className="size-5 stroke-[1.5]" />
+                    </div>
+                    <p className="mt-6 font-display text-[10px] font-semibold uppercase tracking-[0.28em] text-primary">
+                      {feature.numeral}
+                    </p>
+                    <h2 className="mt-3 font-heading text-3xl font-medium leading-tight text-foreground">{feature.title}</h2>
+                    <p className="mt-4 font-body text-base leading-relaxed text-muted-foreground">{feature.description}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="mt-12 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+            <div className="ornate-frame border border-border bg-card/70 p-8 md:p-10">
+              <p className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-primary">Volume III</p>
+              <h2 className="mt-4 font-heading text-4xl font-medium leading-tight text-foreground">
+                Built for clarity, shaped with ceremony.
+              </h2>
+              <p className="drop-cap mt-6 font-body text-lg leading-relaxed text-muted-foreground">
+                DevLinks keeps the daily act of saving resources simple, while giving shared references enough structure to become useful again weeks or months later.
+              </p>
+            </div>
+
+            <div className="border border-border bg-background/50 p-7">
+              <p className="font-display text-xs font-semibold uppercase tracking-[0.28em] text-primary">What You Receive</p>
+              <ul className="mt-6 space-y-4 font-body text-base text-muted-foreground">
+                <li className="flex gap-3">
+                  <span className="font-display text-primary">I</span>
+                  <span>Simple navigation through public and personal collections.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="font-display text-primary">II</span>
+                  <span>Fast tag management for keeping ideas grouped by context.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="font-display text-primary">III</span>
+                  <span>A dignified sharing experience for resources worth citing.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6 font-display text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
             <p>Built for developers who prefer clarity over clutter.</p>
             <div className="flex items-center gap-4">
               {isSignedIn ? (
-                <Link href="/trending" className="transition-colors hover:text-zinc-300">
+                <Link href="/trending" className="transition-colors hover:text-primary">
                   Trending
                 </Link>
               ) : null}
-              <Link href="/feed" className="transition-colors hover:text-zinc-300">
+              <Link href="/feed" className="transition-colors hover:text-primary">
                 Feed
               </Link>
-              <Link href="/add-link" className="transition-colors hover:text-zinc-300">
+              <Link href="/add-link" className="transition-colors hover:text-primary">
                 Add Link
               </Link>
             </div>

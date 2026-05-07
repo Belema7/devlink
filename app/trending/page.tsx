@@ -30,63 +30,44 @@ export default async function TrendingPage({ searchParams }: TrendingPageProps) 
     <>
       <Navbar />
 
-      <main className="relative min-h-screen overflow-hidden bg-black text-zinc-100">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-0"
-          style={{
-            background: `
-              linear-gradient(
-                90deg,
-                transparent 0%,
-                transparent 30%,
-                rgba(138, 43, 226, 0.22) 50%,
-                transparent 70%,
-                transparent 100%
-              ),
-              linear-gradient(
-                to bottom,
-                #1a1a2e 0%,
-                #24153f 42%,
-                #0f0f23 100%
-              )
-            `,
-            backgroundImage: `
-              repeating-linear-gradient(
-                90deg,
-                transparent 0px,
-                transparent 79px,
-                rgba(255, 255, 255, 0.05) 80px,
-                rgba(255, 255, 255, 0.05) 81px
-              ),
-              repeating-linear-gradient(
-                0deg,
-                transparent 0px,
-                transparent 79px,
-                rgba(255, 255, 255, 0.035) 80px,
-                rgba(255, 255, 255, 0.035) 81px
-              )
-            `,
-          }}
-        />
+      <main className="academia-shell relative min-h-screen overflow-hidden text-foreground">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-16 lg:py-24">
+          <section className="space-y-10">
+            <div className="ornate-frame border border-border bg-card/80 p-8 md:p-10">
+              <p className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-primary">Volume I</p>
+              <div className="mt-5 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+                <div>
+                  <h1 className="font-heading text-5xl font-medium leading-[1.05] tracking-normal text-foreground md:text-6xl">
+                    Trending Volumes
+                  </h1>
+                  <p className="drop-cap mt-6 max-w-3xl font-body text-lg leading-relaxed text-muted-foreground">
+                    Consult the most endorsed resources in the collection, elevated by the community as references worthy of a prominent shelf.
+                  </p>
+                </div>
+                <div className="border border-border bg-background/60 p-5">
+                  <FeedSearch />
+                </div>
+              </div>
+            </div>
 
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-14">
-          <section className="space-y-8">
-            <div className="rounded-3xl border border-white/10 bg-black/45 px-6 py-6 backdrop-blur-sm">
-              <FeedSearch />
+            <div className="ornate-divider" aria-hidden="true" />
+
+            <div>
+              <p className="font-display text-[10px] font-semibold uppercase tracking-[0.28em] text-primary">Volume II</p>
+              <h2 className="mt-2 font-heading text-3xl font-medium text-foreground">Most Cited Entries</h2>
             </div>
 
             {links.length === 0 ? (
-              <Card className="border-white/10 bg-black/60">
+              <Card className="corner-flourish border-border bg-card">
                 <CardHeader>
-                  <CardTitle className="text-zinc-100">No trending resources yet</CardTitle>
+                  <CardTitle className="font-heading text-3xl text-foreground">No trending resources yet</CardTitle>
                 </CardHeader>
-                <CardContent className="text-sm text-zinc-300">
+                <CardContent className="font-body text-base text-muted-foreground">
                   {hasFilters ? "Try a different search or tag." : "No cards to show yet."}
                 </CardContent>
               </Card>
             ) : (
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
                 {links.map((link) => (
                   <PublicLinkCard key={link.id} link={link} isAuthenticated />
                 ))}
