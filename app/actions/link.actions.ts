@@ -74,11 +74,6 @@ export async function getUserLinks() {
             name: true,
           },
         },
-        user: {
-          select: {
-            name: true,
-          },
-        },
         _count: {
           select: {
             votes: true,
@@ -104,8 +99,6 @@ export async function getUserLinks() {
       url: link.url,
       description: link.description,
       tags: link.tags,
-      createdBy: link.user.name,
-      isOwner: true,
       isPublic: link.isPublic,
       voteCount: link._count.votes,
       hasVoted: link.votes.length > 0,
@@ -126,11 +119,6 @@ export async function getUserLinks() {
             name: true,
           },
         },
-        user: {
-          select: {
-            name: true,
-          },
-        },
       },
       orderBy: {
         createdAt: "desc",
@@ -143,8 +131,6 @@ export async function getUserLinks() {
       url: link.url,
       description: link.description,
       tags: link.tags,
-      createdBy: link.user.name,
-      isOwner: true,
       isPublic: link.isPublic,
       voteCount: 0,
       hasVoted: false,

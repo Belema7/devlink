@@ -130,7 +130,7 @@ export default async function TrendingPage() {
                 ) : (
                   <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                     {links.map((link) => (
-                      <PublicLinkCard key={link.id} link={link} allowVoting />
+                      <PublicLinkCard key={link.id} link={link} isAuthenticated />
                     ))}
                   </div>
                 )}

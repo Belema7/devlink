@@ -26,7 +26,7 @@ export default async function PublicFeedPage({ searchParams }: FeedPageProps) {
     auth.api.getSession({ headers: await headers() }),
   ]);
 
-  const allowVoting = Boolean(session?.user);
+  const isAuthenticated = Boolean(session?.user);
   const hasFilters = Boolean(search || tag);
   return (
     <>
@@ -156,7 +156,7 @@ export default async function PublicFeedPage({ searchParams }: FeedPageProps) {
                 ) : (
                   <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                     {links.map((link) => (
-                      <PublicLinkCard key={link.id} link={link} allowVoting={allowVoting} />
+                      <PublicLinkCard key={link.id} link={link} isAuthenticated={isAuthenticated} />
                     ))}
                   </div>
                 )}
@@ -168,4 +168,3 @@ export default async function PublicFeedPage({ searchParams }: FeedPageProps) {
     </>
   );
 }
-
