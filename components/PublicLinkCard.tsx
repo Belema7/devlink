@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
-import { ExternalLink, Hash, Pencil, ScrollText, Star, ThumbsUp } from "lucide-react";
+import { ExternalLink, Hash, Pencil, ThumbsUp } from "lucide-react";
 import { removeVote, upvoteLink } from "@/app/actions/vote.actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -81,31 +81,13 @@ export default function PublicLinkCard({ link, isAuthenticated }: PublicLinkCard
   };
 
   return (
-    <Card className="corner-flourish group relative flex h-full flex-col overflow-visible border-border bg-card text-foreground">
-      {hasVoted ? (
-        <div className="wax-seal absolute -top-3 right-6 z-10 flex size-10 items-center justify-center rounded-full text-foreground" aria-label="Voted resource">
-          <Star className="size-4 fill-current stroke-[1.5]" />
-        </div>
-      ) : null}
-
-      <div className="mx-6 mt-6 overflow-hidden border border-primary/30 bg-background arch-top">
-        <div className="sepia-reveal flex aspect-[4/3] items-center justify-center bg-[radial-gradient(circle_at_50%_20%,rgba(201,169,98,0.2),transparent_34%),linear-gradient(135deg,#3D332B_0%,#251E19_52%,#1C1714_100%)]">
-          <ScrollText className="size-10 text-primary" />
-        </div>
-      </div>
-
-      <CardHeader className="space-y-4 px-6 pt-5 pb-4">
+    <Card className="corner-flourish flex h-full flex-col border-border bg-card text-foreground">
+      <CardHeader className="space-y-4 px-6 pt-6 pb-4">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0 flex-1 space-y-2">
-            <p className="font-display text-[10px] font-semibold uppercase tracking-[0.28em] text-primary">I. Catalogue Entry</p>
             <CardTitle className="line-clamp-2 font-heading text-3xl font-medium leading-[1.05] tracking-normal text-foreground">
               {link.title}
             </CardTitle>
-            {typeof link.isPublic === "boolean" ? (
-              <span className="inline-flex w-fit rounded border border-border bg-background px-3 py-1 font-display text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
-                {link.isPublic ? "Public" : "Private"}
-              </span>
-            ) : null}
           </div>
         </div>
       </CardHeader>
@@ -127,7 +109,7 @@ export default function PublicLinkCard({ link, isAuthenticated }: PublicLinkCard
                 className={cn(
                   "inline-flex min-h-8 items-center gap-1.5 rounded border px-3 py-1.5 font-display text-[10px] font-medium uppercase tracking-[0.14em] transition-all duration-300 ease-out focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                   selectedTag === normalizeFeedTag(tag.name)
-                    ? "border-primary bg-primary text-primary-foreground shadow-inner"
+                    ? "border-primary bg-primary text-primary-foreground"
                     : "border-border bg-background text-muted-foreground hover:border-primary/60 hover:text-primary"
                 )}
               >
@@ -180,7 +162,7 @@ export default function PublicLinkCard({ link, isAuthenticated }: PublicLinkCard
             className={cn(
               "h-10 items-center justify-center gap-1 border px-3 text-[10px] transition-all",
               hasVoted
-                ? "border-primary bg-primary text-primary-foreground hover:brightness-110"
+                ? "border-primary bg-primary text-primary-foreground hover:bg-[#D4B872]"
                 : "border-border bg-background text-primary hover:border-primary"
             )}
           >

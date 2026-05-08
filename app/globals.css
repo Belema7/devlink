@@ -90,8 +90,7 @@
   --sidebar-ring: #c9a962;
   --academia-background-alt: #251e19;
   --academia-crimson: #8b2635;
-  --academia-brass-gradient: linear-gradient(180deg, #d4b872 0%, #c9a962 50%, #b8953f 100%);
-  --academia-engraved: 1px 1px 1px rgba(0,0,0,0.4), -1px -1px 1px rgba(255,255,255,0.1);
+  --academia-brass-gradient: #c9a962;
 }
 
 .dark {
@@ -170,10 +169,6 @@
 
   .brass-gradient {
     background: var(--academia-brass-gradient);
-  }
-
-  .engraved-text {
-    text-shadow: var(--academia-engraved);
   }
 
   .corner-flourish,
@@ -269,7 +264,6 @@
     font-family: var(--font-display);
     font-size: 4.5rem;
     line-height: 0.78;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
   }
 
   .arch-top {
@@ -285,14 +279,6 @@
   .sepia-reveal:hover {
     filter: sepia(0) contrast(1) brightness(1);
     transform: scale(1.03);
-  }
-
-  .wax-seal {
-    background: radial-gradient(circle at 35% 25%, #a83243 0%, #8b2635 46%, #5f1723 100%);
-    box-shadow:
-      inset 0 2px 4px rgba(255,255,255,0.2),
-      inset 0 -2px 4px rgba(0,0,0,0.3),
-      0 4px 8px rgba(0,0,0,0.4);
   }
 }
 

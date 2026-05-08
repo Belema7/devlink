@@ -82,16 +82,16 @@ function LoginPageContent() {
   return (
     <div className="w-full max-w-md">
       <div className="mb-8">
-        <p className="text-sm font-medium uppercase tracking-[0.28em] text-zinc-500">Welcome back</p>
-        <h2 className="mt-4 text-3xl font-semibold tracking-tight text-zinc-100">Sign in</h2>
-        <p className="mt-3 text-sm leading-6 text-zinc-400">
+        <p className="font-display text-xs font-semibold uppercase tracking-[0.28em] text-primary">Volume II</p>
+        <h2 className="mt-4 font-heading text-4xl font-medium tracking-normal text-foreground">Sign in</h2>
+        <p className="mt-3 font-body text-base leading-6 text-muted-foreground">
           Use your email or a provider to get back into DevLinks.
         </p>
       </div>
 
       <div className="space-y-4">
         {error ? (
-          <div className="border border-zinc-800 px-4 py-3 text-sm text-zinc-300">{error}</div>
+          <div className="border border-border bg-background/60 px-4 py-3 font-body text-sm text-foreground">{error}</div>
         ) : null}
 
         <div className="grid gap-3 sm:grid-cols-2">
@@ -100,7 +100,7 @@ function LoginPageContent() {
             variant="outline"
             disabled={!!oauthLoading}
             onClick={() => handleOAuth("google")}
-            className="h-11 gap-2 border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900 hover:text-zinc-100"
+            className="h-11 gap-2 border-border bg-background text-primary hover:border-primary"
           >
             {oauthLoading === "google" ? <Loader2 className="size-4 animate-spin" /> : <GoogleIcon />}
             Google
@@ -110,18 +110,18 @@ function LoginPageContent() {
             variant="outline"
             disabled={!!oauthLoading}
             onClick={() => handleOAuth("github")}
-            className="h-11 gap-2 border-zinc-800 bg-zinc-950 text-zinc-100 hover:bg-zinc-900 hover:text-zinc-100"
+            className="h-11 gap-2 border-border bg-background text-primary hover:border-primary"
           >
             {oauthLoading === "github" ? <Loader2 className="size-4 animate-spin" /> : <GithubIcon />}
             GitHub
           </Button>
         </div>
 
-        <Separator className="bg-zinc-800" />
+        <Separator className="bg-border" />
 
         <form onSubmit={handleEmailSignIn} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-sm font-medium text-zinc-200">
+            <Label htmlFor="email" className="font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               Email
             </Label>
             <Input
@@ -132,12 +132,12 @@ function LoginPageContent() {
               autoComplete="email"
               value={form.email}
               onChange={(e) => updateField("email", e.target.value)}
-              className="h-11 border-zinc-800 bg-zinc-950 text-zinc-100 placeholder:text-zinc-500 focus-visible:border-zinc-500"
+              className="h-11 border-border bg-background text-foreground placeholder:text-muted-foreground focus-visible:border-primary"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password" className="text-sm font-medium text-zinc-200">
+            <Label htmlFor="password" className="font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               Password
             </Label>
             <div className="relative">
@@ -149,12 +149,12 @@ function LoginPageContent() {
                 autoComplete="current-password"
                 value={form.password}
                 onChange={(e) => updateField("password", e.target.value)}
-                className="h-11 border-zinc-800 bg-zinc-950 pr-10 text-zinc-100 placeholder:text-zinc-500 focus-visible:border-zinc-500"
+                className="h-11 border-border bg-background pr-10 text-foreground placeholder:text-muted-foreground focus-visible:border-primary"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 transition-colors hover:text-zinc-100"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
@@ -165,16 +165,16 @@ function LoginPageContent() {
           <Button
             type="submit"
             disabled={loading}
-            className="h-11 w-full rounded-full border border-zinc-700 bg-zinc-100 text-zinc-950 hover:bg-zinc-200"
+            className="h-12 w-full"
           >
             {loading ? <Loader2 className="mr-2 size-4 animate-spin" /> : <ArrowRight className="mr-2 size-4" />}
             Sign in
           </Button>
         </form>
 
-        <p className="text-sm text-zinc-400">
+        <p className="font-body text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="font-medium text-zinc-100 underline underline-offset-4">
+          <Link href="/register" className="font-medium text-primary underline underline-offset-4">
             Register
           </Link>
         </p>
@@ -185,7 +185,7 @@ function LoginPageContent() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="text-sm text-zinc-400">Loading login...</div>}>
+    <Suspense fallback={<div className="font-body text-sm text-muted-foreground">Loading login...</div>}>
       <LoginPageContent />
     </Suspense>
   );

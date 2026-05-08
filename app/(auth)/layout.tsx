@@ -1,60 +1,67 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, BookOpenText } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function AuthLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
+    <div className="academia-shell min-h-screen text-foreground">
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-6">
-        <header className="flex items-center justify-between border-b border-zinc-800 py-4">
-          <Link href="/" className="flex items-center gap-3 text-zinc-100">
-            <span className="inline-flex size-9 items-center justify-center rounded-full border border-zinc-700 text-zinc-100">
-              <Sparkles className="size-4" />
+        <header className="flex items-center justify-between border-b border-border py-4">
+          <Link href="/" className="flex items-center gap-3 text-foreground transition-transform duration-300 ease-out hover:scale-105">
+            <span className="inline-flex size-9 items-center justify-center rounded-full border border-primary/40 bg-card text-primary">
+              <BookOpenText className="size-4 stroke-[1.5]" />
             </span>
-            <span className="text-base font-semibold tracking-tight">DevLinks</span>
+            <span className="font-heading text-2xl font-medium tracking-normal">DevLinks</span>
           </Link>
 
           <div className="flex items-center gap-2">
-            <Link href="/feed" className="text-sm font-medium text-zinc-500 transition-colors hover:text-zinc-100">
+            <Link href="/feed" className="hidden font-display text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-primary sm:inline">
               Feed
             </Link>
-            <Link
-              href="/"
-              className="inline-flex h-9 items-center gap-2 rounded-full border border-zinc-800 px-4 text-sm font-medium text-zinc-200 transition-colors hover:border-zinc-700 hover:text-zinc-100"
-            >
-              Home
-              <ArrowRight className="size-4" />
-            </Link>
+            <Button asChild variant="outline" size="sm" className="h-10 px-4">
+              <Link href="/">
+                Home
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
           </div>
         </header>
 
         <main className="grid flex-1 items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-20">
-          <section className="hidden md:block max-w-xl">
-            <p className="text-sm font-medium uppercase tracking-[0.28em] text-zinc-500">Developer link organizer</p>
-            <h1 className="mt-6 text-5xl font-semibold tracking-tight text-zinc-100 sm:text-6xl">
-              Sign in to keep your links clean and organized.
+          <section className="hidden max-w-xl md:block">
+            <p className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-primary">Volume I</p>
+            <h1 className="mt-6 font-heading text-5xl font-medium leading-[1.05] tracking-normal text-foreground sm:text-6xl">
+              Return to your private catalogue.
             </h1>
-            <p className="mt-6 max-w-lg text-base leading-7 text-zinc-400">
-              DevLinks gives you a calm workspace for saving resources, adding tags, and managing the things you want to revisit.
+            <p className="drop-cap mt-6 max-w-lg font-body text-lg leading-relaxed text-muted-foreground">
+              DevLinks gives you a warm, orderly workspace for saving resources, adding tags, and keeping references ready for the next session.
             </p>
 
             <div className="mt-10 grid gap-3 sm:grid-cols-3">
-              <div className="rounded-2xl border border-zinc-800 px-4 py-5">
-                <p className="text-sm font-medium text-zinc-100">Simple</p>
-                <p className="mt-1 text-sm text-zinc-500">No clutter, just focus.</p>
+              <div className="corner-flourish border border-border bg-card px-4 py-5">
+                <p className="font-display text-[10px] font-semibold uppercase tracking-[0.24em] text-primary">I</p>
+                <p className="mt-3 font-heading text-2xl text-foreground">Simple</p>
+                <p className="mt-1 font-body text-sm text-muted-foreground">No clutter, just focus.</p>
               </div>
-              <div className="rounded-2xl border border-zinc-800 px-4 py-5">
-                <p className="text-sm font-medium text-zinc-100">Fast</p>
-                <p className="mt-1 text-sm text-zinc-500">Save and organize quickly.</p>
+              <div className="corner-flourish border border-border bg-card px-4 py-5">
+                <p className="font-display text-[10px] font-semibold uppercase tracking-[0.24em] text-primary">II</p>
+                <p className="mt-3 font-heading text-2xl text-foreground">Fast</p>
+                <p className="mt-1 font-body text-sm text-muted-foreground">Save and organize quickly.</p>
               </div>
-              <div className="rounded-2xl border border-zinc-800 px-4 py-5">
-                <p className="text-sm font-medium text-zinc-100">Focused</p>
-                <p className="mt-1 text-sm text-zinc-500">Built for daily use.</p>
+              <div className="corner-flourish border border-border bg-card px-4 py-5">
+                <p className="font-display text-[10px] font-semibold uppercase tracking-[0.24em] text-primary">III</p>
+                <p className="mt-3 font-heading text-2xl text-foreground">Focused</p>
+                <p className="mt-1 font-body text-sm text-muted-foreground">Built for daily use.</p>
               </div>
             </div>
           </section>
 
-          <section className="flex justify-center lg:justify-end">{children}</section>
+          <section className="flex justify-center lg:justify-end">
+            <div className="ornate-frame w-full max-w-md border border-border bg-card/80 p-6 md:p-8">
+              {children}
+            </div>
+          </section>
         </main>
       </div>
     </div>

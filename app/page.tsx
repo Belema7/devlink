@@ -72,7 +72,7 @@ export default async function Home() {
                 </div>
               </div>
 
-              <div className="group mx-auto w-full max-w-md">
+              <div className="group mx-auto hidden w-full max-w-md md:block">
                 <div className="arch-top overflow-hidden border border-primary/40 bg-background p-4">
                   <div className="sepia-reveal arch-top min-h-[420px] border border-border bg-[radial-gradient(circle_at_50%_10%,rgba(201,169,98,0.22),transparent_30%),linear-gradient(180deg,#3D332B_0%,#251E19_45%,#1C1714_100%)] p-6">
                     <div className="flex h-full min-h-[372px] flex-col justify-between border border-primary/25 bg-background/45 p-5">
@@ -110,7 +110,7 @@ export default async function Home() {
                 const Icon = feature.icon;
 
                 return (
-                  <div key={feature.title} className="corner-flourish border border-border bg-card p-7 transition-all duration-300 ease-out hover:border-primary/50 hover:shadow-[0_8px_24px_rgba(0,0,0,0.3)]">
+                  <div key={feature.title} className="corner-flourish border border-border bg-card p-7 transition-colors duration-300 ease-out hover:border-primary/50">
                     <div className="flex size-12 items-center justify-center rounded-full border border-primary/30 bg-background text-primary">
                       <Icon className="size-5 stroke-[1.5]" />
                     </div>
