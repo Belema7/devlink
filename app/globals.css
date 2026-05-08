@@ -167,6 +167,41 @@
       linear-gradient(180deg, #101010 0%, #050505 46%, #000000 100%);
   }
 
+  .warm-library-theme {
+    --background: #1c1714;
+    --foreground: #e8dfd4;
+    --card: #251e19;
+    --card-foreground: #e8dfd4;
+    --popover: #251e19;
+    --popover-foreground: #e8dfd4;
+    --primary: #c9a962;
+    --primary-foreground: #1c1714;
+    --secondary: #3d332b;
+    --secondary-foreground: #e8dfd4;
+    --muted: #3d332b;
+    --muted-foreground: #9c8b7a;
+    --accent: #c9a962;
+    --accent-foreground: #1c1714;
+    --border: #4a3f35;
+    --input: #4a3f35;
+    --ring: #c9a962;
+    --sidebar: #251e19;
+    --sidebar-foreground: #e8dfd4;
+    --sidebar-primary: #c9a962;
+    --sidebar-primary-foreground: #1c1714;
+    --sidebar-accent: #3d332b;
+    --sidebar-accent-foreground: #e8dfd4;
+    --sidebar-border: #4a3f35;
+    --sidebar-ring: #c9a962;
+    color: var(--foreground);
+  }
+
+  .warm-library-shell {
+    background:
+      radial-gradient(ellipse at top, rgba(201, 169, 98, 0.16), transparent 42%),
+      linear-gradient(180deg, #251e19 0%, #1c1714 48%, #17120f 100%);
+  }
+
   .brass-gradient {
     background: var(--academia-brass-gradient);
   }
