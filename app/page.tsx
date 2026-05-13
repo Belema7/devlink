@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import Link from "next/link";
-import { ArrowRight, BookOpenText, Library, Search, Tags } from "lucide-react";
+import { ArrowRight, BookOpenText, Search, Tags } from "lucide-react";
 import { auth } from "@/lib/auth";
 import Navbar from "@/components/layout/navbar";
-import { BGPattern } from "@/components/ui/bg-pattern";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
@@ -41,65 +40,56 @@ export default async function Home() {
   const isSignedIn = Boolean(session?.user);
 
   return (
-    <div className="academia-shell relative isolate min-h-screen overflow-hidden text-foreground">
-      <BGPattern
-        aria-hidden="true"
-        variant="diagonal-stripes"
-        mask="fade-y"
-        size={36}
-        fill="color-mix(in srgb, var(--primary) 32%, transparent)"
-        className="pointer-events-none z-0 opacity-35"
-      />
-
-      <div className="relative z-10">
+    <div className="min-h-screen bg-white text-black">
+      <div>
         <Navbar />
 
-        <main className="mx-auto flex w-full max-w-7xl flex-col px-6">
-          <section className="flex flex-1 flex-col justify-center py-16 sm:py-20 lg:py-24">
-            <div className="ornate-frame border border-border bg-card/80 p-8 md:p-10 lg:p-12">
+        <main className="mx-auto flex w-full max-w-7xl flex-col px-5 sm:px-6">
+          <section className="flex flex-1 flex-col justify-center py-12 sm:py-16 lg:py-20">
+            <div className="border-2 border-black bg-white p-6 shadow-[8px_8px_0px_#000] md:p-10 lg:p-12">
               <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
                 <div>
-                  <p className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-primary">Volume I</p>
-                  <h1 className="mt-6 font-heading text-5xl font-medium leading-[1.05] tracking-normal text-foreground sm:text-6xl lg:text-7xl">
+                  <p className="inline-flex border-2 border-black bg-muted px-3 py-1 font-display text-xs font-black uppercase text-black shadow-[3px_3px_0px_#000]">Developer bookmarks</p>
+                  <h1 className="mt-6 font-heading text-5xl font-black leading-[1.02] tracking-normal text-black sm:text-6xl lg:text-7xl">
                     DevLinks
                   </h1>
-                  <p className="mt-4 max-w-2xl font-heading text-3xl leading-tight text-foreground/90 sm:text-4xl">
-                    A private reference library for the links that shape your craft.
+                  <p className="mt-4 max-w-2xl font-heading text-3xl font-extrabold leading-tight text-black sm:text-4xl">
+                    A clean place for the links that shape your craft.
                   </p>
-                  <p className="drop-cap mt-7 max-w-2xl font-body text-lg leading-relaxed text-muted-foreground">
-                    Keep developer resources ordered, searchable, and ready at hand in a warm catalogue that feels closer to a study desk than another disposable dashboard.
+                  <p className="mt-7 max-w-2xl font-body text-lg font-medium leading-relaxed text-muted-foreground">
+                    Keep developer resources ordered, searchable, and ready at hand without turning your bookmark list into visual noise.
                   </p>
 
                   <div className="mt-10 flex flex-wrap items-center gap-3">
                     <Button asChild>
                       <Link href={isSignedIn ? "/add-link" : "/register"}>
-                        {isSignedIn ? "Add Link" : "Begin Archive"}
+                        {isSignedIn ? "Add Link" : "Get Started"}
                         <ArrowRight className="size-4" />
                       </Link>
                     </Button>
                     <Button asChild variant="outline">
-                      <Link href="/feed">Browse Catalogue</Link>
+                      <Link href="/feed">Browse Feed</Link>
                     </Button>
                   </div>
                 </div>
 
                 <div className="group mx-auto hidden w-full max-w-md md:block">
-                  <div className="arch-top overflow-hidden border border-primary/40 bg-background p-4">
-                    <div className="sepia-reveal arch-top min-h-[420px] border border-border bg-[radial-gradient(circle_at_50%_10%,rgba(201,169,98,0.16),transparent_30%),linear-gradient(180deg,#181818_0%,#0D0D0D_45%,#050505_100%)] p-6">
-                      <div className="flex h-full min-h-[372px] flex-col justify-between border border-primary/25 bg-background/45 p-5">
+                  <div className="border-2 border-black bg-muted p-4 shadow-[6px_6px_0px_#000]">
+                    <div className="sepia-reveal min-h-[420px] border-2 border-black bg-white p-6">
+                      <div className="flex h-full min-h-[372px] flex-col justify-between">
                         <div>
-                          <div className="flex items-center justify-between border-b border-border pb-4">
-                            <span className="font-display text-[10px] uppercase tracking-[0.28em] text-primary">Ledger</span>
-                            <Library className="size-5 text-primary" />
+                          <div className="flex items-center justify-between border-b-2 border-black pb-4">
+                            <span className="font-display text-xs font-black uppercase text-black">Saved links</span>
+                            <BookOpenText className="size-5 text-black" />
                           </div>
                           <div className="mt-8 space-y-4">
                             {["React patterns", "Database guides", "Design systems"].map((entry, index) => (
-                              <div key={entry} className="corner-flourish border border-border bg-card/80 p-4">
-                                <p className="font-display text-[10px] uppercase tracking-[0.2em] text-primary">
-                                  {["I", "II", "III"][index]}
+                              <div key={entry} className="border-2 border-black bg-white p-4 shadow-[4px_4px_0px_#000]">
+                                <p className="font-display text-xs font-black uppercase text-muted-foreground">
+                                  0{index + 1}
                                 </p>
-                                <p className="mt-2 font-heading text-2xl leading-tight text-foreground">{entry}</p>
-                                <div className="mt-4 h-1 w-24 bg-primary/50" />
+                                <p className="mt-2 font-heading text-2xl font-black leading-tight text-black">{entry}</p>
+                                <div className="mt-4 h-2 w-24 bg-black" />
                               </div>
                             ))}
                           </div>
@@ -112,24 +102,21 @@ export default async function Home() {
               </div>
             </div>
 
-            <div className="my-12 ornate-divider" aria-hidden="true" />
-
             <div>
-              <p className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-primary">Volume II</p>
-              <div className="mt-5 grid gap-6 md:grid-cols-3">
+              <div className="mt-10 grid gap-6 md:grid-cols-3">
                 {features.map((feature) => {
                   const Icon = feature.icon;
 
                   return (
-                    <div key={feature.title} className="corner-flourish border border-border bg-card p-7 transition-colors duration-300 ease-out hover:border-primary/50">
-                      <div className="flex size-12 items-center justify-center rounded-full border border-primary/30 bg-background text-primary">
-                        <Icon className="size-5 stroke-[1.5]" />
+                    <div key={feature.title} className="border-2 border-black bg-white p-7 shadow-[6px_6px_0px_#000] transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[8px_8px_0px_#000]">
+                      <div className="flex size-12 items-center justify-center rounded border-2 border-black bg-muted text-black shadow-[3px_3px_0px_#000]">
+                        <Icon className="size-5 stroke-[2.25]" />
                       </div>
-                      <p className="mt-6 font-display text-[10px] font-semibold uppercase tracking-[0.28em] text-primary">
-                        {feature.numeral}
+                      <p className="mt-6 font-display text-xs font-black uppercase text-muted-foreground">
+                        Feature {feature.numeral}
                       </p>
-                      <h2 className="mt-3 font-heading text-3xl font-medium leading-tight text-foreground">{feature.title}</h2>
-                      <p className="mt-4 font-body text-base leading-relaxed text-muted-foreground">{feature.description}</p>
+                      <h2 className="mt-3 font-heading text-2xl font-black leading-tight text-black">{feature.title}</h2>
+                      <p className="mt-4 font-body text-base font-medium leading-relaxed text-muted-foreground">{feature.description}</p>
                     </div>
                   );
                 })}
@@ -137,47 +124,47 @@ export default async function Home() {
             </div>
 
             <div className="mt-12 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-              <div className="ornate-frame border border-border bg-card/70 p-8 md:p-10">
-                <p className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-primary">Volume III</p>
-                <h2 className="mt-4 font-heading text-4xl font-medium leading-tight text-foreground">
-                  Built for clarity, shaped with ceremony.
+              <div className="border-2 border-black bg-black p-8 text-white shadow-[6px_6px_0px_#000] md:p-10">
+                <p className="font-display text-xs font-black uppercase text-white">Why it works</p>
+                <h2 className="mt-4 font-heading text-4xl font-black leading-tight text-white">
+                  Built for clarity and daily use.
                 </h2>
-                <p className="drop-cap mt-6 font-body text-lg leading-relaxed text-muted-foreground">
+                <p className="mt-6 font-body text-lg font-medium leading-relaxed text-white/80">
                   DevLinks keeps the daily act of saving resources simple, while giving shared references enough structure to become useful again weeks or months later.
                 </p>
               </div>
 
-              <div className="border border-border bg-background/50 p-7">
-                <p className="font-display text-xs font-semibold uppercase tracking-[0.28em] text-primary">What You Receive</p>
-                <ul className="mt-6 space-y-4 font-body text-base text-muted-foreground">
+              <div className="border-2 border-black bg-white p-7 shadow-[6px_6px_0px_#000]">
+                <p className="font-display text-xs font-black uppercase text-black">What You Get</p>
+                <ul className="mt-6 space-y-4 font-body text-base font-medium text-muted-foreground">
                   <li className="flex gap-3">
-                    <span className="font-display text-primary">I</span>
+                    <span className="font-display font-black text-black">01</span>
                     <span>Simple navigation through public and personal collections.</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="font-display text-primary">II</span>
+                    <span className="font-display font-black text-black">02</span>
                     <span>Fast tag management for keeping ideas grouped by context.</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="font-display text-primary">III</span>
+                    <span className="font-display font-black text-black">03</span>
                     <span>A dignified sharing experience for resources worth citing.</span>
                   </li>
                 </ul>
               </div>
             </div>
 
-            <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6 font-display text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t-2 border-black pt-6 font-display text-xs font-black uppercase text-muted-foreground">
               <p>Built for developers who prefer clarity over clutter.</p>
               <div className="flex items-center gap-4">
                 {isSignedIn ? (
-                  <Link href="/trending" className="transition-colors hover:text-primary">
+                  <Link href="/trending" className="transition-colors hover:text-black">
                     Trending
                   </Link>
                 ) : null}
-                <Link href="/feed" className="transition-colors hover:text-primary">
+                <Link href="/feed" className="transition-colors hover:text-black">
                   Feed
                 </Link>
-                <Link href="/add-link" className="transition-colors hover:text-primary">
+                <Link href="/add-link" className="transition-colors hover:text-black">
                   Add Link
                 </Link>
               </div>

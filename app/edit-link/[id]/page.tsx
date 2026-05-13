@@ -21,7 +21,7 @@ const EditLinkPage = async ({ params }: EditLinkPageProps) => {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-zinc-950 px-6 py-14 text-zinc-100">
+      <main className="min-h-screen bg-white px-5 py-12 text-black sm:px-6">
         <div className="mx-auto max-w-7xl px-0 py-0">
           <LinkForm
             mode="edit"

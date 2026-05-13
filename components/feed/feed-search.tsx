@@ -42,13 +42,13 @@ export default function FeedSearch() {
   return (
     <div className="relative w-full">
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-        <Search className="size-4 text-primary" />
+        <Search className="size-4 text-black" />
       </div>
       <Input
         type="search"
         aria-label="Search public resources"
         placeholder="Search the catalogue by title or tag..."
-        className="h-12 border-border bg-background/70 pl-11 pr-24 text-foreground placeholder:text-muted-foreground focus-visible:border-primary"
+        className="h-12 bg-white pl-11 pr-24 text-black placeholder:text-muted-foreground"
         value={searchValue}
         onChange={(event) => setSearchValue(event.target.value)}
       />
@@ -58,14 +58,14 @@ export default function FeedSearch() {
             type="button"
             variant="ghost"
             size="icon-xs"
-            className="h-8 w-8 text-muted-foreground hover:bg-muted hover:text-primary"
+            className="h-8 w-8 text-black hover:bg-muted"
             onClick={() => setSearchValue("")}
             aria-label="Clear search"
           >
             <X className="size-4" />
           </Button>
         ) : null}
-        {isPending ? <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" /> : null}
+        {isPending ? <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent" /> : null}
       </div>
     </div>
   );

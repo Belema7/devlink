@@ -81,16 +81,16 @@ export default function RegisterPage() {
   return (
     <div className="w-full max-w-md">
       <div className="mb-8">
-        <p className="font-display text-xs font-semibold uppercase tracking-[0.28em] text-primary">Volume II</p>
-        <h2 className="mt-4 font-heading text-4xl font-medium tracking-normal text-foreground">Create account</h2>
-        <p className="mt-3 font-body text-base leading-6 text-muted-foreground">
+        <p className="font-display text-xs font-black uppercase text-muted-foreground">New workspace</p>
+        <h2 className="mt-4 font-heading text-4xl font-black tracking-normal text-black">Create account</h2>
+        <p className="mt-3 font-body text-base font-medium leading-6 text-muted-foreground">
           Create a workspace for saving links, tags, and resources you want to keep.
         </p>
       </div>
 
       <div className="space-y-4">
         {error ? (
-          <div className="border border-border bg-background/60 px-4 py-3 font-body text-sm text-foreground">{error}</div>
+          <div className="border-2 border-destructive bg-white px-4 py-3 font-body text-sm font-bold text-destructive shadow-[4px_4px_0px_#000]">{error}</div>
         ) : null}
 
         <div className="grid gap-3 sm:grid-cols-2">
@@ -99,7 +99,7 @@ export default function RegisterPage() {
             variant="outline"
             disabled={!!oauthLoading}
             onClick={() => handleOAuth("google")}
-            className="h-11 gap-2 border-border bg-background text-primary hover:border-primary"
+            className="h-11 gap-2"
           >
             {oauthLoading === "google" ? <Loader2 className="size-4 animate-spin" /> : <GoogleIcon />}
             Google
@@ -109,18 +109,18 @@ export default function RegisterPage() {
             variant="outline"
             disabled={!!oauthLoading}
             onClick={() => handleOAuth("github")}
-            className="h-11 gap-2 border-border bg-background text-primary hover:border-primary"
+            className="h-11 gap-2"
           >
             {oauthLoading === "github" ? <Loader2 className="size-4 animate-spin" /> : <GithubIcon />}
             GitHub
           </Button>
         </div>
 
-        <Separator className="bg-border" />
+        <Separator className="h-0.5 bg-black" />
 
         <form onSubmit={handleEmailSignUp} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name" className="font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+            <Label htmlFor="name" className="font-display text-xs font-black uppercase text-black">
               Full name
             </Label>
             <Input
@@ -131,12 +131,12 @@ export default function RegisterPage() {
               autoComplete="name"
               value={form.name}
               onChange={(e) => updateField("name", e.target.value)}
-              className="h-11 border-border bg-background text-foreground placeholder:text-muted-foreground focus-visible:border-primary"
+              className="h-11"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email" className="font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+            <Label htmlFor="email" className="font-display text-xs font-black uppercase text-black">
               Email
             </Label>
             <Input
@@ -147,12 +147,12 @@ export default function RegisterPage() {
               autoComplete="email"
               value={form.email}
               onChange={(e) => updateField("email", e.target.value)}
-              className="h-11 border-border bg-background text-foreground placeholder:text-muted-foreground focus-visible:border-primary"
+              className="h-11"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password" className="font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+            <Label htmlFor="password" className="font-display text-xs font-black uppercase text-black">
               Password
             </Label>
             <div className="relative">
@@ -164,12 +164,12 @@ export default function RegisterPage() {
                 autoComplete="new-password"
                 value={form.password}
                 onChange={(e) => updateField("password", e.target.value)}
-                className="h-11 border-border bg-background pr-10 text-foreground placeholder:text-muted-foreground focus-visible:border-primary"
+                className="h-11 pr-10"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-black transition-colors hover:text-muted-foreground focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
@@ -187,9 +187,9 @@ export default function RegisterPage() {
           </Button>
         </form>
 
-        <p className="font-body text-sm text-muted-foreground">
+        <p className="font-body text-sm font-medium text-muted-foreground">
           Already have an account?{" "}
-          <Link href="/login" className="font-medium text-primary underline underline-offset-4">
+          <Link href="/login" className="font-black text-black underline underline-offset-4">
             Sign in
           </Link>
         </p>

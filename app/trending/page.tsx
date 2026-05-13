@@ -30,39 +30,37 @@ export default async function TrendingPage({ searchParams }: TrendingPageProps) 
     <>
       <Navbar />
 
-      <main className="academia-shell relative min-h-screen overflow-hidden text-foreground">
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-16 lg:py-24">
+      <main className="min-h-screen bg-white text-black">
+        <div className="mx-auto w-full max-w-7xl px-5 py-12 sm:px-6 lg:py-16">
           <section className="space-y-10">
-            <div className="ornate-frame border border-border bg-card/80 p-8 md:p-10">
-              <p className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-primary">Volume I</p>
+            <div className="border-2 border-black bg-white p-6 shadow-[8px_8px_0px_#000] md:p-10">
+              <p className="inline-flex border-2 border-black bg-muted px-3 py-1 font-display text-xs font-black uppercase text-black shadow-[3px_3px_0px_#000]">Trending</p>
               <div className="mt-5 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
                 <div>
-                  <h1 className="font-heading text-5xl font-medium leading-[1.05] tracking-normal text-foreground md:text-6xl">
-                    Trending Volumes
+                  <h1 className="font-heading text-5xl font-black leading-[1.05] tracking-normal text-black md:text-6xl">
+                    Trending Resources
                   </h1>
-                  <p className="drop-cap mt-6 max-w-3xl font-body text-lg leading-relaxed text-muted-foreground">
-                    Consult the most endorsed resources in the collection, elevated by the community as references worthy of a prominent shelf.
+                  <p className="mt-6 max-w-3xl font-body text-lg font-medium leading-relaxed text-muted-foreground">
+                    See the most endorsed resources in the collection, ranked by community votes.
                   </p>
                 </div>
-                <div className="border border-border bg-background/60 p-5">
+                <div className="border-2 border-black bg-muted p-5 shadow-[4px_4px_0px_#000]">
                   <FeedSearch />
                 </div>
               </div>
             </div>
 
-            <div className="ornate-divider" aria-hidden="true" />
-
             <div>
-              <p className="font-display text-[10px] font-semibold uppercase tracking-[0.28em] text-primary">Volume II</p>
-              <h2 className="mt-2 font-heading text-3xl font-medium text-foreground">Most Cited Entries</h2>
+              <p className="font-display text-xs font-black uppercase text-muted-foreground">Top voted</p>
+              <h2 className="mt-2 font-heading text-3xl font-black text-black">Most Cited Entries</h2>
             </div>
 
             {links.length === 0 ? (
-              <Card className="corner-flourish border-border bg-card">
+              <Card>
                 <CardHeader>
-                  <CardTitle className="font-heading text-3xl text-foreground">No trending resources yet</CardTitle>
+                  <CardTitle className="font-heading text-3xl text-black">No trending resources yet</CardTitle>
                 </CardHeader>
-                <CardContent className="font-body text-base text-muted-foreground">
+                <CardContent className="font-body text-base font-medium text-muted-foreground">
                   {hasFilters ? "Try a different search or tag." : "No cards to show yet."}
                 </CardContent>
               </Card>

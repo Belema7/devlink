@@ -5,18 +5,18 @@ import { Button } from "@/components/ui/button";
 
 export default function AuthLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <div className="academia-shell min-h-screen text-foreground">
-      <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-6">
-        <header className="flex items-center justify-between border-b border-border py-4">
-          <Link href="/" className="flex items-center gap-3 text-foreground transition-transform duration-300 ease-out hover:scale-105">
-            <span className="inline-flex size-9 items-center justify-center rounded-full border border-primary/40 bg-card text-primary">
-              <BookOpenText className="size-4 stroke-[1.5]" />
+    <div className="min-h-screen bg-white text-black">
+      <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-5 sm:px-6">
+        <header className="flex items-center justify-between border-b-2 border-black py-4">
+          <Link href="/" className="flex items-center gap-3 text-black transition-transform duration-150 ease-out hover:-translate-y-0.5">
+            <span className="inline-flex size-10 items-center justify-center rounded border-2 border-black bg-white shadow-[3px_3px_0px_#000]">
+              <BookOpenText className="size-5 stroke-[2.25]" />
             </span>
-            <span className="font-heading text-2xl font-medium tracking-normal">DevLinks</span>
+            <span className="font-heading text-2xl font-black tracking-normal">DevLinks</span>
           </Link>
 
           <div className="flex items-center gap-2">
-            <Link href="/feed" className="hidden font-display text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-primary sm:inline">
+            <Link href="/feed" className="hidden rounded border-2 border-transparent px-3 py-2 font-display text-xs font-extrabold uppercase text-black transition-colors hover:border-black hover:bg-muted sm:inline">
               Feed
             </Link>
             <Button asChild variant="outline" size="sm" className="h-10 px-4">
@@ -30,35 +30,35 @@ export default function AuthLayout({ children }: Readonly<{ children: ReactNode 
 
         <main className="grid flex-1 items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-20">
           <section className="hidden max-w-xl md:block">
-            <p className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-primary">Volume I</p>
-            <h1 className="mt-6 font-heading text-5xl font-medium leading-[1.05] tracking-normal text-foreground sm:text-6xl">
-              Return to your private catalogue.
+            <p className="inline-flex border-2 border-black bg-muted px-3 py-1 font-display text-xs font-black uppercase text-black shadow-[3px_3px_0px_#000]">Account</p>
+            <h1 className="mt-6 font-heading text-5xl font-black leading-[1.05] tracking-normal text-black sm:text-6xl">
+              Return to your workspace.
             </h1>
-            <p className="drop-cap mt-6 max-w-lg font-body text-lg leading-relaxed text-muted-foreground">
-              DevLinks gives you a warm, orderly workspace for saving resources, adding tags, and keeping references ready for the next session.
+            <p className="mt-6 max-w-lg font-body text-lg font-medium leading-relaxed text-muted-foreground">
+              DevLinks gives you an orderly workspace for saving resources, adding tags, and keeping references ready for the next session.
             </p>
 
             <div className="mt-10 grid gap-3 sm:grid-cols-3">
-              <div className="corner-flourish border border-border bg-card px-4 py-5">
-                <p className="font-display text-[10px] font-semibold uppercase tracking-[0.24em] text-primary">I</p>
-                <p className="mt-3 font-heading text-2xl text-foreground">Simple</p>
-                <p className="mt-1 font-body text-sm text-muted-foreground">No clutter, just focus.</p>
+              <div className="border-2 border-black bg-white px-4 py-5 shadow-[4px_4px_0px_#000]">
+                <p className="font-display text-xs font-black uppercase text-muted-foreground">01</p>
+                <p className="mt-3 font-heading text-2xl font-black text-black">Simple</p>
+                <p className="mt-1 font-body text-sm font-medium text-muted-foreground">No clutter, just focus.</p>
               </div>
-              <div className="corner-flourish border border-border bg-card px-4 py-5">
-                <p className="font-display text-[10px] font-semibold uppercase tracking-[0.24em] text-primary">II</p>
-                <p className="mt-3 font-heading text-2xl text-foreground">Fast</p>
-                <p className="mt-1 font-body text-sm text-muted-foreground">Save and organize quickly.</p>
+              <div className="border-2 border-black bg-white px-4 py-5 shadow-[4px_4px_0px_#000]">
+                <p className="font-display text-xs font-black uppercase text-muted-foreground">02</p>
+                <p className="mt-3 font-heading text-2xl font-black text-black">Fast</p>
+                <p className="mt-1 font-body text-sm font-medium text-muted-foreground">Save and organize quickly.</p>
               </div>
-              <div className="corner-flourish border border-border bg-card px-4 py-5">
-                <p className="font-display text-[10px] font-semibold uppercase tracking-[0.24em] text-primary">III</p>
-                <p className="mt-3 font-heading text-2xl text-foreground">Focused</p>
-                <p className="mt-1 font-body text-sm text-muted-foreground">Built for daily use.</p>
+              <div className="border-2 border-black bg-white px-4 py-5 shadow-[4px_4px_0px_#000]">
+                <p className="font-display text-xs font-black uppercase text-muted-foreground">03</p>
+                <p className="mt-3 font-heading text-2xl font-black text-black">Focused</p>
+                <p className="mt-1 font-body text-sm font-medium text-muted-foreground">Built for daily use.</p>
               </div>
             </div>
           </section>
 
           <section className="flex justify-center lg:justify-end">
-            <div className="ornate-frame w-full max-w-md border border-border bg-card/80 p-6 md:p-8">
+            <div className="w-full max-w-md border-2 border-black bg-white p-6 shadow-[8px_8px_0px_#000] md:p-8">
               {children}
             </div>
           </section>

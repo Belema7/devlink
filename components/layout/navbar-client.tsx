@@ -58,17 +58,16 @@ export default function NavbarClient({ user }: NavbarClientProps) {
   };
 
   return (
-    <nav className="border-b border-border bg-background/95 text-foreground backdrop-blur-sm">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-        <Link href="/" className="flex items-center gap-3 text-foreground transition-transform duration-300 ease-out hover:scale-105">
-          <span className="inline-flex size-9 items-center justify-center rounded-full border border-primary/40 bg-card text-primary">
-            <BookOpenText className="size-4 stroke-[1.5]" />
+    <nav className="sticky top-0 z-40 border-b-2 border-black bg-white text-black">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 sm:px-6">
+        <Link href="/" className="flex items-center gap-3 text-black transition-transform duration-150 ease-out hover:-translate-y-0.5">
+          <span className="inline-flex size-10 items-center justify-center rounded border-2 border-black bg-white shadow-[3px_3px_0px_#000]">
+            <BookOpenText className="size-5 stroke-[2.25]" />
           </span>
-          <span className="hidden font-heading text-2xl font-medium tracking-normal md:inline">DevLinks</span>
-          <span className="font-heading text-2xl font-medium tracking-normal md:hidden">Devlink</span>
+          <span className="font-heading text-2xl font-black tracking-normal">DevLinks</span>
         </Link>
 
-        <div className="hidden items-center gap-8 lg:flex">
+        <div className="hidden items-center gap-2 lg:flex">
           {navItems.map((item) => {
             const active = isActiveRoute(pathname, item.href);
 
@@ -78,8 +77,10 @@ export default function NavbarClient({ user }: NavbarClientProps) {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "font-display text-xs font-medium uppercase tracking-[0.2em] transition-all duration-300 ease-out",
-                  active ? "text-primary" : "text-muted-foreground hover:text-primary hover:tracking-[0.25em]"
+                  "rounded border-2 px-4 py-2 font-display text-xs font-extrabold uppercase tracking-normal transition-all duration-150 ease-out",
+                  active
+                    ? "border-black bg-black text-white shadow-[3px_3px_0px_#000]"
+                    : "border-transparent text-black hover:border-black hover:bg-muted"
                 )}
               >
                 {item.label}
@@ -103,14 +104,14 @@ export default function NavbarClient({ user }: NavbarClientProps) {
           ) : null}
         </div>
 
-        <div className="flex items-center gap-4 md:hidden">
+        <div className="flex items-center gap-3 md:hidden">
           <ButtonLink href={addLinkHref} className="h-10 px-4">
             Add Link
           </ButtonLink>
         </div>
       </div>
 
-      <div className="border-t border-border px-6 py-3 md:hidden">
+      <div className="border-t-2 border-black px-5 py-3 md:hidden">
         <div className="mx-auto flex max-w-6xl items-center gap-2">
           <MobileTab href="/feed" active={isActiveRoute(pathname, "/feed")}>
             Feed
@@ -154,19 +155,19 @@ function ProfileMenu({
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-primary/60 hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="inline-flex size-10 items-center justify-center rounded border-2 border-black bg-white text-black shadow-[3px_3px_0px_#000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-muted hover:shadow-[5px_5px_0px_#000] focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-label="Open profile menu"
         >
           <Avatar className="size-8">
             <AvatarImage src={image ?? undefined} alt={name ?? "User"} />
-            <AvatarFallback className="bg-muted font-display text-xs font-medium text-primary">
+            <AvatarFallback className="bg-muted font-display text-xs font-black text-black">
               {getInitials(name)}
             </AvatarFallback>
           </Avatar>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-64 border-border bg-card text-foreground">
-        <DropdownMenuLabel className="flex min-w-0 items-center gap-2 font-body text-xs font-normal text-muted-foreground">
+      <DropdownMenuContent align="end" className="w-64">
+        <DropdownMenuLabel className="flex min-w-0 items-center gap-2 font-body text-xs font-bold text-muted-foreground">
           <UserRound className="size-4 shrink-0" />
           <span className="truncate">{email}</span>
         </DropdownMenuLabel>
@@ -178,7 +179,7 @@ function ProfileMenu({
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="cursor-pointer text-red-400 focus:bg-red-500/10 focus:text-red-300"
+          className="cursor-pointer text-destructive focus:bg-destructive focus:text-white"
           onClick={onLogout}
         >
           <LogOut className="mr-2 size-4" />
@@ -203,10 +204,10 @@ function MobileTab({
       href={href}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "inline-flex h-10 items-center rounded border px-4 font-display text-[0.7rem] font-medium uppercase tracking-[0.16em] transition-colors",
+        "inline-flex h-10 items-center rounded border-2 px-4 font-display text-[0.7rem] font-extrabold uppercase tracking-normal transition-colors",
         active
-          ? "brass-gradient border-primary text-primary-foreground"
-          : "border-border bg-card text-muted-foreground hover:border-primary/60 hover:text-primary"
+          ? "brass-gradient border-black text-white shadow-[3px_3px_0px_#000]"
+          : "border-black bg-white text-black hover:bg-muted"
       )}
     >
       {children}

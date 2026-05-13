@@ -81,11 +81,11 @@ export default function PublicLinkCard({ link, isAuthenticated }: PublicLinkCard
   };
 
   return (
-    <Card className="corner-flourish flex h-full flex-col border-border bg-card text-foreground">
+    <Card className="flex h-full flex-col text-black">
       <CardHeader className="space-y-4 px-6 pt-6 pb-4">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0 flex-1 space-y-2">
-            <CardTitle className="line-clamp-2 font-heading text-3xl font-medium leading-[1.05] tracking-normal text-foreground">
+            <CardTitle className="line-clamp-2 font-heading text-2xl font-black leading-[1.08] tracking-normal text-black">
               {link.title}
             </CardTitle>
           </div>
@@ -93,7 +93,7 @@ export default function PublicLinkCard({ link, isAuthenticated }: PublicLinkCard
       </CardHeader>
 
       <CardContent className="flex-1 space-y-6 px-6 py-5">
-        <p className="line-clamp-4 font-body text-base leading-relaxed text-muted-foreground">
+        <p className="line-clamp-4 font-body text-base font-medium leading-relaxed text-muted-foreground">
           {link.description?.trim() ? link.description : "No description provided."}
         </p>
 
@@ -107,10 +107,10 @@ export default function PublicLinkCard({ link, isAuthenticated }: PublicLinkCard
                 type="button"
                 onClick={() => handleTagClick(tag.name)}
                 className={cn(
-                  "inline-flex min-h-8 items-center gap-1.5 rounded border px-3 py-1.5 font-display text-[10px] font-medium uppercase tracking-[0.14em] transition-all duration-300 ease-out focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                  "inline-flex min-h-8 items-center gap-1.5 rounded border-2 px-3 py-1.5 font-display text-[10px] font-extrabold uppercase tracking-normal shadow-[2px_2px_0px_#000] transition-all duration-150 ease-out hover:-translate-x-0.5 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                   selectedTag === normalizeFeedTag(tag.name)
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-border bg-background text-muted-foreground hover:border-primary/60 hover:text-primary"
+                    ? "border-black bg-black text-white"
+                    : "border-black bg-white text-black hover:bg-muted"
                 )}
               >
                 <Hash className="size-3" />
@@ -118,14 +118,14 @@ export default function PublicLinkCard({ link, isAuthenticated }: PublicLinkCard
               </button>
             ))
           ) : (
-            <span className="rounded border border-border px-4 py-1.5 font-display text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+            <span className="rounded border-2 border-black bg-muted px-4 py-1.5 font-display text-[10px] font-extrabold uppercase tracking-normal text-black">
               No tags
             </span>
           )}
         </div>
       </CardContent>
 
-      <CardFooter className="mt-auto border-t border-border bg-muted/30 px-6 py-5">
+      <CardFooter className="mt-auto px-6 py-5">
         <div className="flex w-full flex-wrap items-center justify-between gap-2">
           {isAuthenticated ? (
             <Button
@@ -162,8 +162,8 @@ export default function PublicLinkCard({ link, isAuthenticated }: PublicLinkCard
             className={cn(
               "h-10 items-center justify-center gap-1 border px-3 text-[10px] transition-all",
               hasVoted
-                ? "border-primary bg-primary text-primary-foreground hover:bg-[#D4B872]"
-                : "border-border bg-background text-primary hover:border-primary"
+                ? "border-black bg-black text-white hover:bg-black"
+                : "border-black bg-white text-black hover:bg-muted"
             )}
           >
             <ThumbsUp
@@ -176,7 +176,7 @@ export default function PublicLinkCard({ link, isAuthenticated }: PublicLinkCard
       </CardFooter>
 
       {message && (
-        <div className="px-6 pb-6 text-xs text-red-400">{message}</div>
+        <div className="px-6 pb-6 text-xs font-bold text-destructive">{message}</div>
       )}
     </Card>
   );
