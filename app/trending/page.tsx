@@ -37,26 +37,14 @@ export default async function TrendingPage({ searchParams }: TrendingPageProps) 
       <main className="min-h-screen bg-white text-black">
         <div className="mx-auto w-full max-w-7xl px-5 py-12 sm:px-6 lg:py-16">
           <section className="space-y-10">
-            <div className="border-2 border-black bg-white p-6 shadow-[8px_8px_0px_#000] md:p-10">
-              <p className="inline-flex border-2 border-black bg-muted px-3 py-1 font-display text-xs font-black uppercase text-black shadow-[3px_3px_0px_#000]">Trending</p>
-              <div className="mt-5 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-                <div>
-                  <h1 className="font-heading text-5xl font-black leading-[1.05] tracking-normal text-black md:text-6xl">
-                    Trending Resources
-                  </h1>
-                  <p className="mt-6 max-w-3xl font-body text-lg font-medium leading-relaxed text-muted-foreground">
-                    See the most endorsed resources in the collection, ranked by community votes.
-                  </p>
-                </div>
-                <div className="border-2 border-black bg-muted p-5 shadow-[4px_4px_0px_#000]">
-                  <FeedSearch />
-                </div>
+            <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="font-display text-xs font-black uppercase text-muted-foreground">Top voted</p>
+                <h2 className="mt-2 font-heading text-3xl font-black text-black">Most Cited Entries</h2>
               </div>
-            </div>
-
-            <div>
-              <p className="font-display text-xs font-black uppercase text-muted-foreground">Top voted</p>
-              <h2 className="mt-2 font-heading text-3xl font-black text-black">Most Cited Entries</h2>
+              <div className="w-full md:max-w-xl">
+                <FeedSearch />
+              </div>
             </div>
 
             {links.length === 0 ? (
