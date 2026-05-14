@@ -43,7 +43,7 @@ export default function NavbarClient({ user }: NavbarClientProps) {
   const addLinkHref = isAuthenticated ? "/add-link" : "/login?redirectTo=/add-link";
   const navItems = [
     { href: "/feed", label: "Feed" },
-    ...(isAuthenticated ? [{ href: "/trending", label: "Trending" }] : []),
+    { href: "/trending", label: "Trending" },
   ];
 
   const handleLogout = async () => {
@@ -116,22 +116,18 @@ export default function NavbarClient({ user }: NavbarClientProps) {
           <MobileTab href="/feed" active={isActiveRoute(pathname, "/feed")}>
             Feed
           </MobileTab>
-          {isAuthenticated ? (
-            <>
-              <MobileTab href="/trending" active={isActiveRoute(pathname, "/trending")}>
-                Trending
-              </MobileTab>
-              {user ? (
-                <div className="ml-auto">
-                  <ProfileMenu
-                    email={user.email}
-                    image={user.image}
-                    name={user.name}
-                    onLogout={handleLogout}
-                  />
-                </div>
-              ) : null}
-            </>
+          <MobileTab href="/trending" active={isActiveRoute(pathname, "/trending")}>
+            Trending
+          </MobileTab>
+          {user ? (
+            <div className="ml-auto">
+              <ProfileMenu
+                email={user.email}
+                image={user.image}
+                name={user.name}
+                onLogout={handleLogout}
+              />
+            </div>
           ) : null}
         </div>
       </div>

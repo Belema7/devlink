@@ -1,8 +1,9 @@
+import { headers } from "next/headers";
 import Navbar from "@/components/layout/navbar";
 import PublicLinkCard from "@/components/PublicLinkCard";
 import FeedSearch from "@/components/feed/feed-search";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { requireUser } from "@/lib/auth-guard";
+import { auth } from "@/lib/auth";
 import { getTrendingLinks } from "@/lib/public-links";
 import { normalizeFeedSearchQuery, normalizeFeedTag } from "@/lib/feed-filters";
 
@@ -19,11 +20,14 @@ type TrendingPageProps = {
 };
 
 export default async function TrendingPage({ searchParams }: TrendingPageProps) {
-  await requireUser();
   const params = await searchParams;
   const search = normalizeFeedSearchQuery(params.search);
   const tag = normalizeFeedTag(params.tag);
-  const links = await getTrendingLinks({ search, tag });
+  const [links, session] = await Promise.all([
+    getTrendingLinks({ search, tag }),
+    auth.api.getSession({ headers: await headers() }),
+  ]);
+  const isAuthenticated = Boolean(session?.user);
   const hasFilters = Boolean(search || tag);
 
   return (
@@ -67,7 +71,7 @@ export default async function TrendingPage({ searchParams }: TrendingPageProps) 
             ) : (
               <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
                 {links.map((link) => (
-                  <PublicLinkCard key={link.id} link={link} isAuthenticated />
+                  <PublicLinkCard key={link.id} link={link} isAuthenticated={isAuthenticated} />
                 ))}
               </div>
             )}
